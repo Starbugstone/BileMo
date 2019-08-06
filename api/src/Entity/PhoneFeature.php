@@ -6,9 +6,10 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
- * @ApiResource()
+ * @ ApiResource()
  * @ORM\Entity(repositoryClass="App\Repository\PhoneFeatureRepository")
  */
 class PhoneFeature
@@ -22,11 +23,13 @@ class PhoneFeature
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"get_phone"})
      */
     private $name;
 
     /**
      * @ORM\Column(type="string", length=25, nullable=true)
+     * @Groups({"get_phone"})
      */
     private $unit;
 

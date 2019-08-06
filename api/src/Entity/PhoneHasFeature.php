@@ -4,9 +4,10 @@ namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
- * @ApiResource()
+ * @ ApiResource()
  * @ORM\Entity(repositoryClass="App\Repository\PhoneHasFeatureRepository")
  */
 class PhoneHasFeature
@@ -27,11 +28,13 @@ class PhoneHasFeature
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\PhoneFeature", inversedBy="phoneHasFeatures")
      * @ORM\JoinColumn(nullable=false)
+     * @Groups({"get_phone"})
      */
     private $phoneFeature;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"get_phone"})
      */
     private $value;
 
