@@ -22,7 +22,7 @@ final class Version20190806110934 extends AbstractMigration
         // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'postgresql', 'Migration can only be executed safely on \'postgresql\'.');
 
-        $this->addSql('DROP SEQUENCE greeting_id_seq CASCADE');
+        #$this->addSql('DROP SEQUENCE greeting_id_seq CASCADE');
         $this->addSql('CREATE SEQUENCE phone_id_seq INCREMENT BY 1 MINVALUE 1 START 1');
         $this->addSql('CREATE SEQUENCE phone_feature_id_seq INCREMENT BY 1 MINVALUE 1 START 1');
         $this->addSql('CREATE SEQUENCE phone_has_feature_id_seq INCREMENT BY 1 MINVALUE 1 START 1');
@@ -33,7 +33,7 @@ final class Version20190806110934 extends AbstractMigration
         $this->addSql('CREATE INDEX IDX_F86B71B048EF7EEC ON phone_has_feature (phone_feature_id)');
         $this->addSql('ALTER TABLE phone_has_feature ADD CONSTRAINT FK_F86B71B03B7323CB FOREIGN KEY (phone_id) REFERENCES phone (id) NOT DEFERRABLE INITIALLY IMMEDIATE');
         $this->addSql('ALTER TABLE phone_has_feature ADD CONSTRAINT FK_F86B71B048EF7EEC FOREIGN KEY (phone_feature_id) REFERENCES phone_feature (id) NOT DEFERRABLE INITIALLY IMMEDIATE');
-        $this->addSql('DROP TABLE greeting');
+        #$this->addSql('DROP TABLE greeting');
     }
 
     public function down(Schema $schema) : void
