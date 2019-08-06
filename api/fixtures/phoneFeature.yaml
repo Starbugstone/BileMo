@@ -1,0 +1,7 @@
+App\Entity\PhoneFeature:
+  phoneFeature_brand:
+    name: brand
+
+  phoneFeature_weight:
+    name: weight
+    unit: grammes
