@@ -5,3 +5,18 @@ App\Entity\PhoneFeature:
   phoneFeature_weight:
     name: weight
     unit: grammes
+
+  phoneFeature_screen_size:
+    name: screen size
+    unit: inches
+
+  phoneFeature_OS:
+    name: Operating System
+
+  phoneFeature_memory:
+    name: Memory
+    unit: Gb
+
+  phoneFeature_disk:
+    name: disk
+    unit: Gb

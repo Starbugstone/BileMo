@@ -1,5 +1,0 @@
-App\Entity\PhoneHasFeature:
-  phoneHasFeature_G5_Brand:
-    phone: '@phone_moto-g5'
-    phoneFeature: '@phoneFeature_brand'
-    value: Motorola
