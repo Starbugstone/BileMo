@@ -2,6 +2,10 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\RangeFilter;
+
 use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -22,6 +26,13 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *     }
  *
  * )
+ * @ApiFilter(SearchFilter::class, properties={"id": "exact", "description": "partial", "phoneHasFeatures.value": "exact"})
+ * )
+ *
+ * @ApiFilter(SearchFilter::class, properties={"phoneHasFeatures.phoneFeature.name", "phoneHasFeatures.value"}, strategy="exact")
+ *
+ * @ApiFilter(RangeFilter::class, properties={"price"})
+ *
  * @ORM\Entity(repositoryClass="App\Repository\PhoneRepository")
  */
 class Phone
