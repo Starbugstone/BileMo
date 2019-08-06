@@ -8,8 +8,8 @@ parameters:
 api_platform:
     mapping:
         paths: ['%kernel.project_dir%/src/Entity']
-    title: Hello API Platform
-    version: 1.0.0
+    title: Welcome to BileMo
+    version: 0.1
     # Varnish integration, remove if unwanted
     http_cache:
         invalidation:
