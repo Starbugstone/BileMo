@@ -8,9 +8,13 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
+
 /**
  * @ ApiResource()
  * @ORM\Entity(repositoryClass="App\Repository\PhoneFeatureRepository")
+ * @UniqueEntity("name")
  */
 class PhoneFeature
 {
@@ -22,12 +26,16 @@ class PhoneFeature
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @var string $name The name of the Feature
+     * @ORM\Column(type="string", length=255, unique=true)
      * @Groups({"get_phone"})
+     *
+     * @Assert\NotBlank
      */
     private $name;
 
     /**
+     * @var string|null $unit The unit of the feature (Kg, Gb, ...)
      * @ORM\Column(type="string", length=25, nullable=true)
      * @Groups({"get_phone"})
      */

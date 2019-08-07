@@ -5,6 +5,7 @@ namespace App\Entity;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ ApiResource()
@@ -20,12 +21,14 @@ class PhoneHasFeature
     private $id;
 
     /**
+     * @var Phone $phone the associated telephone
      * @ORM\ManyToOne(targetEntity="App\Entity\Phone", inversedBy="phoneHasFeatures")
      * @ORM\JoinColumn(nullable=false)
      */
     private $phone;
 
     /**
+     * @var PhoneFeature $phoneFeature The associated feature
      * @ORM\ManyToOne(targetEntity="App\Entity\PhoneFeature", inversedBy="phoneHasFeatures")
      * @ORM\JoinColumn(nullable=false)
      * @Groups({"get_phone"})
@@ -33,8 +36,12 @@ class PhoneHasFeature
     private $phoneFeature;
 
     /**
+     * @var string $value the value of the feature
      * @ORM\Column(type="string", length=255)
      * @Groups({"get_phone"})
+     *
+     * @Assert\NotBlank
+     *
      */
     private $value;
 

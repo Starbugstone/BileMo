@@ -12,6 +12,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ApiResource(
@@ -55,26 +56,42 @@ class Phone
     private $id;
 
     /**
+     * @var string $name The name of the Phone
      * @ORM\Column(type="string", length=255)
      * @Groups({"get_phone", "post_phone", "get_phones", "put_phone"})
+     *
+     * @Assert\NotBlank
+     *
      */
     private $name;
 
     /**
+     * @var float $price The price of the Phone
      * @ORM\Column(type="float")
      * @Groups({"get_phone", "post_phone", "get_phones", "put_phone"})
+     *
+     * @Assert\NotBlank
+     * @Assert\Range(min=0, minMessage="The price must be superior to 0.")
+     * @Assert\Type(type="float")
+     *
      */
     private $price;
 
     /**
+     * @var string $description The long description of the Phone
      * @ORM\Column(type="text", nullable=true)
      * @Groups({"get_phone", "post_phone", "get_phones", "put_phone"})
      */
     private $description;
 
     /**
+     * @var \DateTime $releaseDate The date the phone came out
      * @ORM\Column(type="datetime")
      * @Groups({"get_phone", "post_phone", "get_phones", "put_phone"})
+     *
+     * @Assert\Date
+     * @Assert\GreaterThan("1973-04-03", message="the input of {{ value }} is before the creation of the first mobile phone, respect Martin Cooper and all the hard work he did on {{ compared_value }}") #the first mobile phone was invented by martin cooper
+     *
      */
     private $releaseDate;
 
