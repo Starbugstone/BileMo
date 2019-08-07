@@ -1,9 +1,9 @@
 App\Entity\Phone:
-  phone_random_{1..10}:
+  phone_random_{1..30}:
     name: <name()>
     price: <randomFloat(2,50, 900)>
     description: <paragraph()>
-    releaseDate: <date_create()>
+    releaseDate: <dateTimeBetween('-10 years')>
 
 App\Entity\PhoneHasFeature:
   phoneHasFeature_Brand_{@phone_random_*}:
