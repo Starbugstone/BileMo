@@ -7,6 +7,8 @@ use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\RangeFilter;
 
+use ApiPlatform\Core\Annotation\ApiSubresource;
+
 use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -15,6 +17,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
+ *
  * @ApiResource(
  *     attributes={"order"={"releaseDate": "ASC"}},
  *     normalizationContext={"groups"={"get_phones"}},
@@ -33,16 +36,21 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ApiFilter(
  *     SearchFilter::class,
  *     properties={
- *      "id": "exact",
- *      "name": "partial",
- *      "description": "partial",
- *      "phoneHasFeatures.value": "exact",
- *      "phoneHasFeatures.phoneFeature.name": "exact",
- *      "phoneHasFeatures.value": "exact",
+ *          "name": "ipartial",
+ *          "description": "ipartial",
+ *          "phoneHasFeatures.value": "exact",
+ *          "phoneHasFeatures.phoneFeature.name": "exact",
  *     }
  * )
  *
- * @ApiFilter(RangeFilter::class, properties={"price"})
+ * @ApiFilter(
+ *     RangeFilter::class,
+ *     properties={
+ *          "price",
+ *          "releaseDate"
+ *     }
+ *
+ * )
  *
  * @ORM\Entity(repositoryClass="App\Repository\PhoneRepository")
  */
@@ -98,6 +106,7 @@ class Phone
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\PhoneHasFeature", mappedBy="phone", orphanRemoval=true)
      * @Groups({"get_phone"})
+     *
      */
     private $phoneHasFeatures;
 
