@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+#The filters
 use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\RangeFilter;
@@ -14,6 +15,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ApiResource(
+ *     attributes={"order"={"releaseDate": "ASC"}},
  *     normalizationContext={"groups"={"get_phones"}},
  *     denormalizationContext={"groups"={"post_phone"}},
  *     itemOperations={
@@ -26,10 +28,18 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *     }
  *
  * )
- * @ApiFilter(SearchFilter::class, properties={"id": "exact", "description": "partial", "phoneHasFeatures.value": "exact"})
- * )
  *
- * @ApiFilter(SearchFilter::class, properties={"phoneHasFeatures.phoneFeature.name", "phoneHasFeatures.value"}, strategy="exact")
+ * @ApiFilter(
+ *     SearchFilter::class,
+ *     properties={
+ *      "id": "exact",
+ *      "name": "partial",
+ *      "description": "partial",
+ *      "phoneHasFeatures.value": "exact",
+ *      "phoneHasFeatures.phoneFeature.name": "exact",
+ *      "phoneHasFeatures.value": "exact",
+ *     }
+ * )
  *
  * @ApiFilter(RangeFilter::class, properties={"price"})
  *
