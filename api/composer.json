@@ -10,7 +10,7 @@
         "guzzlehttp/guzzle": "^6.3",
         "symfony/console": "4.3.*",
         "symfony/dotenv": "4.3.*",
-        "symfony/flex": "^1.1",
+        "symfony/flex": "^1.4",
         "symfony/framework-bundle": "4.3.*",
         "symfony/mercure-bundle": "*",
         "symfony/yaml": "4.3.*"
@@ -19,6 +19,7 @@
         "api-platform/schema-generator": "^2.1",
         "hautelook/alice-bundle": "^2.5",
         "symfony/maker-bundle": "^1.11",
+        "symfony/phpunit-bridge": "^4.3",
         "symfony/profiler-pack": "^1.0"
     },
     "config": {
