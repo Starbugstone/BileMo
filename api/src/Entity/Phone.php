@@ -7,8 +7,6 @@ use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\RangeFilter;
 
-use ApiPlatform\Core\Annotation\ApiSubresource;
-
 use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -100,7 +98,7 @@ class Phone
     private $description;
 
     /**
-     * @var \DateTime $releaseDate The date the phone came out
+     * @var \DateTimeInterface $releaseDate The date the phone came out
      * @ORM\Column(type="datetime")
      * @Groups({"get_phone", "post_phone", "get_phones", "put_phone"})
      *
