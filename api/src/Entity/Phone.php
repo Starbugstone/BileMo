@@ -20,14 +20,21 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @ApiResource(
  *     attributes={"order"={"releaseDate": "ASC"}},
- *     normalizationContext={"groups"={"get_phones"}},
- *     denormalizationContext={"groups"={"post_phone"}},
+
+ *     collectionOperations={
+ *          "get"={
+ *              "normalization_context"={"groups"={"get_phones"}}
+ *          },
+ *          "post"={
+ *              "denormalization_context"={"groups"={"post_phone"}}
+ *          }
+ *     },
  *     itemOperations={
  *         "get"={
  *             "normalization_context"={"groups"={"get_phone"}}
  *         },
  *         "put"={
- *             "normalization_context"={"groups"={"put_phone"}}
+ *             "denormalization_context"={"groups"={"put_phone"}}
  *         }
  *     }
  *
