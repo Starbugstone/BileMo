@@ -12,7 +12,7 @@ services:
     image: ${CONTAINER_REGISTRY_BASE}/php
     build:
       context: ./api
-      dockerfile: TestDockerfile
+      dockerfile: test-Dockerfile
       target: api_platform_php
       <<: *cache
     depends_on:
@@ -27,7 +27,7 @@ services:
     image: ${CONTAINER_REGISTRY_BASE}/nginx
     build:
       context: ./api
-      dockerfile: TestDockerfile
+      dockerfile: test-Dockerfile
       target: api_platform_nginx
       <<: *cache
     depends_on:
