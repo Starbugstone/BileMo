@@ -115,9 +115,15 @@ class Phone
      */
     private $phoneHasFeatures;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\PhoneImage", mappedBy="phone", orphanRemoval=true)
+     */
+    private $phoneImages;
+
     public function __construct()
     {
         $this->phoneHasFeatures = new ArrayCollection();
+        $this->phoneImages = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -198,6 +204,37 @@ class Phone
             // set the owning side to null (unless already changed)
             if ($phoneHasFeature->getPhone() === $this) {
                 $phoneHasFeature->setPhone(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|PhoneImage[]
+     */
+    public function getPhoneImages(): Collection
+    {
+        return $this->phoneImages;
+    }
+
+    public function addPhoneImage(PhoneImage $phoneImage): self
+    {
+        if (!$this->phoneImages->contains($phoneImage)) {
+            $this->phoneImages[] = $phoneImage;
+            $phoneImage->setPhone($this);
+        }
+
+        return $this;
+    }
+
+    public function removePhoneImage(PhoneImage $phoneImage): self
+    {
+        if ($this->phoneImages->contains($phoneImage)) {
+            $this->phoneImages->removeElement($phoneImage);
+            // set the owning side to null (unless already changed)
+            if ($phoneImage->getPhone() === $this) {
+                $phoneImage->setPhone(null);
             }
         }
 
