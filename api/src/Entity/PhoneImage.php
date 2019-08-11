@@ -6,10 +6,23 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Symfony\Component\Validator\Constraints as Assert;
+use App\Controller\UploadPhoneImageAction;
 
 /**
- * @ApiResource()
+ * @ApiResource(
+ *     collectionOperations={
+ *          "get",
+ *          "post"={
+ *              "method"="POST",
+ *              "path"="/phone_images",
+ *              "controller"=UploadPhoneImageAction::class,
+ *              "defaults"={"_api_receve"=false}
+ *          }
+ *     }
+ * )
  * @ORM\Entity(repositoryClass="App\Repository\PhoneImageRepository")
+ * @Vich\Uploadable()
  */
 class PhoneImage
 {
@@ -32,7 +45,8 @@ class PhoneImage
 
 
     /**
-     * @Vich\UploadableField(mapping="product_images", fileNameProperty="image")
+     * @Vich\UploadableField(mapping="phone_images", fileNameProperty="image")
+     * @Assert\NotNull()
      * @var File
      */
     private $imageFile;
@@ -67,7 +81,7 @@ class PhoneImage
 
     public function getImage(): ?string
     {
-        return $this->image;
+        return '/phone_images/' . $this->image;
     }
 
     public function setImage(string $image): self
