@@ -42,8 +42,11 @@ final class ResolvePhoneImageImageUrlSubscriber implements EventSubscriberInterf
             return;
         }
 
-        if (!($attributes = RequestAttributesExtractor::extractAttributes($request)) || (!\is_a($attributes['resource_class'],
-                    PhoneImage::class, true) && !\is_a($attributes['resource_class'], Phone::class, true))) {
+        if (!($attributes = RequestAttributesExtractor::extractAttributes($request)) ) {
+            return;
+        }
+
+        if (!\is_a($attributes['resource_class'],PhoneImage::class, true) && !\is_a($attributes['resource_class'], Phone::class, true)) {
             return;
         }
 
@@ -73,7 +76,7 @@ final class ResolvePhoneImageImageUrlSubscriber implements EventSubscriberInterf
     private function setPhoneImagesUri(Phone $phone): void
     {
         $images = $phone->getPhoneImages();
-        foreach ($images as $image){
+        foreach ($images as $image) {
             $this->setImageUrl($image);
         }
     }

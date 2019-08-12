@@ -27,7 +27,7 @@ class CreatePhoneImageAction extends AbstractController
             throw new BadRequestHttpException('"file" is required');
         }
 
-        if(!$phone){
+        if($phone === null){
             throw new BadRequestHttpException('The Phone ID is incorrect');
         }
 
