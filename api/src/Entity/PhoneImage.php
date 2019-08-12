@@ -30,10 +30,10 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *                         "description"="The file to upload",
  *                     },
  *                     {
- *                         "in"="string",
+ *                         "in"="formData",
  *                         "name"="phone",
  *                         "type"="string",
- *                         "description"="The attached phone",
+ *                         "description"="The id of the attached phone",
  *                     },
  *                 },
  *             },
@@ -68,7 +68,7 @@ class PhoneImage
 
     /**
      * @var string $imageUrl Generated URL for the image
-     *
+     * @Groups({"get_phone"})
      */
     public $imageUrl;
 
