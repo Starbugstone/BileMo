@@ -19,3 +19,7 @@
 .phpunit.result.cache
 /phpunit.xml
 ###< symfony/phpunit-bridge ###
+
+###> uploaded images ###
+/public/phone_images/
+###< uploaded images ###
