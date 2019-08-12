@@ -64,7 +64,7 @@ final class ResolvePhoneImageImageUrlSubscriber implements EventSubscriberInterf
             }
 
             if ($mediaObject instanceof Phone) {
-                $this->setPhoneImagesUri($mediaObject);
+                $this->setPhoneImagesUrl($mediaObject);
             } else {
                 $this->setImageUrl($mediaObject);
             }
@@ -73,7 +73,7 @@ final class ResolvePhoneImageImageUrlSubscriber implements EventSubscriberInterf
         }
     }
 
-    private function setPhoneImagesUri(Phone $phone): void
+    private function setPhoneImagesUrl(Phone $phone): void
     {
         $images = $phone->getPhoneImages();
         foreach ($images as $image) {
@@ -81,10 +81,7 @@ final class ResolvePhoneImageImageUrlSubscriber implements EventSubscriberInterf
         }
     }
 
-    private
-    function setImageUrl(
-        PhoneImage $phoneImage
-    ): void {
+    private function setImageUrl(PhoneImage $phoneImage): void {
         $phoneImage->setImageUrl($this->storage->resolveUri($phoneImage, 'imageFile'));
     }
 
