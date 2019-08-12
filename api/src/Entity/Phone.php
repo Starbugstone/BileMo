@@ -118,7 +118,7 @@ class Phone
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\PhoneImage", mappedBy="phone")
      * @ORM\JoinColumn(nullable=true)
-     * @Groups({"get_phone"})
+     * @Groups({"get_phone", "get_phones"})
      */
     private $phoneImages;
 

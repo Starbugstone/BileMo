@@ -34,7 +34,6 @@ final class ResolvePhoneImageImageUrlSubscriber implements EventSubscriberInterf
 
     public function onPreSerialize(GetResponseForControllerResultEvent $event): void
     {
-//        var_dump($event);
 
         $controllerResult = $event->getControllerResult();
         $request = $event->getRequest();
@@ -43,10 +42,8 @@ final class ResolvePhoneImageImageUrlSubscriber implements EventSubscriberInterf
             return;
         }
 
-        //TODO: Also allow this when we are calling the actual phones so we get the URL back in the array
-        if (!($attributes = RequestAttributesExtractor::extractAttributes($request)) || (!\is_a($attributes['resource_class'], PhoneImage::class, true) && !\is_a($attributes['resource_class'], Phone::class, true))) {
-//            var_dump($attributes); //TODO: Ok, no longer here thanks to the || ( && ) for Phone class
-//            die('here ');
+        if (!($attributes = RequestAttributesExtractor::extractAttributes($request)) || (!\is_a($attributes['resource_class'],
+                    PhoneImage::class, true) && !\is_a($attributes['resource_class'], Phone::class, true))) {
             return;
         }
 
@@ -58,14 +55,35 @@ final class ResolvePhoneImageImageUrlSubscriber implements EventSubscriberInterf
 
         foreach ($mediaObjects as $mediaObject) {
 
-            if (!$mediaObject instanceof PhoneImage) {
-                //TODO: the Phone is not an instance of PhoneImage so we don't get our nice URL !
+
+            if (!$mediaObject instanceof PhoneImage && !$mediaObject instanceof Phone) {
                 continue;
             }
 
-//            $mediaObject->imageUrl = $this->storage->resolveUri($mediaObject, 'imageFile');
-            $mediaObject->setImageUrl($this->storage->resolveUri($mediaObject, 'imageFile'));
+            if ($mediaObject instanceof Phone) {
+                $this->setPhoneImagesUri($mediaObject);
+            } else {
+                $this->setImageUrl($mediaObject);
+            }
+
+
         }
     }
+
+    private function setPhoneImagesUri(Phone $phone): void
+    {
+        $images = $phone->getPhoneImages();
+        foreach ($images as $image){
+            $this->setImageUrl($image);
+        }
+    }
+
+    private
+    function setImageUrl(
+        PhoneImage $phoneImage
+    ): void {
+        $phoneImage->setImageUrl($this->storage->resolveUri($phoneImage, 'imageFile'));
+    }
+
 
 }

@@ -68,7 +68,7 @@ class PhoneImage
 
     /**
      * @var string $imageUrl Generated URL for the image
-     * @Groups({"get_phone"})
+     * @Groups({"get_phone", "get_phones"})
      */
     public $imageUrl;
 
