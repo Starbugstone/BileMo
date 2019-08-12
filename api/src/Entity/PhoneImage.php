@@ -81,7 +81,8 @@ class PhoneImage
 
     public function getImage(): ?string
     {
-        return '/phone_images/' . $this->image;
+//        return '/phone_images/' . $this->image;
+        return $this->image;
     }
 
     public function setImage(string $image): self
@@ -128,7 +129,7 @@ class PhoneImage
         }
     }
 
-    public function getImageFile(): File
+    public function getImageFile()
     {
         return $this->imageFile;
     }

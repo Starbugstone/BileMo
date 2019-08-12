@@ -35,3 +35,10 @@ App\Entity\PhoneHasFeature:
     phone: <current()>
     phoneFeature: '@phoneFeature_disk'
     value: <numberBetween(4, 128)>
+
+App\Entity\PhoneImage:
+  phoneImage_{@phone_random_*}:
+    phone: <current()>
+    title: <firstName()>
+    image: <image('public/phone_images', 640, 480)>
+    updatedAt: <date_create()>
