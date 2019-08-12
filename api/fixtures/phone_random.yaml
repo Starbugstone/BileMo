@@ -39,6 +39,6 @@ App\Entity\PhoneHasFeature:
 App\Entity\PhoneImage:
   phoneImage_{@phone_random_*}:
     phone: <current()>
-    title: <firstName()>
-    image: <image('public/phone_images', '640', '480', '', False)>
+#    title: <firstName()>
+    image: <image('public/phone_images', 640, 480, '', 0)>
     updatedAt: <date_create()>
