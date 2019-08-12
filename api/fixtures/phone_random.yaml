@@ -40,5 +40,5 @@ App\Entity\PhoneImage:
   phoneImage_{@phone_random_*}:
     phone: <current()>
     title: <firstName()>
-    image: <image('public/phone_images', 640, 480)>
+    image: <image('public/phone_images', '640', '480', '', False)>
     updatedAt: <date_create()>

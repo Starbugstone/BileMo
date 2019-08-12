@@ -7,17 +7,36 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\Validator\Constraints as Assert;
-use App\Controller\UploadPhoneImageAction;
+use App\Controller\CreatePhoneImageAction;
+
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ApiResource(
  *     collectionOperations={
  *          "get",
  *          "post"={
- *              "method"="POST",
- *              "path"="/phone_images",
- *              "controller"=UploadPhoneImageAction::class,
- *              "defaults"={"_api_receve"=false}
+ *              "controller"=CreatePhoneImageAction::class,
+ *              "deserialize"=false,
+ *              "swagger_context"={
+ *                 "consumes"={
+ *                     "multipart/form-data",
+ *                 },
+ *                 "parameters"={
+ *                     {
+ *                         "in"="formData",
+ *                         "name"="imageFile",
+ *                         "type"="file",
+ *                         "description"="The file to upload",
+ *                     },
+ *                     {
+ *                         "in"="string",
+ *                         "name"="phone",
+ *                         "type"="string",
+ *                         "description"="The attached phone",
+ *                     },
+ *                 },
+ *             },
  *          }
  *     }
  * )
@@ -35,11 +54,7 @@ class PhoneImage
 
     /**
      * @ORM\Column(type="string", length=255)
-     */
-    private $title;
-
-    /**
-     * @ORM\Column(type="string", length=255)
+     * @Groups({"get_phone"})
      */
     private $image;
 
@@ -52,8 +67,14 @@ class PhoneImage
     private $imageFile;
 
     /**
+     * @var string $imageUrl Generated URL for the image
+     *
+     */
+    public $imageUrl;
+
+    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Phone", inversedBy="phoneImages")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=true)
      */
     private $phone;
 
@@ -67,21 +88,8 @@ class PhoneImage
         return $this->id;
     }
 
-    public function getTitle(): ?string
-    {
-        return $this->title;
-    }
-
-    public function setTitle(string $title): self
-    {
-        $this->title = $title;
-
-        return $this;
-    }
-
     public function getImage(): ?string
     {
-//        return '/phone_images/' . $this->image;
         return $this->image;
     }
 
@@ -109,8 +117,12 @@ class PhoneImage
         return $this->updatedAt;
     }
 
-    public function setUpdatedAt(\DateTimeInterface $updatedAt): self
+    public function setUpdatedAt(\DateTimeInterface $updatedAt = null): self
     {
+        //Helper if we omit to set the updated time, we automaticly set it here
+        if($updatedAt === null){
+            $updatedAt = new \DateTime();
+        }
         $this->updatedAt = $updatedAt;
 
         return $this;
@@ -132,5 +144,20 @@ class PhoneImage
     public function getImageFile()
     {
         return $this->imageFile;
+//        return null;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getImageUrl()
+    {
+        return $this->imageUrl;
+    }
+
+
+    public function setImageUrl(string $imageUrl)
+    {
+        $this->imageUrl = $imageUrl;
     }
 }

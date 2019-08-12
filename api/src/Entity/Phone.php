@@ -116,7 +116,9 @@ class Phone
     private $phoneHasFeatures;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\PhoneImage", mappedBy="phone", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\PhoneImage", mappedBy="phone")
+     * @ORM\JoinColumn(nullable=true)
+     * @Groups({"get_phone"})
      */
     private $phoneImages;
 
