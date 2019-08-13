@@ -41,25 +41,11 @@ final class ResolvePhoneImageImageUrlSubscriber implements EventSubscriberInterf
     public function onPreSerialize(GetResponseForControllerResultEvent $event): void
     {
 
-        $controllerResult = $event->getControllerResult();
-        $request = $event->getRequest();
-
-        //TODO: Move this to private method to ease mocks
-        ///---- Extract to method to mock after
-        if ($controllerResult instanceof Response || !$request->attributes->getBoolean('_api_respond', true)) {
+        if(!$this->isCorrectCall($event)){
             return;
         }
 
-        if (!($attributes = RequestAttributesExtractor::extractAttributes($request)) ) {
-            return;
-        }
-
-        if (!\is_a($attributes['resource_class'],PhoneImage::class, true) && !\is_a($attributes['resource_class'], Phone::class, true)) {
-            return;
-        }
-        ///--- end extract
-
-        $mediaObjects = $controllerResult;
+        $mediaObjects = $event->getControllerResult();
 
         if (!is_iterable($mediaObjects)) {
             $mediaObjects = [$mediaObjects];
@@ -81,10 +67,13 @@ final class ResolvePhoneImageImageUrlSubscriber implements EventSubscriberInterf
             $this->setImageUrl($mediaObject);
 
 
-
         }
     }
 
+    /**
+     * Go through each image on the phone and set the url
+     * @param Phone $phone
+     */
     private function setPhoneImagesUrl(Phone $phone): void
     {
         $images = $phone->getPhoneImages();
@@ -93,11 +82,42 @@ final class ResolvePhoneImageImageUrlSubscriber implements EventSubscriberInterf
         }
     }
 
-    private function setImageUrl(PhoneImage $phoneImage): void {
+    /**
+     * Sets the full path of the phone image for ease of use
+     * @param PhoneImage $phoneImage
+     */
+    private function setImageUrl(PhoneImage $phoneImage): void
+    {
         $httpHost = $this->requestStack->getMasterRequest()->getHttpHost();
         $imagePath = $this->storage->resolveUri($phoneImage, 'imageFile');
-        $phoneImage->setImageUrl($httpHost.$imagePath);
+        $phoneImage->setImageUrl($httpHost . $imagePath);
     }
 
+    /**
+     * checks if this is the right kind of call. Eg a request with Phone or PhoneImage,
+     * @param GetResponseForControllerResultEvent $event
+     * @return bool
+     */
+    private function isCorrectCall(GetResponseForControllerResultEvent $event): bool
+    {
+        $controllerResult = $event->getControllerResult();
+        $request = $event->getRequest();
 
+        //TODO: Move this to private method to ease mocks
+        ///---- Extract to method to mock after
+        if ($controllerResult instanceof Response || !$request->attributes->getBoolean('_api_respond', true)) {
+            return false;
+        }
+
+        if (!($attributes = RequestAttributesExtractor::extractAttributes($request))) {
+            return false;
+        }
+
+        if (!\is_a($attributes['resource_class'], PhoneImage::class, true) && !\is_a($attributes['resource_class'],
+                Phone::class, true)) {
+            return false;
+        }
+        ///--- end extract
+        return true;
+    }
 }

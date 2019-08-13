@@ -13,6 +13,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ApiResource(
+ *     normalizationContext={"groups"={"read"}},
  *     collectionOperations={
  *          "get",
  *          "post"={
@@ -49,12 +50,13 @@ class PhoneImage
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @Groups({"read"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"get_phone"})
+     * @Groups({"get_phone", "read"})
      */
     private $image;
 
@@ -69,13 +71,14 @@ class PhoneImage
 
     /**
      * @var string $imageUrl Generated URL for the image
-     * @Groups({"get_phone", "get_phones"})
+     * @Groups({"get_phone", "get_phones", "read"})
      */
     public $imageUrl;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Phone", inversedBy="phoneImages")
      * @ORM\JoinColumn(nullable=true)
+     * @Groups({"read"})
      */
     private $phone;
 
