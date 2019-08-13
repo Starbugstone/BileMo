@@ -9,7 +9,7 @@ use App\Entity\PhoneImage;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent;
+use Symfony\Component\HttpKernel\Event\ViewEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Vich\UploaderBundle\Storage\StorageInterface;
 
@@ -38,7 +38,7 @@ final class ResolvePhoneImageImageUrlSubscriber implements EventSubscriberInterf
         ];
     }
 
-    public function onPreSerialize(GetResponseForControllerResultEvent $event): void
+    public function onPreSerialize(ViewEvent $event): void
     {
 
         if (!$this->isCorrectCall($event)) {
@@ -95,10 +95,10 @@ final class ResolvePhoneImageImageUrlSubscriber implements EventSubscriberInterf
 
     /**
      * checks if this is the right kind of call. Eg a request with Phone or PhoneImage,
-     * @param GetResponseForControllerResultEvent $event
+     * @param ViewEvent $event
      * @return bool
      */
-    private function isCorrectCall(GetResponseForControllerResultEvent $event): bool
+    private function isCorrectCall(ViewEvent $event): bool
     {
         $controllerResult = $event->getControllerResult();
         $request = $event->getRequest();
