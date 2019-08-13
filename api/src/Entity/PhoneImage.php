@@ -66,7 +66,6 @@ class PhoneImage
      * @Assert\NotNull()
      * @var File
      */
-    //TODO: remove from deserialisation groupe.
     private $imageFile;
 
     /**

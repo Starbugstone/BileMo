@@ -41,7 +41,7 @@ final class ResolvePhoneImageImageUrlSubscriber implements EventSubscriberInterf
     public function onPreSerialize(GetResponseForControllerResultEvent $event): void
     {
 
-        if(!$this->isCorrectCall($event)){
+        if (!$this->isCorrectCall($event)) {
             return;
         }
 
@@ -88,7 +88,7 @@ final class ResolvePhoneImageImageUrlSubscriber implements EventSubscriberInterf
      */
     private function setImageUrl(PhoneImage $phoneImage): void
     {
-        $httpHost = $this->requestStack->getMasterRequest()->getHttpHost();
+        $httpHost = $this->requestStack->getMasterRequest()->getSchemeAndHttpHost();
         $imagePath = $this->storage->resolveUri($phoneImage, 'imageFile');
         $phoneImage->setImageUrl($httpHost . $imagePath);
     }
@@ -103,8 +103,6 @@ final class ResolvePhoneImageImageUrlSubscriber implements EventSubscriberInterf
         $controllerResult = $event->getControllerResult();
         $request = $event->getRequest();
 
-        //TODO: Move this to private method to ease mocks
-        ///---- Extract to method to mock after
         if ($controllerResult instanceof Response || !$request->attributes->getBoolean('_api_respond', true)) {
             return false;
         }
@@ -117,7 +115,7 @@ final class ResolvePhoneImageImageUrlSubscriber implements EventSubscriberInterf
                 Phone::class, true)) {
             return false;
         }
-        ///--- end extract
+
         return true;
     }
 }
