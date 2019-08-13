@@ -9,7 +9,6 @@ use App\Entity\PhoneImage;
 use App\EventSubscriber\ResolvePhoneImageImageUrlSubscriber;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\RequestStack;
-use Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent;
 use Symfony\Component\HttpKernel\Event\ViewEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Vich\UploaderBundle\Storage\StorageInterface;
@@ -24,31 +23,32 @@ class ResolvePhoneImageImageUrlSubscriberTest extends TestCase
         $this->assertEquals(['onPreSerialize', EventPriorities::PRE_SERIALIZE], $result[KernelEvents::VIEW]);
     }
 
-    public function testSetImageUrlCallOnPhoneImage()
-    {
-        $phoneImage = new PhoneImage();
-        $phoneImage->setImage('abc.jpg');
-
-        $storageInterfaceMock = $this->createMock(StorageInterface::class);
-
-        $requestStackMock = $this->createMock(RequestStack::class);
-
-        $eventMock = $this->createMock(ViewEvent::class);
-
-
-//        $eventMock = $this->getMockBuilder(GetResponseForControllerResultEvent::class)
-//            ->getMockForAbstractClass();
+    // TODO: There is nothing returned,how to test ?
+//    public function testSetImageUrlCallOnPhoneImage()
+//    {
+//        $phoneImage = new PhoneImage();
+//        $phoneImage->setImage('abc.jpg');
 //
-//        $eventMock->expects($this->atLeastOnce())
-//            ->method('getControllerResult')
-//            ->willReturn($phoneImage);
+//        $storageInterfaceMock = $this->createMock(StorageInterface::class);
+//
+//        $requestStackMock = $this->createMock(RequestStack::class);
+//
+//        $eventMock = $this->createMock(ViewEvent::class);
 //
 //
-//        $storageMock = $this->getMockBuilder(StorageInterface::class)
-//            ->getMockForAbstractClass();
-//
-//        $storageMock->expects($this->atLeastOnce())
-//            ->method('resolveUri')
-//            ->willReturn('/phone_images/abc.jpg');
-    }
+////        $eventMock = $this->getMockBuilder(GetResponseForControllerResultEvent::class)
+////            ->getMockForAbstractClass();
+////
+////        $eventMock->expects($this->atLeastOnce())
+////            ->method('getControllerResult')
+////            ->willReturn($phoneImage);
+////
+////
+////        $storageMock = $this->getMockBuilder(StorageInterface::class)
+////            ->getMockForAbstractClass();
+////
+////        $storageMock->expects($this->atLeastOnce())
+////            ->method('resolveUri')
+////            ->willReturn('/phone_images/abc.jpg');
+//    }
 }

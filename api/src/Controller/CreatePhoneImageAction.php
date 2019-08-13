@@ -24,19 +24,16 @@ class CreatePhoneImageAction
     public function __invoke(Request $request)
     {
         $uploadedFile = $request->files->get('imageFile');
-//        $repo = $this->getDoctrine()->getRepository(Phone::class);
-
 
         //TODO: Prehaps look into reformatting when we are passing the API url ?
         /**@var Phone $phone */
         $phone = $this->repository->find($request->get('phone'));
 
-
         if (!$uploadedFile) {
             throw new BadRequestHttpException('"file" is required');
         }
 
-        if($phone === null){
+        if ($phone === null) {
             throw new BadRequestHttpException('The Phone ID is incorrect');
         }
 
