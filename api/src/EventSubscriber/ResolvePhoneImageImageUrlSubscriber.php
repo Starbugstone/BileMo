@@ -38,6 +38,8 @@ final class ResolvePhoneImageImageUrlSubscriber implements EventSubscriberInterf
         $controllerResult = $event->getControllerResult();
         $request = $event->getRequest();
 
+        //TODO: Move this to private method to ease mocks
+        ///---- Extract to method to mock after
         if ($controllerResult instanceof Response || !$request->attributes->getBoolean('_api_respond', true)) {
             return;
         }
@@ -49,6 +51,7 @@ final class ResolvePhoneImageImageUrlSubscriber implements EventSubscriberInterf
         if (!\is_a($attributes['resource_class'],PhoneImage::class, true) && !\is_a($attributes['resource_class'], Phone::class, true)) {
             return;
         }
+        ///--- end extract
 
         $mediaObjects = $controllerResult;
 
@@ -59,15 +62,18 @@ final class ResolvePhoneImageImageUrlSubscriber implements EventSubscriberInterf
         foreach ($mediaObjects as $mediaObject) {
 
 
+            //TODO: Check if we ever arrive here.
             if (!$mediaObject instanceof PhoneImage && !$mediaObject instanceof Phone) {
                 continue;
             }
 
             if ($mediaObject instanceof Phone) {
                 $this->setPhoneImagesUrl($mediaObject);
-            } else {
-                $this->setImageUrl($mediaObject);
+                continue;
             }
+
+            $this->setImageUrl($mediaObject);
+
 
 
         }
@@ -81,6 +87,7 @@ final class ResolvePhoneImageImageUrlSubscriber implements EventSubscriberInterf
         }
     }
 
+    //TODO: Add the server front URL
     private function setImageUrl(PhoneImage $phoneImage): void {
         $phoneImage->setImageUrl($this->storage->resolveUri($phoneImage, 'imageFile'));
     }

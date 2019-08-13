@@ -4,8 +4,7 @@ namespace App\Controller;
 
 use App\Entity\PhoneImage;
 use App\Entity\Phone;
-use Doctrine\Common\Persistence\ObjectRepository;
-use Doctrine\ORM\EntityManagerInterface;
+use App\Repository\PhoneRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
@@ -13,19 +12,13 @@ class CreatePhoneImageAction
 {
 
     /**
-     * @var EntityManagerInterface
+     * @var PhoneRepository
      */
-    private $entityManager;
+    private $repository;
 
-    /**
-     * @var ObjectRepository
-     */
-    private $objectRepository;
-
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(PhoneRepository $repository)
     {
-        $this->entityManager = $entityManager;
-        $this->objectRepository = $this->entityManager->getRepository(Phone::class);
+        $this->repository = $repository;
     }
 
     public function __invoke(Request $request)
@@ -36,7 +29,7 @@ class CreatePhoneImageAction
 
         //TODO: Prehaps look into reformatting when we are passing the API url ?
         /**@var Phone $phone */
-        $phone = $this->objectRepository->find($request->get('phone'));
+        $phone = $this->repository->find($request->get('phone'));
 
 
         if (!$uploadedFile) {
