@@ -7,6 +7,7 @@ use ApiPlatform\Core\Util\RequestAttributesExtractor;
 use App\Entity\Phone;
 use App\Entity\PhoneImage;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
@@ -19,10 +20,15 @@ final class ResolvePhoneImageImageUrlSubscriber implements EventSubscriberInterf
      * @var StorageInterface
      */
     private $storage;
+    /**
+     * @var RequestStack
+     */
+    private $requestStack;
 
-    public function __construct(StorageInterface $storage)
+    public function __construct(StorageInterface $storage, RequestStack $requestStack)
     {
         $this->storage = $storage;
+        $this->requestStack = $requestStack;
     }
 
     public static function getSubscribedEvents()
@@ -87,9 +93,10 @@ final class ResolvePhoneImageImageUrlSubscriber implements EventSubscriberInterf
         }
     }
 
-    //TODO: Add the server front URL
     private function setImageUrl(PhoneImage $phoneImage): void {
-        $phoneImage->setImageUrl($this->storage->resolveUri($phoneImage, 'imageFile'));
+        $httpHost = $this->requestStack->getMasterRequest()->getHttpHost();
+        $imagePath = $this->storage->resolveUri($phoneImage, 'imageFile');
+        $phoneImage->setImageUrl($httpHost.$imagePath);
     }
 
 
