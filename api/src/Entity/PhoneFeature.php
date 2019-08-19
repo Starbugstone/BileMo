@@ -12,7 +12,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ ApiResource()
+ * @ApiResource()
  * @ORM\Entity(repositoryClass="App\Repository\PhoneFeatureRepository")
  * @UniqueEntity("name")
  */
