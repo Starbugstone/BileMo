@@ -2,12 +2,14 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
+ * @ApiResource()
  * @ORM\Entity(repositoryClass="App\Repository\ClientRepository")
  */
 class Client implements UserInterface
@@ -57,7 +59,7 @@ class Client implements UserInterface
      */
     public function getUsername(): string
     {
-        return (string) $this->username;
+        return (string)$this->username;
     }
 
     public function setUsername(string $username): self
@@ -86,12 +88,22 @@ class Client implements UserInterface
         return $this;
     }
 
+    public function addRole(string $role): self
+    {
+        $roles = $this->roles;
+        $roles[] = $role;
+        $this->roles = array_unique($roles);
+        return $this;
+
+
+    }
+
     /**
      * @see UserInterface
      */
     public function getPassword(): string
     {
-        return (string) $this->password;
+        return (string)$this->password;
     }
 
     public function setPassword(string $password): self

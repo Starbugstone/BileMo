@@ -1,0 +1,13 @@
+parameters:
+  hash: $argon2i$v=19$m=1024,t=2,p=2$elM4RUozOFdXYW1LZUJGcg$SGGCmOxFl/PBt4DwbGBH8sQrfovD4fhenL1SDK/4CYE
+
+App\Entity\Client:
+  client_admin:
+    username: admin
+    password: <{hash}>
+    roles:
+      - 'ROLE_ADMIN'
+
+  client_{1..4}:
+    username: client<current()>
+    password: <{hash}>
