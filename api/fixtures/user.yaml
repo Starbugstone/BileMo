@@ -11,3 +11,9 @@ App\Entity\Client:
   client_{1..4}:
     username: client<current()>
     password: <{hash}>
+
+App\Entity\ClientUser:
+  user_{1..20}:
+    username (unique): <username()>
+    client:
+      - '@client_*'
