@@ -8,7 +8,9 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ApiResource()
+ * @ApiResource(
+ *     attributes={"access_control"="is_granted('ROLE_CLIENT')"},
+ * )
  * @ORM\Entity(repositoryClass="App\Repository\ClientUserRepository")
  */
 class ClientUser
