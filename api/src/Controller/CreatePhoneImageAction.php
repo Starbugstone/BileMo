@@ -40,6 +40,7 @@ class CreatePhoneImageAction
         $phoneImage = new PhoneImage();
         $phoneImage->setImageFile($uploadedFile);
         $phoneImage->setPhone($phone);
+        $phoneImage->setTitle($request->get('title'));
 
         return $phoneImage;
     }
