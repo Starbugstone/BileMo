@@ -160,11 +160,29 @@
     "jms/metadata": {
         "version": "2.0.0"
     },
+    "lcobucci/jwt": {
+        "version": "3.3.1"
+    },
     "league/html-to-markdown": {
         "version": "4.8.1"
     },
+    "lexik/jwt-authentication-bundle": {
+        "version": "2.5",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "2.5",
+            "ref": "5b2157bcd5778166a5696e42f552ad36529a07a6"
+        },
+        "files": [
+            "config/packages/lexik_jwt_authentication.yaml"
+        ]
+    },
     "myclabs/deep-copy": {
         "version": "1.9.1"
+    },
+    "namshi/jose": {
+        "version": "7.2.3"
     },
     "nelmio/alice": {
         "version": "3.2",

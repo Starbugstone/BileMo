@@ -24,3 +24,7 @@
 /public/phone_images/*
 !/public/phone_images/index.php
 ###< uploaded images ###
+
+###> lexik/jwt-authentication-bundle ###
+/config/jwt/*.pem
+###< lexik/jwt-authentication-bundle ###
