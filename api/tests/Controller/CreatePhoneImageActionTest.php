@@ -15,49 +15,89 @@ use Doctrine\Common\Persistence\ObjectRepository;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\FileBag;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 class CreatePhoneImageActionTest extends TestCase
 {
-    public function testDummy()
+    protected $phoneRepositoryMock;
+    protected $requestMock;
+
+    protected function setUp()
     {
-        $this->assertEquals(1,1);
+        $this->phoneRepositoryMock = $this->createMock(PhoneRepository::class);
+        $this->requestMock = $this->createMock(Request::class);
     }
 
-    //TODO: Test on errors
-    // -Null file
-    // -no phone
+    protected function tearDown()
+    {
+        $this->phoneRepositoryMock = null;
+        $this->requestMock = null;
+    }
 
     public function testCreationPhoneImage()
     {
 
         $phone = new Phone();
+        $phone->setName('DummyPhone');
 
-        //"Mocking" the file upload and placing it into the fileBag
-        $tmpFile = $this->createTempFile();
-        $bag = new FileBag(array('imageFile' => array(
-            'name' => basename($tmpFile),
-            'type' => 'text/plain',
-            'tmp_name' => $tmpFile,
-            'error' => 0,
-            'size' => 100,
-        )));
-
-
-        $phoneRepositoryMock = $this->createMock(PhoneRepository::class);
-        $phoneRepositoryMock->expects($this->once())
+        $this->phoneRepositoryMock->expects($this->once())
             ->method('find')
             ->willReturn($phone);
 
+        //Adding the image to the request
+        $this->requestMock->files = $this->createFileBag();
 
-        $requestMock = $this->createMock(Request::class);
-        $requestMock->files = $bag;
+        $controller = new CreatePhoneImageAction($this->phoneRepositoryMock);
+        $resultImage = $controller($this->requestMock);
 
-        $controller = new CreatePhoneImageAction($phoneRepositoryMock);
-        $resultImage = $controller($requestMock);
+        $this->assertInstanceOf(PhoneImage::class, $resultImage);
+        $this->assertInstanceOf(Phone::class, $resultImage->getPhone());
 
-        //TODO: Add asserts to check that all is OK
-        var_dump($resultImage);
+        //Make sure we are getting the proper phone back
+        $this->assertEquals('DummyPhone', $resultImage->getPhone()->getName());
+    }
 
+    public function testNullPhone()
+    {
+        $this->phoneRepositoryMock->expects($this->once())
+            ->method('find')
+            ->willReturn(null);
+
+        //Adding the image to the request
+        $this->requestMock->files = $this->createFileBag();
+
+        $controller = new CreatePhoneImageAction($this->phoneRepositoryMock);
+
+        $this->expectException(BadRequestHttpException::class);
+        $controller($this->requestMock);
+    }
+
+    public function testNullImage()
+    {
+
+        $phone = new Phone();
+
+        //Creating a null file upload
+        $bag = new FileBag(array('imageFile' => array(
+            'name' => '',
+            'type' => '',
+            'tmp_name' => '',
+            'error' => UPLOAD_ERR_NO_FILE,
+            'size' => 0,
+        )));
+
+
+        $this->phoneRepositoryMock->expects($this->once())
+            ->method('find')
+            ->willReturn($phone);
+
+        //Adding the image to the request
+        $this->requestMock->files = $bag;
+
+        $controller = new CreatePhoneImageAction($this->phoneRepositoryMock);
+
+        $this->expectException(BadRequestHttpException::class);
+        $controller($this->requestMock);
     }
 
     /**
@@ -68,7 +108,21 @@ class CreatePhoneImageActionTest extends TestCase
     {
         //create a file in the temporary directory.
         // need the @ in front to avoid PHP7 warnings that fail the test
-        return @tempnam(sys_get_temp_dir().'/form_test', 'FormTest');
+        return @tempnam(sys_get_temp_dir() . '/form_test', 'FormTest');
+    }
+
+    protected function createFileBag(): FileBag
+    {
+        $tmpFile = $this->createTempFile();
+        $bag = new FileBag(array('imageFile' => array(
+            'name' => basename($tmpFile),
+            'type' => 'text/plain',
+            'tmp_name' => $tmpFile,
+            'error' => 0,
+            'size' => 100,
+        )));
+
+        return $bag;
     }
 
 
