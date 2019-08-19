@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -32,6 +34,16 @@ class Client implements UserInterface
      * @ORM\Column(type="string")
      */
     private $password;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\ClientUser", mappedBy="client")
+     */
+    private $clientUsers;
+
+    public function __construct()
+    {
+        $this->clientUsers = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -104,5 +116,33 @@ class Client implements UserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+
+    /**
+     * @return Collection|ClientUser[]
+     */
+    public function getClientUsers(): Collection
+    {
+        return $this->clientUsers;
+    }
+
+    public function addClientUser(ClientUser $clientUser): self
+    {
+        if (!$this->clientUsers->contains($clientUser)) {
+            $this->clientUsers[] = $clientUser;
+            $clientUser->addClient($this);
+        }
+
+        return $this;
+    }
+
+    public function removeClientUser(ClientUser $clientUser): self
+    {
+        if ($this->clientUsers->contains($clientUser)) {
+            $this->clientUsers->removeElement($clientUser);
+            $clientUser->removeClient($this);
+        }
+
+        return $this;
     }
 }
