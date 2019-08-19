@@ -34,7 +34,13 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *                         "in"="formData",
  *                         "name"="phone",
  *                         "type"="string",
- *                         "description"="The id of the attached phone",
+ *                         "description"="ID of the attached phone",
+ *                     },
+ *                     {
+ *                         "in"="formData",
+ *                         "name"="title",
+ *                         "type"="string",
+ *                         "description"="Title of the uploaded image",
  *                     },
  *                 },
  *             },
@@ -85,6 +91,13 @@ class PhoneImage
      * @ORM\Column(type="datetime")
      */
     private $updatedAt;
+
+    /**
+     * @var string $title Title of the image
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"get_phone", "get_phones", "read"})
+     */
+    private $title;
 
     public function getId(): ?int
     {
@@ -162,5 +175,17 @@ class PhoneImage
     public function setImageUrl(string $imageUrl)
     {
         $this->imageUrl = $imageUrl;
+    }
+
+    public function getTitle(): ?string
+    {
+        return $this->title;
+    }
+
+    public function setTitle(?string $title): self
+    {
+        $this->title = $title;
+
+        return $this;
     }
 }
