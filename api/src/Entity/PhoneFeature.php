@@ -12,7 +12,14 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ApiResource()
+ * @ApiResource(
+ *     normalizationContext={"groups"={"read_feature"}},
+ *     itemOperations={
+ *         "get"={
+ *             "normalization_context"={"groups"={"get_feature"}}
+ *          },
+ *     }
+ * )
  * @ORM\Entity(repositoryClass="App\Repository\PhoneFeatureRepository")
  * @UniqueEntity("name")
  */
@@ -28,7 +35,7 @@ class PhoneFeature
     /**
      * @var string $name The name of the Feature
      * @ORM\Column(type="string", length=255, unique=true)
-     * @Groups({"get_phone"})
+     * @Groups({"get_phone", "read_feature", "get_feature"})
      *
      * @Assert\NotBlank
      */
@@ -37,12 +44,14 @@ class PhoneFeature
     /**
      * @var string|null $unit The unit of the feature (Kg, Gb, ...)
      * @ORM\Column(type="string", length=25, nullable=true)
-     * @Groups({"get_phone"})
+     * @Groups({"get_phone", "read_feature", "get_feature"})
      */
     private $unit;
 
     /**
+     * @var PhoneHasFeature $phoneHasFeatures phone / feature association
      * @ORM\OneToMany(targetEntity="App\Entity\PhoneHasFeature", mappedBy="phoneFeature", orphanRemoval=true)
+     * @Groups({"get_feature"})
      */
     private $phoneHasFeatures;
 
