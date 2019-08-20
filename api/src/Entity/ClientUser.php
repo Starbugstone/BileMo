@@ -10,6 +10,14 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ApiResource(
  *     attributes={"access_control"="is_granted('ROLE_CLIENT')"},
+ *     collectionOperations={
+ *         "get",
+ *         "post"={"access_control"="is_granted('ROLE_CLIENT')"}
+ *     },
+ *     itemOperations={
+ *         "get"={"access_control"="is_granted('ROLE_CLIENT') and object.isUserOf(user)", "access_control_message"="Sorry, not one of your users."},
+ *         "put"={"access_control"="is_granted('ROLE_CLIENT') and object.isUserOf(user)", "access_control_message"="Sorry, you can only update your own users."},
+ *     }
  * )
  * @ORM\Entity(repositoryClass="App\Repository\ClientUserRepository")
  */
@@ -30,7 +38,7 @@ class ClientUser
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Client", inversedBy="clientUsers")
      */
-    private $client;
+    public $client;
 
     public function __construct()
     {
@@ -78,5 +86,10 @@ class ClientUser
         }
 
         return $this;
+    }
+
+    public function isUserOf(Client $client): bool
+    {
+        return $this->client->contains($client);
     }
 }
