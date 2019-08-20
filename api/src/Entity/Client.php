@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Annotation\ApiSubresource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -39,6 +40,7 @@ class Client implements UserInterface
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\ClientUser", mappedBy="client")
+     * @ApiSubresource
      */
     private $clientUsers;
 
