@@ -1,4 +1,5 @@
 <?php
+// api\src\Entity\ClientUser.php
 
 namespace App\Entity;
 
