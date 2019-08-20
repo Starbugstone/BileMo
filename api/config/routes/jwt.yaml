@@ -1,3 +1,3 @@
-jwt_login_check:
+jwt_client_login:
   path: /client_login
   methods: ['POST']
