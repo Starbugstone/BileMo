@@ -97,8 +97,6 @@ class Client implements UserInterface
         $roles[] = $role;
         $this->roles = array_unique($roles);
         return $this;
-
-
     }
 
     /**
