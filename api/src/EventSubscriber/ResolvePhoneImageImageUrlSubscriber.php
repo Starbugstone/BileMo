@@ -54,8 +54,6 @@ final class ResolvePhoneImageImageUrlSubscriber implements EventSubscriberInterf
 
         foreach ($mediaObjects as $mediaObject) {
 
-
-            //TODO: Check if we ever arrive here.
             if (!$mediaObject instanceof PhoneImage && !$mediaObject instanceof Phone) {
                 continue;
             }
