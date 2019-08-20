@@ -8,7 +8,7 @@ use App\Controller\CreatePhoneImageAction;
 use App\Entity\Phone;
 use App\Entity\PhoneImage;
 use App\Repository\PhoneRepository;
-use PHPUnit\Framework\TestCase;
+use Symfony\Bundle\FrameworkBundle\Tests\TestCase;
 use Symfony\Component\HttpFoundation\FileBag;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;

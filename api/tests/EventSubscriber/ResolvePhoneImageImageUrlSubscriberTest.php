@@ -8,7 +8,7 @@ use ApiPlatform\Core\EventListener\EventPriorities;
 use App\Entity\Phone;
 use App\Entity\PhoneImage;
 use App\EventSubscriber\ResolvePhoneImageImageUrlSubscriber;
-use PHPUnit\Framework\TestCase;
+use Symfony\Bundle\FrameworkBundle\Tests\TestCase;
 use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -131,8 +131,8 @@ class ResolvePhoneImageImageUrlSubscriberTest extends TestCase
 
         $controllerResultMock = $this->createMock(Response::class); //has to be a request
 
-        $this->viewEventMock->expects($this->once()) //we exit before the second call
-            ->method('getControllerResult')
+        $this->viewEventMock->expects($this->once())//we exit before the second call
+        ->method('getControllerResult')
             ->willReturn($controllerResultMock);
 
         $this->viewEventMock->expects($this->once())
@@ -160,8 +160,8 @@ class ResolvePhoneImageImageUrlSubscriberTest extends TestCase
 
         $controllerResultMock = $this->createMock(Request::class); //has to be a request
 
-        $this->viewEventMock->expects($this->once()) //we exit before the second call
-            ->method('getControllerResult')
+        $this->viewEventMock->expects($this->once())//we exit before the second call
+        ->method('getControllerResult')
             ->willReturn($controllerResultMock);
 
         $this->viewEventMock->expects($this->once())
@@ -189,8 +189,8 @@ class ResolvePhoneImageImageUrlSubscriberTest extends TestCase
 
         $controllerResultMock = $this->createMock(Request::class); //has to be a request
 
-        $this->viewEventMock->expects($this->once()) //we exit before the second call
-            ->method('getControllerResult')
+        $this->viewEventMock->expects($this->once())//we exit before the second call
+        ->method('getControllerResult')
             ->willReturn($controllerResultMock);
 
         $this->viewEventMock->expects($this->once())
@@ -216,8 +216,8 @@ class ResolvePhoneImageImageUrlSubscriberTest extends TestCase
 
         $controllerResultMock = $this->createMock(Request::class); //has to be a request
 
-        $this->viewEventMock->expects($this->once()) //we exit before the second call
-            ->method('getControllerResult')
+        $this->viewEventMock->expects($this->once())//we exit before the second call
+        ->method('getControllerResult')
             ->willReturn($controllerResultMock);
 
         $this->viewEventMock->expects($this->once())
