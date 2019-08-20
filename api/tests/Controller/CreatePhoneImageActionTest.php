@@ -8,11 +8,7 @@ use App\Controller\CreatePhoneImageAction;
 use App\Entity\Phone;
 use App\Entity\PhoneImage;
 use App\Repository\PhoneRepository;
-use Doctrine\ORM\EntityManagerInterface;
 use PHPUnit\Framework\TestCase;
-use Doctrine\Common\Persistence\ObjectManager;
-use Doctrine\Common\Persistence\ObjectRepository;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\FileBag;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
@@ -113,6 +109,7 @@ class CreatePhoneImageActionTest extends TestCase
 
     protected function createFileBag(): FileBag
     {
+        //TODO: Prehaps only allow image uploads
         $tmpFile = $this->createTempFile();
         $bag = new FileBag(array('imageFile' => array(
             'name' => basename($tmpFile),

@@ -21,7 +21,7 @@ class CreatePhoneImageAction
         $this->repository = $repository;
     }
 
-    public function __invoke(Request $request)
+    public function __invoke(Request $request): PhoneImage
     {
         $uploadedFile = $request->files->get('imageFile');
 

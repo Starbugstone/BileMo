@@ -41,7 +41,7 @@ class Client implements UserInterface
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\ClientUser", mappedBy="client")
      * @ApiSubresource
-     */
+*/
     private $clientUsers;
 
     public function __construct()
