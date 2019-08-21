@@ -2,7 +2,7 @@
 import { AUTH_LOGIN, AUTH_LOGOUT, AUTH_ERROR, AUTH_CHECK } from 'react-admin';
 
 // Change this to be your own authentication token URI.
-const authenticationTokenUri = `${process.env.REACT_APP_API_ENTRYPOINT}/authentication_token`;
+const authenticationTokenUri = `${process.env.REACT_APP_API_ENTRYPOINT}/client_login`;
 
 export default (type, params) => {
   switch (type) {
@@ -10,7 +10,7 @@ export default (type, params) => {
       const { username, password } = params;
       const request = new Request(authenticationTokenUri, {
         method: 'POST',
-        body: JSON.stringify({ email: username, password }),
+        body: JSON.stringify({ username, password }),
         headers: new Headers({ 'Content-Type': 'application/json' }),
       });
 

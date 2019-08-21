@@ -9,7 +9,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ApiResource()
+ * @ApiResource(
  *     attributes={"access_control"="is_granted('ROLE_CLIENT')"},
  *     itemOperations={
  *         "get"={"access_control"="is_granted('ROLE_CLIENT') and object.isUserOf(user) or is_granted('ROLE_ADMIN')", "access_control_message"="Sorry, not one of your users."},
