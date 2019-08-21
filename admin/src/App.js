@@ -5,15 +5,18 @@ import authProvider from './authProvider';
 import { Route, Redirect } from 'react-router-dom';
 
 const entrypoint = process.env.REACT_APP_API_ENTRYPOINT; // Change this by your own entrypoint if you're not using API Platform distribution
-const fetchHeaders = {'Authorization': `Bearer ${localStorage.getItem('token')}`};
+const docentry = process.env.REACT_APP_API_DOCS; // Change this by your own entrypoint if you're not using API Platform distribution
+// const fetchHeaders = {'Authorization': `Bearer ${localStorage.getItem('token')}`};
 const fetchHydra = (url, options = {}) => baseFetchHydra(url, {
     ...options,
-    headers: new Headers(fetchHeaders),
+    // headers: new Headers(fetchHeaders),
+    headers: new Headers({'Authorization': `Bearer ${localStorage.getItem('token')}`}),
 });
 const dataProvider = api => hydraClient(api, fetchHydra);
-const apiDocumentationParser = entrypoint =>
-  parseHydraDocumentation(entrypoint, {
-    headers: new Headers(fetchHeaders),
+const apiDocumentationParser = docentry =>
+  parseHydraDocumentation(docentry, {
+    // headers: new Headers(fetchHeaders),
+    headers: new Headers({'Authorization': `Bearer ${localStorage.getItem('token')}`}),
   }).then(
     ({ api }) => ({ api }),
     result => {

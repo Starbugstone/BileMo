@@ -24,11 +24,13 @@ export default (type, params) => {
           localStorage.setItem('token', token); // The JWT token is stored in the browser's local storage
           window.location.replace('/');
         });
+      // return Promise.resolve();
+      // break;
 
     case AUTH_LOGOUT:
       localStorage.removeItem('token');
       return Promise.resolve();
-      break;
+      // break;
 
     case AUTH_ERROR:
       if (401 === params.status || 403 === params.status) {
