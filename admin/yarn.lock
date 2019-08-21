@@ -2,27 +2,26 @@
 # yarn lockfile v1
 
 
-"@api-platform/admin@^0.6.1":
-  version "0.6.3"
-  resolved "https://registry.yarnpkg.com/@api-platform/admin/-/admin-0.6.3.tgz#e07d20bb659bf96c27a506e02f9d921db968ec7b"
-  integrity sha512-H7peq3mWG7vGGRCg6dPXNJ8iN7pbLxiFayEqM3T9YLEuflYGnsuToqDUXsILi3z9oMpKtmuTHtfz2/cVJSStMw==
+"@api-platform/admin@0.6.2":
+  version "0.6.2"
+  resolved "https://registry.yarnpkg.com/@api-platform/admin/-/admin-0.6.2.tgz#5b23fb37f542ac42a6105be5830620a2f294b33b"
+  integrity sha512-k4DTbpwksxNMtmg/wvWTiQu1XuIBaOxkC6w37zdVDlxb2DoIhnirq37F6kQtyblr1E9GEL8btxp9L77kTZPv4w==
   dependencies:
-    "@api-platform/api-doc-parser" "^0.7.2"
+    "@api-platform/api-doc-parser" "^0.6"
     "@babel/runtime" "^7.2.0"
     jsonld "^1.2.1"
     lodash.isplainobject "^4.0.6"
     prop-types "^15.6.2"
-    react-admin "^2.7.0"
+    react-admin "^2.5.2"
 
-"@api-platform/api-doc-parser@^0.7.2":
-  version "0.7.2"
-  resolved "https://registry.yarnpkg.com/@api-platform/api-doc-parser/-/api-doc-parser-0.7.2.tgz#c5ca5913fa6ee319016a635df5225e0db5ecc9ab"
-  integrity sha512-FHzAldq1/ZZZhRyI8sgfxIrf3NtKLNgaW6P8Z12cjK3qWDuYCjsQZ1H2Z4WGZk0tGhDxA3lVJXcw4HHD5kjTrQ==
+"@api-platform/api-doc-parser@^0.6":
+  version "0.6.1"
+  resolved "https://registry.yarnpkg.com/@api-platform/api-doc-parser/-/api-doc-parser-0.6.1.tgz#953fb37947eb760c1a8e5d891de2ddbd706a0bbd"
+  integrity sha512-/e3WhJyEnISxC7zv5udpFNsx6P5i8DhW+8gUy8bxVmYrbM7fCCKJvEqcYF/EFirfbB3qsFDCztem73VgP1V3HA==
   dependencies:
     babel-runtime "^6.23.0"
-    jsonld "^1.5.0"
+    jsonld "^0.4.11"
     lodash.get "^4.4.2"
-    lodash.uniq "^4.5.0"
 
 "@babel/code-frame@7.0.0":
   version "7.0.0"
@@ -3585,6 +3584,11 @@ es6-error@^4.1.1:
   resolved "https://registry.yarnpkg.com/es6-error/-/es6-error-4.1.1.tgz#9e3af407459deed47e9a91f9b885a84eb05c561d"
   integrity sha512-Um/+FxMr9CISWh0bi5Zv0iOD+4cFh5qLeks1qhAopKVAJw3drgKbKySikp7wGhDL0HPeaja0P5ULZrxLkniUVg==
 
+es6-promise@^2.0.0:
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/es6-promise/-/es6-promise-2.3.0.tgz#96edb9f2fdb01995822b263dd8aadab6748181bc"
+  integrity sha1-lu258v2wGZWCKyY92KratnSBgbw=
+
 escape-html@~1.0.3:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/escape-html/-/escape-html-1.0.3.tgz#0258eae4d3d0c0974de1c169188ef0051d1d1988"
@@ -6050,7 +6054,17 @@ jsonify@~0.0.0:
   resolved "https://registry.yarnpkg.com/jsonify/-/jsonify-0.0.0.tgz#2c74b6ee41d93ca51b7b5aaee8f503631d252a73"
   integrity sha1-LHS27kHZPKUbe1qu6PUDYx0lKnM=
 
-jsonld@^1.2.1, jsonld@^1.5.0:
+jsonld@^0.4.11:
+  version "0.4.12"
+  resolved "https://registry.yarnpkg.com/jsonld/-/jsonld-0.4.12.tgz#a02f205d5341414df1b6d8414f1b967a712073e8"
+  integrity sha1-oC8gXVNBQU3xtthBTxuWenEgc+g=
+  dependencies:
+    es6-promise "^2.0.0"
+    pkginfo "~0.4.0"
+    request "^2.61.0"
+    xmldom "0.1.19"
+
+jsonld@^1.2.1:
   version "1.6.2"
   resolved "https://registry.yarnpkg.com/jsonld/-/jsonld-1.6.2.tgz#d81620dccf75fd7bc7501709eeec5da77ecc45e9"
   integrity sha512-eMzFHqhF2kPMrMUjw8+Lz9IF1QkrxTOIfVndkP/OpuoZs31VdDtfDs8mLa5EOC/ROdemFTQGLdYPZbRtmMe2Yw==
@@ -7551,6 +7565,11 @@ pkg-up@2.0.0:
   dependencies:
     find-up "^2.1.0"
 
+pkginfo@~0.4.0:
+  version "0.4.1"
+  resolved "https://registry.yarnpkg.com/pkginfo/-/pkginfo-0.4.1.tgz#b5418ef0439de5425fc4995042dced14fb2a84ff"
+  integrity sha1-tUGO8EOd5UJfxJlQQtztFPsqhP8=
+
 pluralize@^7.0.0:
   version "7.0.0"
   resolved "https://registry.yarnpkg.com/pluralize/-/pluralize-7.0.0.tgz#298b89df8b93b0221dbf421ad2b1b1ea23fc6777"
@@ -8429,10 +8448,10 @@ querystringify@^2.1.1:
   resolved "https://registry.yarnpkg.com/querystringify/-/querystringify-2.1.1.tgz#60e5a5fd64a7f8bfa4d2ab2ed6fdf4c85bad154e"
   integrity sha512-w7fLxIRCRT7U8Qu53jQnJyPkYZIaR4n5151KMfcJlO/A9397Wxb1amJvROTK6TOnp7PfoAmg/qXiNHI+08jRfA==
 
-ra-core@^2.9.5:
-  version "2.9.5"
-  resolved "https://registry.yarnpkg.com/ra-core/-/ra-core-2.9.5.tgz#63861650a3e564b2dd0d1540ffed17b0751cf798"
-  integrity sha512-YncSBw1RBqvFQbWAmnw1zBAZfrRA9nc4kyTGENAPQcy2uctbyGtihZMndIDYsmLvM8OwNmY8Ld4ZDcu12XPAHA==
+ra-core@^2.9.6:
+  version "2.9.6"
+  resolved "https://registry.yarnpkg.com/ra-core/-/ra-core-2.9.6.tgz#6e8f28d47a39182d8a28447fff4d32783a2b5cf2"
+  integrity sha512-Pr6UEuejWOfIcppZGuFD6AHKPyvFMq6gnYvr62iuOMO5W3WOX5fS3Hy1lDcsKv/4y8BEz9UaKrqEhkTH3GBS7g==
   dependencies:
     classnames "~2.2.5"
     date-fns "^1.29.0"
@@ -8457,10 +8476,10 @@ ra-language-english@^2.9.3:
   resolved "https://registry.yarnpkg.com/ra-language-english/-/ra-language-english-2.9.3.tgz#346528ad8bc54c16ba23c011b7866d98541c6d7b"
   integrity sha512-ni923vBW0V+vMfo1NoaF8Bhk/T7GZdAyoO3J5B+/czQKCGh3bFm7D3xZExf/0NB/e/TmYUEy4noVQ+SsflY7ew==
 
-ra-ui-materialui@^2.9.5:
-  version "2.9.5"
-  resolved "https://registry.yarnpkg.com/ra-ui-materialui/-/ra-ui-materialui-2.9.5.tgz#58e56838100038980c74b9f7a37f8f3308a551ea"
-  integrity sha512-kZX5sXoKDFSdJzneTlcI8HFwRXjRHGYWtj7SOGmXMb+n4rd83J2CHTIHMWQT5mWt8+0gmC4U2XliUgWDT1KhSQ==
+ra-ui-materialui@^2.9.6:
+  version "2.9.6"
+  resolved "https://registry.yarnpkg.com/ra-ui-materialui/-/ra-ui-materialui-2.9.6.tgz#2d1f93cb2b478451141cae6fc8b9cc60cc4bff6e"
+  integrity sha512-F1vMh8cgvOiafSh4ie2aICXiF8KhrBi5hz72dMoeNAQzzNW/rqvTN90M4EgW/kmyrf6XyQFFEmcwVlD1VBvC4w==
   dependencies:
     "@material-ui/core" "^1.4.0"
     "@material-ui/icons" "^1.0.0"
@@ -8471,7 +8490,7 @@ ra-ui-materialui@^2.9.5:
     material-ui-chip-input "1.0.0-beta.6 - 1.0.0-beta.8"
     papaparse "^4.1.4"
     prop-types "~15.6.1"
-    ra-core "^2.9.5"
+    ra-core "^2.9.6"
     react-autosuggest "^9.4.2"
     react-dropzone "~4.0.1"
     react-headroom "^2.2.4"
@@ -8548,14 +8567,14 @@ rdf-canonize@^1.0.2:
     node-forge "^0.8.1"
     semver "^5.6.0"
 
-react-admin@^2.7.0:
-  version "2.9.5"
-  resolved "https://registry.yarnpkg.com/react-admin/-/react-admin-2.9.5.tgz#69cae0721227cba302f100520502d0bb67cd43b6"
-  integrity sha512-0JelbF6OkTnAqSZQUG6xw1wXGvTbjTH/FfnkhU7rrUARj5kfpKPzmO0Qsp4ai6r3TE3iajmlN+g5ul9zdejgWQ==
+react-admin@^2.5.2:
+  version "2.9.6"
+  resolved "https://registry.yarnpkg.com/react-admin/-/react-admin-2.9.6.tgz#ee5d4198a03d9cbc157a10ecaa901464b54ae3b6"
+  integrity sha512-AhhsbJxabP9SaA1hBAY12fEVL0GxlBPld+vcVAlThtb0zy8HVlUxdD1pqKcNnWClFmKsgP0LFEalcZP+vcgkzQ==
   dependencies:
-    ra-core "^2.9.5"
+    ra-core "^2.9.6"
     ra-language-english "^2.9.3"
-    ra-ui-materialui "^2.9.5"
+    ra-ui-materialui "^2.9.6"
 
 react-app-polyfill@^0.2.2:
   version "0.2.2"
@@ -9105,7 +9124,7 @@ request-promise-native@^1.0.5:
     stealthy-require "^1.1.1"
     tough-cookie "^2.3.3"
 
-request@^2.87.0, request@^2.88.0:
+request@^2.61.0, request@^2.87.0, request@^2.88.0:
   version "2.88.0"
   resolved "https://registry.yarnpkg.com/request/-/request-2.88.0.tgz#9c2fca4f7d35b592efe57c7f0a55e81052124fef"
   integrity sha512-NAqBSrijGLZdM0WZNsInLJpkJokL72XYjUpnB0iwsRgxh7dB6COrHnTBNwN0E+lHDAJzu7kLAkDeY08z2/A0hg==
