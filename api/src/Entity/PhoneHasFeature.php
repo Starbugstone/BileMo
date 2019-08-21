@@ -1,4 +1,5 @@
 <?php
+// api\src\Entity\PhoneHasFeature.php
 
 namespace App\Entity;
 

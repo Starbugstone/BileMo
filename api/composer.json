@@ -8,9 +8,10 @@
         "api-platform/api-pack": "^1.1",
         "doctrine/doctrine-migrations-bundle": "^2.0",
         "guzzlehttp/guzzle": "^6.3",
+        "lexik/jwt-authentication-bundle": "^2.6",
         "symfony/console": "4.3.*",
         "symfony/dotenv": "4.3.*",
-        "symfony/flex": "^1.4",
+        "symfony/flex": "^1.1",
         "symfony/framework-bundle": "4.3.*",
         "symfony/mercure-bundle": "*",
         "symfony/yaml": "4.3.*",
@@ -18,10 +19,10 @@
     },
     "require-dev": {
         "api-platform/schema-generator": "^2.1",
-        "hautelook/alice-bundle": "^2.5",
         "symfony/maker-bundle": "^1.11",
-        "symfony/phpunit-bridge": "^4.3",
-        "symfony/profiler-pack": "^1.0"
+        "symfony/profiler-pack": "^1.0",
+        "hautelook/alice-bundle": "^2.5",
+        "symfony/phpunit-bridge": "^4.3"
     },
     "config": {
         "preferred-install": {
