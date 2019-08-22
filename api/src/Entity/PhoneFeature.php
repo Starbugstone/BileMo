@@ -50,7 +50,6 @@ class PhoneFeature
     private $unit;
 
     /**
-     * @var PhoneHasFeature $phoneHasFeatures phone / feature association
      * @ORM\OneToMany(targetEntity="App\Entity\PhoneHasFeature", mappedBy="phoneFeature", orphanRemoval=true)
      * @Groups({"get_feature"})
      */
