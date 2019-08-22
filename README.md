@@ -3,7 +3,7 @@
 run this to generate the API JWT Key
 
 ```
-$ docker-compose exec php sh -c '
+docker-compose exec php sh -c '
     set -e
     apk add openssl
     mkdir -p config/jwt
@@ -16,3 +16,6 @@ $ docker-compose exec php sh -c '
 ```
 
 See https://api-platform.com/docs/core/jwt/
+
+And this to load the fixtures
+docker-compose exec php bin/console hautelook:fixtures:load -n
