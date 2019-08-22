@@ -19,10 +19,10 @@
     },
     "require-dev": {
         "api-platform/schema-generator": "^2.1",
-        "symfony/maker-bundle": "^1.11",
-        "symfony/profiler-pack": "^1.0",
         "hautelook/alice-bundle": "^2.5",
-        "symfony/phpunit-bridge": "^4.3"
+        "symfony/maker-bundle": "^1.11",
+        "symfony/phpunit-bridge": "^4.3",
+        "symfony/profiler-pack": "^1.0"
     },
     "config": {
         "preferred-install": {
