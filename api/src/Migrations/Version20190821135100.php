@@ -22,8 +22,9 @@ final class Version20190821135100 extends AbstractMigration
         // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'postgresql', 'Migration can only be executed safely on \'postgresql\'.');
 
-        $this->addSql('DROP SEQUENCE greeting_id_seq CASCADE');
-        $this->addSql('DROP TABLE greeting');
+		$this->addSql('DROP SEQUENCE IF EXISTS greeting_id_seq CASCADE');
+		$this->addSql('DROP TABLE IF EXISTS greeting');
+        
     }
 
     public function down(Schema $schema) : void
