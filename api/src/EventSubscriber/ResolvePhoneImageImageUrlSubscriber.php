@@ -89,7 +89,7 @@ final class ResolvePhoneImageImageUrlSubscriber implements EventSubscriberInterf
     {
         $httpHost = $this->requestStack->getMasterRequest()->getSchemeAndHttpHost();
         $imagePath = $this->storage->resolveUri($phoneImage, 'imageFile');
-        $phoneImage->setImageUrl($httpHost . $imagePath);
+        $phoneImage->setImageUrl($httpHost.$imagePath);
     }
 
     /**

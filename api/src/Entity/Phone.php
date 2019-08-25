@@ -19,7 +19,6 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @ApiResource(
  *     attributes={"order"={"releaseDate": "ASC"}},
-
  *     collectionOperations={
  *          "get"={
  *              "normalization_context"={"groups"={"get_phones"}}
