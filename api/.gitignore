@@ -25,5 +25,5 @@
 .phpunit
 .phpunit.result.cache
 /phpunit.xml
-/test/html/* #no need to push the test coverage
+/tests/html/* #no need to push the test coverage
 ###< symfony/phpunit-bridge ###

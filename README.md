@@ -19,3 +19,6 @@ See https://api-platform.com/docs/core/jwt/
 
 And this to load the fixtures
 docker-compose exec php bin/console hautelook:fixtures:load -n
+
+And tests with code coverage
+docker-compose exec php bin/phpunit --coverage-html tstst/html
