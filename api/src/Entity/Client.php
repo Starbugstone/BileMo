@@ -9,6 +9,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * @ApiResource()
@@ -38,6 +39,12 @@ class Client implements UserInterface
      * @ORM\Column(type="string")
      */
     private $password;
+
+    /**
+     * @var string|null the unencrypted password
+     * @ SerializedName("password")
+     */
+    private $plainPassword;
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\ClientUser", mappedBy="client")
@@ -128,7 +135,7 @@ class Client implements UserInterface
     public function eraseCredentials()
     {
         // If you store any temporary, sensitive data on the user, clear it here
-        // $this->plainPassword = null;
+         $this->plainPassword = null;
     }
 
     /**
@@ -157,5 +164,23 @@ class Client implements UserInterface
         }
 
         return $this;
+    }
+
+    /**
+     * @param string $plainPassword
+     * @return Client
+     */
+    public function setPlainPassword(string $plainPassword): Client
+    {
+        $this->plainPassword = $plainPassword;
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getPlainPassword(): ?string
+    {
+        return $this->plainPassword;
     }
 }
