@@ -6,12 +6,14 @@ App\Entity\Client:
   client_admin:
     username: admin
     password: <{hash}>
+    email: 'admin@localhost.dev'
     roles:
       - 'ROLE_ADMIN'
 
   client_{1..4}:
     username: client<current()>
     password: <{hash}>
+    email: <email()>
 
 App\Entity\ClientUser:
   user_{1..20}:

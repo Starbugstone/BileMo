@@ -52,6 +52,16 @@ class Client implements UserInterface
 */
     private $clientUsers;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $newUserToken;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $email;
+
     public function __construct()
     {
         $this->clientUsers = new ArrayCollection();
@@ -182,5 +192,29 @@ class Client implements UserInterface
     public function getPlainPassword(): ?string
     {
         return $this->plainPassword;
+    }
+
+    public function getNewUserToken(): ?string
+    {
+        return $this->newUserToken;
+    }
+
+    public function setNewUserToken(?string $newUserToken): self
+    {
+        $this->newUserToken = $newUserToken;
+
+        return $this;
+    }
+
+    public function getEmail(): ?string
+    {
+        return $this->email;
+    }
+
+    public function setEmail(string $email): self
+    {
+        $this->email = $email;
+
+        return $this;
     }
 }

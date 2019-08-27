@@ -7,9 +7,10 @@ namespace App\DataPersister;
 use ApiPlatform\Core\DataPersister\DataPersisterInterface;
 use App\Entity\Client;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
-class ClientDataPersister implements DataPersisterInterface
+class ClientUpdateDataPersister implements DataPersisterInterface
 {
 
     /**
@@ -30,10 +31,15 @@ class ClientDataPersister implements DataPersisterInterface
 
     /**
      * Is the data supported by the persister?
+     * @param $data
+     * @return bool
      */
     public function supports($data): bool
     {
-        return $data instanceof Client;
+        if($data instanceof  Client && Request::METHOD_PUT){
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -43,6 +49,7 @@ class ClientDataPersister implements DataPersisterInterface
      */
     public function persist($data)
     {
+        //TODO Chech if constraints work here or are we before the constraint verification (normaly no as the object is already hydrated
         if($data->getPlainPassword()){
             $encodedPassword = $this->passwordEncoder->encodePassword($data, $data->getPlainPassword());
             $data->setPassword($encodedPassword);
@@ -53,7 +60,7 @@ class ClientDataPersister implements DataPersisterInterface
     }
 
     /**
-     * Removes the data.
+     * Removes the data. this should never happen
      */
     public function remove($data)
     {

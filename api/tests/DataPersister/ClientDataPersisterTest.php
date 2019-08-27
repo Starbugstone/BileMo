@@ -4,7 +4,7 @@
 namespace App\Tests\DataPersister;
 
 
-use App\DataPersister\ClientDataPersister;
+use App\DataPersister\ClientUpdateDataPersister;
 use App\Entity\Client;
 use Doctrine\ORM\EntityManagerInterface;
 use PHPUnit\Framework\TestCase;
@@ -33,7 +33,7 @@ class ClientDataPersisterTest extends TestCase
     {
         $testClient = new Client();
         $testOther = new \stdClass();
-        $testClientDataPersister = new ClientDataPersister($this->managerMock, $this->passwordEncoderMock);
+        $testClientDataPersister = new ClientUpdateDataPersister($this->managerMock, $this->passwordEncoderMock);
         $this->assertTrue($testClientDataPersister->supports($testClient));
         $this->assertFalse($testClientDataPersister->supports($testOther));
     }
@@ -41,7 +41,7 @@ class ClientDataPersisterTest extends TestCase
     public function testPersistEmptyPassword()
     {
         $testClient = new Client();
-        $testClientDataPersister = new ClientDataPersister($this->managerMock, $this->passwordEncoderMock);
+        $testClientDataPersister = new ClientUpdateDataPersister($this->managerMock, $this->passwordEncoderMock);
         $this->managerMock->expects($this->once())
             ->method('persist')
             ;
@@ -56,7 +56,7 @@ class ClientDataPersisterTest extends TestCase
     {
         $testClient = new Client();
         $testClient->setPlainPassword('azerty');
-        $testClientDataPersister = new ClientDataPersister($this->managerMock, $this->passwordEncoderMock);
+        $testClientDataPersister = new ClientUpdateDataPersister($this->managerMock, $this->passwordEncoderMock);
 
         $this->managerMock->expects($this->once())
             ->method('persist')
@@ -74,7 +74,7 @@ class ClientDataPersisterTest extends TestCase
     public function testRemove()
     {
         $testClient = new Client();
-        $testClientDataPersister = new ClientDataPersister($this->managerMock, $this->passwordEncoderMock);
+        $testClientDataPersister = new ClientUpdateDataPersister($this->managerMock, $this->passwordEncoderMock);
         $this->managerMock->expects($this->once())
             ->method('remove')
         ;
