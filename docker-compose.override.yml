@@ -17,3 +17,7 @@ services:
       # This should correspond to the server declared in PHPStorm `Preferences | Languages & Frameworks | PHP | Servers`
       # Then PHPStorm will use the corresponding path mappings
       PHP_IDE_CONFIG: serverName=api-platform
+  blackfire:
+    image: blackfire/blackfire
+    env_file:
+      - blackfire-variables.env

@@ -33,7 +33,6 @@ class ClientDataPersister implements DataPersisterInterface
      */
     public function supports($data): bool
     {
-        // TODO: Implement supports() method.
         return $data instanceof Client;
     }
 
@@ -44,7 +43,6 @@ class ClientDataPersister implements DataPersisterInterface
      */
     public function persist($data)
     {
-        // TODO: Implement persist() method.
         if($data->getPlainPassword()){
             $encodedPassword = $this->passwordEncoder->encodePassword($data, $data->getPlainPassword());
             $data->setPassword($encodedPassword);
@@ -59,7 +57,6 @@ class ClientDataPersister implements DataPersisterInterface
      */
     public function remove($data)
     {
-        // TODO: Implement remove() method.
         $this->manager->remove($data);
         $this->manager->flush();
     }

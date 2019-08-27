@@ -22,3 +22,12 @@ docker-compose exec php bin/console hautelook:fixtures:load -n
 
 And tests with code coverage
 docker-compose exec php bin/phpunit --coverage-html tstst/html
+
+To enable the blackfire profiler create blackfire-variables.env
+and paste 
+```
+BLACKFIRE_CLIENT_ID=XXX
+BLACKFIRE_CLIENT_TOKEN=XXX
+BLACKFIRE_SERVER_ID=XXX
+BLACKFIRE_SERVER_TOKEN=XXX
+```
