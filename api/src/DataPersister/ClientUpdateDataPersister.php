@@ -63,6 +63,8 @@ class ClientUpdateDataPersister implements DataPersisterInterface
         }
         $this->manager->persist($data);
         $this->manager->flush();
+
+        //TODO Return $data and update tests.
     }
 
     /**

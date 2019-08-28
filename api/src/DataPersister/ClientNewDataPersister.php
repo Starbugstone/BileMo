@@ -56,9 +56,10 @@ class ClientNewDataPersister implements DataPersisterInterface
     public function persist($data)
     {
         //TODO for #23, if new client, generate token and send email
-
+        // TODO: should this realy be here? The role is to transform the data. We should have an event listener
         $this->manager->persist($data);
         $this->manager->flush();
+        //TODO Return $data and update tests.
     }
 
     /**
