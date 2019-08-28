@@ -21,12 +21,17 @@ class ClientNewDataPersister implements DataPersisterInterface
      * @var UserPasswordEncoderInterface
      */
     private $passwordEncoder;
+    /**
+     * @var Request
+     */
+    private $request;
 
-    public function __construct(EntityManagerInterface $manager, UserPasswordEncoderInterface $passwordEncoder)
+    public function __construct(EntityManagerInterface $manager, UserPasswordEncoderInterface $passwordEncoder, Request $request)
     {
 
         $this->manager = $manager;
         $this->passwordEncoder = $passwordEncoder;
+        $this->request = $request;
     }
 
     /**
@@ -36,7 +41,8 @@ class ClientNewDataPersister implements DataPersisterInterface
      */
     public function supports($data): bool
     {
-        if($data instanceof  Client && Request::METHOD_POST){
+        //Request::METHOD_POST
+        if($data instanceof  Client && $this->request->getMethod() === Request::METHOD_POST){
             return true;
         }
         return false;
