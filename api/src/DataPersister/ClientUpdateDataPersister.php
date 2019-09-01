@@ -21,17 +21,12 @@ class ClientUpdateDataPersister implements DataPersisterInterface
      * @var UserPasswordEncoderInterface
      */
     private $passwordEncoder;
-    /**
-     * @var Request
-     */
-    private $request;
 
-    public function __construct(EntityManagerInterface $manager, UserPasswordEncoderInterface $passwordEncoder, Request $request)
+
+    public function __construct(EntityManagerInterface $manager, UserPasswordEncoderInterface $passwordEncoder)
     {
-
         $this->manager = $manager;
         $this->passwordEncoder = $passwordEncoder;
-        $this->request = $request;
     }
 
     /**
@@ -41,8 +36,7 @@ class ClientUpdateDataPersister implements DataPersisterInterface
      */
     public function supports($data): bool
     {
-        //Request::METHOD_PUT
-        if($data instanceof  Client && $this->request->getMethod() === Request::METHOD_PUT){
+        if($data instanceof  Client){
             return true;
         }
         return false;
@@ -55,7 +49,7 @@ class ClientUpdateDataPersister implements DataPersisterInterface
      */
     public function persist($data)
     {
-        //TODO Chech if constraints work here or are we before the constraint verification (normaly no as the object is already hydrated
+        //TODO Check if constraints work here or are we before the constraint verification (normaly no as the object is already hydrated
         if($data->getPlainPassword()){
             $encodedPassword = $this->passwordEncoder->encodePassword($data, $data->getPlainPassword());
             $data->setPassword($encodedPassword);
@@ -64,11 +58,12 @@ class ClientUpdateDataPersister implements DataPersisterInterface
         $this->manager->persist($data);
         $this->manager->flush();
 
-        //TODO Return $data and update tests.
+        return $data;
     }
 
     /**
-     * Removes the data. this should never happen
+     * Removes the data.
+     * @var Client $data
      */
     public function remove($data)
     {
