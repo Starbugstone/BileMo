@@ -7,13 +7,14 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use App\Controller\CreateClientUserAction;
 
 /**
- * @ApiResource(itemOperations={
+ * @ApiResource(collectionOperations={
  *     "get",
- *     "post_publication"={
+ *     "post_newClientUser"={
  *         "method"="POST",
- *         "path"="/client_users/add",
+ *         "path"="/client_users/bla",
  *         "controller"=CreateClientUserAction::class,
  *     }
  * })
