@@ -9,7 +9,14 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ApiResource()
+ * @ApiResource(itemOperations={
+ *     "get",
+ *     "post_publication"={
+ *         "method"="POST",
+ *         "path"="/client_users/add",
+ *         "controller"=CreateClientUserAction::class,
+ *     }
+ * })
  * @ORM\Entity(repositoryClass="App\Repository\ClientUserRepository")
  */
 class ClientUser
