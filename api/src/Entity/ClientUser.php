@@ -14,7 +14,7 @@ use App\Controller\CreateClientUserAction;
  *     "get",
  *     "post_newClientUser"={
  *         "method"="POST",
- *         "path"="/client_users/bla",
+ *         "path"="/client_users",
  *         "controller"=CreateClientUserAction::class,
  *     }
  * })
