@@ -1,12 +1,14 @@
 <?php
-
+// /api/src/EventSubscriber/CreateNewClientSubscriber.php
 
 namespace App\EventSubscriber;
 
 
 use ApiPlatform\Core\EventListener\EventPriorities;
 use App\Entity\Client;
+use App\Mail\SendMail;
 use App\Token\TokenGenerator;
+use Exception;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\ViewEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
@@ -18,10 +20,15 @@ class CreateNewClientSubscriber implements EventSubscriberInterface
      * @var TokenGenerator
      */
     private $tokenGenerator;
+    /**
+     * @var SendMail
+     */
+    private $sendMail;
 
-    public function __construct(TokenGenerator $tokenGenerator)
+    public function __construct(TokenGenerator $tokenGenerator, SendMail $sendMail)
     {
         $this->tokenGenerator = $tokenGenerator;
+        $this->sendMail = $sendMail;
     }
 
     /**
@@ -49,12 +56,17 @@ class CreateNewClientSubscriber implements EventSubscriberInterface
         ];
     }
 
+    /**
+     * create the new client and send mail for the password creation
+     * @param ViewEvent $event
+     * @throws Exception
+     */
     public function onPreDeserialize(ViewEvent $event)
     {
 
 
         //we only want posts of the client
-        if(!$event->getControllerResult() instanceof Client || !$event->getRequest()->attributes->get('_api_collection_operation_name') === 'post'){
+        if (!$event->getControllerResult() instanceof Client || !$event->getRequest()->attributes->get('_api_collection_operation_name') === 'post') {
             return;
         }
 
@@ -69,5 +81,15 @@ class CreateNewClientSubscriber implements EventSubscriberInterface
         //TODO: do not allow the password to be sent on POST
 
         //send mail to client
+        $mailSent = $this->sendMail->send(
+            'New account created for ' . $client->getUsername(),
+            'email/sendCreatePassword.html.twig',
+            $client,
+            $client->getEmail(),
+            'test@local.com'
+        );
+        if (!$mailSent) {
+            throw new Exception('mail not sent');
+        }
     }
 }
