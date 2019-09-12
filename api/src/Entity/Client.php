@@ -9,10 +9,20 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
-use Symfony\Component\Serializer\Annotation\SerializedName;
+use App\Controller\ActivateClientAction;
 
 /**
- * @ApiResource()
+ * @ApiResource(itemOperations={
+ *     "get",
+ *     "put",
+ *     "delete",
+ *     "put_activateClient"={
+ *         "method"="PUT",
+ *         "path"="/activate_client/{id}",
+ *         "controller"=ActivateClientAction::class,
+ *         }
+ *     }
+ * )
  * @ORM\Entity(repositoryClass="App\Repository\ClientRepository")
  */
 class Client implements UserInterface

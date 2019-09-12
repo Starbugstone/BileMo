@@ -63,8 +63,6 @@ class CreateNewClientSubscriber implements EventSubscriberInterface
      */
     public function onPreDeserialize(ViewEvent $event)
     {
-
-
         //we only want posts of the client
         if (!$event->getControllerResult() instanceof Client || !$event->getRequest()->attributes->get('_api_collection_operation_name') === 'post') {
             return;
@@ -76,7 +74,7 @@ class CreateNewClientSubscriber implements EventSubscriberInterface
         $client = $event->getControllerResult();
 
         //create token
-        $client->setNewUserToken($this->tokenGenerator->uniqueToken());
+        $client->setNewUserToken($this->tokenGenerator->uniqueToken()); //TODO Bug, this generates even on the get/ID
 
         //TODO: do not allow the password to be sent on POST
 

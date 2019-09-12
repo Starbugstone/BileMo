@@ -37,8 +37,9 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-         - { path: ^/client_login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-         - { path: ^/docs,         roles: IS_AUTHENTICATED_ANONYMOUSLY }
-         - { path: ^/,             roles: IS_AUTHENTICATED_FULLY }
+         - { path: ^/client_login, roles: IS_AUTHENTICATED_ANONYMOUSLY } # the dev login form helper
+         - { path: ^/activate_client, roles: IS_AUTHENTICATED_ANONYMOUSLY } # activate the client with token and set password
+         - { path: ^/docs,         roles: IS_AUTHENTICATED_ANONYMOUSLY } # access the documentation
+         - { path: ^/,             roles: IS_AUTHENTICATED_FULLY } # everything else
         # - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }
