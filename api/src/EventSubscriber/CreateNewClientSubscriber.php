@@ -10,6 +10,7 @@ use App\Mail\SendMail;
 use App\Token\TokenGenerator;
 use Exception;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Event\ViewEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
@@ -64,7 +65,7 @@ class CreateNewClientSubscriber implements EventSubscriberInterface
     public function onPreDeserialize(ViewEvent $event)
     {
         //we only want posts of the client
-        if (!$event->getControllerResult() instanceof Client || !$event->getRequest()->attributes->get('_api_collection_operation_name') === 'post') {
+        if (!$event->getControllerResult() instanceof Client || $event->getRequest()->getMethod() !== Request::METHOD_POST) {
             return;
         }
 
