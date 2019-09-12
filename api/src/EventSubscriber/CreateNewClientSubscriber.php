@@ -53,7 +53,7 @@ class CreateNewClientSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return [
-            KernelEvents::VIEW => ['onPreDeserialize', EventPriorities::PRE_WRITE],
+            KernelEvents::VIEW => ['CreateNewClient', EventPriorities::PRE_WRITE],
         ];
     }
 
@@ -62,7 +62,7 @@ class CreateNewClientSubscriber implements EventSubscriberInterface
      * @param ViewEvent $event
      * @throws Exception
      */
-    public function onPreDeserialize(ViewEvent $event)
+    public function CreateNewClient(ViewEvent $event)
     {
         //we only want posts of the client
         if (!$event->getControllerResult() instanceof Client || $event->getRequest()->getMethod() !== Request::METHOD_POST) {
@@ -75,7 +75,7 @@ class CreateNewClientSubscriber implements EventSubscriberInterface
         $client = $event->getControllerResult();
 
         //create token
-        $client->setNewUserToken($this->tokenGenerator->uniqueToken()); //TODO Bug, this generates even on the get/ID
+        $client->setNewUserToken($this->tokenGenerator->uniqueToken());
 
         //TODO: do not allow the password to be sent on POST
 
@@ -85,7 +85,7 @@ class CreateNewClientSubscriber implements EventSubscriberInterface
             'email/sendCreatePassword.html.twig',
             $client,
             $client->getEmail(),
-            'test@local.com'
+            'test@local.com' //TODO: remove hard set email
         );
         if (!$mailSent) {
             throw new Exception('mail not sent');

@@ -9,17 +9,18 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
-use App\Controller\ActivateClientAction;
+use App\Controller\SetClientPasswordAction;
+use App\Controller\ResetClientPasswordAction;
 
 /**
  * @ApiResource(itemOperations={
  *     "get",
  *     "put",
  *     "delete",
- *     "put_activateClient"={
+ *     "put_SetClientPassword"={
  *         "method"="PUT",
  *         "path"="/activate_client/{id}",
- *         "controller"=ActivateClientAction::class,
+ *         "controller"=SetClientPasswordAction::class,
  *         }
  *     }
  * )

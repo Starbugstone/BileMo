@@ -1,5 +1,5 @@
 <?php
-// api\src\Entity\ClientUser.php
+// api/src/Entity/ClientUser.php
 
 namespace App\Entity;
 
@@ -32,6 +32,7 @@ class ClientUser
     /**
      * @ORM\Column(type="string", length=255)
      */
+    //TODO: Change username to email
     private $username;
 
     /**
