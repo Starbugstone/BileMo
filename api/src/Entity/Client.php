@@ -11,6 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use App\Controller\ClientIntegration\ActivateClientPasswordAction;
 use App\Controller\ClientIntegration\ResetClientPasswordAction;
+use App\Controller\ClientIntegration\ForgotClientPasswordAction;
 
 /**
  * @ApiResource(itemOperations={
@@ -28,7 +29,14 @@ use App\Controller\ClientIntegration\ResetClientPasswordAction;
  *         "path"="/reset_client/{id}",
  *         "controller"=ResetClientPasswordAction::class,
  *         }
+ *     },
+ *     "put_ForgotClientPassword"={
+ *         "method"="PUT",
+ *         "path"="/forgot_client/{id}",
+ *         "controller"=ForgotClientPasswordAction::class,
+ *         }
  *     }
+ *
  * )
  * @ORM\Entity(repositoryClass="App\Repository\ClientRepository")
  */
