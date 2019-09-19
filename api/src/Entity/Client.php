@@ -17,10 +17,16 @@ use App\Controller\ClientIntegration\ResetClientPasswordAction;
  *     "get",
  *     "put",
  *     "delete",
- *     "put_SetClientPassword"={
+ *     "put_ActivateClientPassword"={
  *         "method"="PUT",
  *         "path"="/activate_client/{id}",
  *         "controller"=ActivateClientPasswordAction::class,
+ *         }
+ *     },
+ *     "put_ResetClientPassword"={
+ *         "method"="PUT",
+ *         "path"="/reset_client/{id}",
+ *         "controller"=ResetClientPasswordAction::class,
  *         }
  *     }
  * )
@@ -60,7 +66,7 @@ class Client implements UserInterface
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\ClientUser", mappedBy="client")
      * @ApiSubresource
-*/
+     */
     private $clientUsers;
 
     /**
@@ -161,7 +167,7 @@ class Client implements UserInterface
     public function eraseCredentials()
     {
         // If you store any temporary, sensitive data on the user, clear it here
-         $this->plainPassword = null;
+        $this->plainPassword = null;
     }
 
     /**

@@ -4,11 +4,22 @@ namespace App\Controller\ClientIntegration;
 
 
 use App\Entity\Client;
+use App\Exception\BadTokenException;
 use App\Repository\ClientRepository;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
+use Exception;
 use Symfony\Component\Routing\Annotation\Route;
 
+
+/**
+ * id in the url
+ * send reset token
+ * send new password
+ *
+ * Class ResetClientPasswordAction
+ * @package App\Controller\ClientIntegration
+ */
 class ResetClientPasswordAction
 {
 
@@ -30,9 +41,34 @@ class ResetClientPasswordAction
         $this->em = $em;
     }
 
-    public function __invoke()
+    public function __invoke(Client $data)
     {
-        // TODO: Implement __invoke() method.
+
+        $this->em->clear(); //needed to clear doctrine cache else it returns the same as $data
+        /**
+         * @var Client $registeredClient
+         */
+        $registeredClient = $this->clientRepository->find($data->getId());
+        if ($registeredClient->getNewUserToken() === null) {
+            throw new BadTokenException('No define password key found');
+        }
+
+        if ($registeredClient->getActive() === false) {
+            throw new Exception('Account already active');
+        }
+
+        if ($data->getNewUserToken() !== $registeredClient->getNewUserToken()) {
+            throw new BadTokenException('the sent token is incorrect');
+        }
+
+        //since we cleared the cache, the $data is no longer linked to the entity so we use the registered client to update
+        $registeredClient->setPlainPassword($data->getPlainPassword());
+
+        //resetting the token to null as we have redefined the password
+        $registeredClient->setNewUserToken(null);
+
+        return $registeredClient;
+
     }
 
     /**

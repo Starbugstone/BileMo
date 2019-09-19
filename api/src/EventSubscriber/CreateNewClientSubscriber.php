@@ -84,8 +84,7 @@ class CreateNewClientSubscriber implements EventSubscriberInterface
             'New account created for ' . $client->getUsername(),
             'email/sendCreatePassword.html.twig',
             $client,
-            $client->getEmail(),
-            'test@local.com' //TODO: remove hard set email
+            $client->getEmail()
         );
         if (!$mailSent) {
             throw new Exception('mail not sent');
