@@ -1,7 +1,7 @@
 <?php
-// api/src/Controller/VerifyClientTokenAction.php
+// api/src/Controller/ClientIntegration/VerifyClientTokenAction.php
 
-namespace App\Controller;
+namespace App\Controller\ClientIntegration;
 
 
 use App\Entity\Client;
@@ -10,8 +10,9 @@ use App\Repository\ClientRepository;
 use Doctrine\Common\Persistence\Mapping\MappingException;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
+use Exception;
 
-class SetClientPasswordAction
+class ActivateClientPasswordAction
 {
 
     /**
@@ -38,6 +39,7 @@ class SetClientPasswordAction
      * @throws MappingException
      * @throws \Doctrine\ORM\ORMException
      * @throws \Doctrine\ORM\OptimisticLockException
+     * @throws Exception
      */
     public function __invoke(Client $data): Client
     {
@@ -51,12 +53,17 @@ class SetClientPasswordAction
             throw new BadTokenException('No define password key found');
         }
 
+        if($registeredClient->getActive() === true){
+            throw new Exception('Account already active');
+        }
+
         if ($data->getNewUserToken() !== $registeredClient->getNewUserToken()) {
             throw new BadTokenException('the sent token is incorrect');
         }
 
         //since we cleared the cache, the $data is no longer linked to the entity so we use the registered client to update
         $registeredClient->setPlainPassword($data->getPlainPassword());
+        $registeredClient->setActive(true);
 
         //resetting the token to null as we have redefined the password
         $registeredClient->setNewUserToken(null);

@@ -9,8 +9,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
-use App\Controller\SetClientPasswordAction;
-use App\Controller\ResetClientPasswordAction;
+use App\Controller\ClientIntegration\ActivateClientPasswordAction;
+use App\Controller\ClientIntegration\ResetClientPasswordAction;
 
 /**
  * @ApiResource(itemOperations={
@@ -20,7 +20,7 @@ use App\Controller\ResetClientPasswordAction;
  *     "put_SetClientPassword"={
  *         "method"="PUT",
  *         "path"="/activate_client/{id}",
- *         "controller"=SetClientPasswordAction::class,
+ *         "controller"=ActivateClientPasswordAction::class,
  *         }
  *     }
  * )
@@ -72,6 +72,11 @@ class Client implements UserInterface
      * @ORM\Column(type="string", length=255)
      */
     private $email;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $active = false;
 
     public function __construct()
     {
@@ -225,6 +230,18 @@ class Client implements UserInterface
     public function setEmail(string $email): self
     {
         $this->email = $email;
+
+        return $this;
+    }
+
+    public function getActive(): ?bool
+    {
+        return $this->active;
+    }
+
+    public function setActive(bool $active): self
+    {
+        $this->active = $active;
 
         return $this;
     }

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\ClientIntegration;
 
 
 use App\Entity\Client;
@@ -28,6 +28,11 @@ class ResetClientPasswordAction
 
         $this->clientRepository = $clientRepository;
         $this->em = $em;
+    }
+
+    public function __invoke()
+    {
+        // TODO: Implement __invoke() method.
     }
 
     /**
