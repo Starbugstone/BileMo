@@ -22,19 +22,20 @@ use App\Controller\ClientIntegration\ForgotClientPasswordAction;
  *         "method"="PUT",
  *         "path"="/activate_client/{id}",
  *         "controller"=ActivateClientPasswordAction::class,
- *         }
- *     },
+ *         },
+ *
  *     "put_ResetClientPassword"={
  *         "method"="PUT",
  *         "path"="/reset_client/{id}",
  *         "controller"=ResetClientPasswordAction::class,
- *         }
- *     },
+ *         },
+ *
  *     "put_ForgotClientPassword"={
  *         "method"="PUT",
  *         "path"="/forgot_client/{id}",
  *         "controller"=ForgotClientPasswordAction::class,
  *         }
+ *
  *     }
  *
  * )

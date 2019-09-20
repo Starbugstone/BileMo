@@ -1,4 +1,5 @@
 <?php
+// api/src/Controller/ClientIntegration/ResetClientPasswordAction.php
 
 namespace App\Controller\ClientIntegration;
 

@@ -1,7 +1,7 @@
 <?php
-// api\src\Controller\ClientLoginFormController.php
+// api/src/Controller/UI/ClientLoginFormController.php
 
-namespace App\Controller;
+namespace App\Controller\UI;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
