@@ -16,8 +16,10 @@ use Symfony\Component\Routing\Annotation\Route;
 
 
 /**
+ * "path"="/forgot_client/{id}"
+ *
  * id in the url
- * send Client Email
+ * send Client Email in the put request
  *
  * Class ResetClientPasswordAction
  * @package App\Controller\ClientIntegration
@@ -63,16 +65,14 @@ class ForgotClientPasswordAction
         $registeredClient = $this->clientRepository->find($data->getId());
 
         if ($registeredClient->getEmail() !== $data->getEmail()) {
-            $fake = new Client();
-            return $fake; //returning fake client for security reasons to not give pirates any false info. they already tried with a true ID
-            //we can turn this into a honeypot if needed
+            throw new Exception('Bad Email'); //TODO: make this better than a simple error
         }
 
         //setting a new token
         $registeredClient->setNewUserToken($this->tokenGenerator->uniqueToken());
 
         //sending a new email
-        $this->sendMail->send('Forgot Bilmo password','email/sendResetPassword',$registeredClient,$registeredClient->getEmail());
+        $this->sendMail->send('Forgot Bilmo password','email/sendResetPassword.html.twig',$registeredClient,$registeredClient->getEmail());
 
         //TODO: return a validation message rather than the actual data
         return $registeredClient;

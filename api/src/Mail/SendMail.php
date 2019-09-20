@@ -48,7 +48,7 @@ class SendMail
     public function send(string $subject, string $template, $mailData, string $to, String $from = null): bool
     {
         if ($from === null) {
-            $from = getenv('ADMIN_EMAIL');
+            $from = 'admin@local.dev';
         }
 
         $message = (new Swift_Message($subject))
