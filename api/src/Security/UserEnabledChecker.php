@@ -21,7 +21,6 @@ class UserEnabledChecker implements UserCheckerInterface
      */
     public function checkPreAuth(UserInterface $user)
     {
-        // TODO: Implement checkPreAuth() method.
         if(!$user instanceof Client){
             return;
         }
@@ -40,6 +39,6 @@ class UserEnabledChecker implements UserCheckerInterface
      */
     public function checkPostAuth(UserInterface $user)
     {
-        // TODO: Implement checkPostAuth() method.
+        // nothing to do
     }
 }
