@@ -32,7 +32,7 @@ use App\Controller\ClientIntegration\ForgotClientPasswordAction;
  *
  *     "put_ForgotClientPassword"={
  *         "method"="PUT",
- *         "path"="/forgot_client/{id}",
+ *         "path"="/forgot_client",
  *         "controller"=ForgotClientPasswordAction::class,
  *         }
  *

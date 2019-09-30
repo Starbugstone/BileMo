@@ -29,6 +29,8 @@ Trait TokenVerificationTrait
      */
     public function getValidUser(int $id, string $token):Client
     {
+        //clear doctrine cache else we return data and not the DB entity
+        $this->em->clear();
 
         /**
          * @var Client $registeredClient
@@ -37,10 +39,6 @@ Trait TokenVerificationTrait
         if ($registeredClient->getNewUserToken() === null) {
             throw new BadTokenException('No define password key found');
         }
-
-//        if ($registeredClient->getActive() === false) {
-//            throw new Exception('Account is not active, contact the administrator');
-//        }
 
         if ($token !== $registeredClient->getNewUserToken()) {
             throw new BadTokenException('the sent token is incorrect');
