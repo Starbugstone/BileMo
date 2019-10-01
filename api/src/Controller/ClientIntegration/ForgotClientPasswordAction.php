@@ -57,7 +57,8 @@ class ForgotClientPasswordAction
 
     public function __invoke(Client $data)
     {
-//        var_dump($data);
+        var_dump($data);
+        return $data;
         $this->em->clear(); //needed to clear doctrine cache else it returns the same as $data
         /**
          * @var Client $registeredClient
