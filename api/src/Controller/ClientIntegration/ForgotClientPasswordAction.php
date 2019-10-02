@@ -12,6 +12,7 @@ use App\Token\TokenGenerator;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
@@ -77,13 +78,12 @@ class ForgotClientPasswordAction
             throw new Exception($errors[0]->getMessage());
         }
 
-        $this->em->clear(); //needed to clear doctrine cache else it returns the same as $data
+        //$this->em->clear(); //needed to clear doctrine cache else it returns the same as $data
         /**
          * @var Client $registeredClient
          */
         $registeredClient = $this->clientRepository->findOneBy(['email' => $data->getEmail()]);
 
-        //TODO: prehaps not use the ID and just use the email to check if user exists.
         if (null === $registeredClient) {
             throw new Exception('Unregistered Email');
         }
@@ -94,8 +94,8 @@ class ForgotClientPasswordAction
         //sending a new email
         $this->sendMail->send('Forgot Bilmo password','email/sendResetPassword.html.twig',$registeredClient,$registeredClient->getEmail());
 
-        //TODO: return a validation message rather than the actual data
-        return $registeredClient;
+        
+        return new Response(null, 204, ['message' => 'Reset password request successful']);
 
     }
 
