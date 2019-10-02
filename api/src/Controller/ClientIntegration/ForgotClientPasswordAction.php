@@ -5,14 +5,15 @@ namespace App\Controller\ClientIntegration;
 
 
 use App\Entity\Client;
-use App\Exception\BadTokenException;
+use App\Entity\ForgotPasswordRequest;
 use App\Mail\SendMail;
 use App\Repository\ClientRepository;
 use App\Token\TokenGenerator;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 
 /**
@@ -45,29 +46,46 @@ class ForgotClientPasswordAction
      * @var TokenGenerator
      */
     private $tokenGenerator;
+    /**
+     * @var ValidatorInterface
+     */
+    private $validator;
 
-    public function __construct(ClientRepository $clientRepository, EntityManagerInterface $em, SendMail $sendMail, TokenGenerator $tokenGenerator)
+    public function __construct(ClientRepository $clientRepository, EntityManagerInterface $em, SendMail $sendMail, TokenGenerator $tokenGenerator, ValidatorInterface $validator)
     {
 
         $this->clientRepository = $clientRepository;
         $this->em = $em;
         $this->sendMail = $sendMail;
         $this->tokenGenerator = $tokenGenerator;
+        $this->validator = $validator;
     }
 
-    public function __invoke(Client $data)
+    public function __invoke(ForgotPasswordRequest $data)
     {
-        var_dump($data);
-        return $data;
+
+        //verify email as the constraints in the entity haven't been fired yet
+        $emailConstraint = new Assert\Email();
+        $emailConstraint->message = 'Invalid email address';
+
+        $errors = $this->validator->validate(
+            $data->getEmail(),
+            $emailConstraint
+        );
+
+        if(0 !== count($errors)){
+            throw new Exception($errors[0]->getMessage());
+        }
+
         $this->em->clear(); //needed to clear doctrine cache else it returns the same as $data
         /**
          * @var Client $registeredClient
          */
-        $registeredClient = $this->clientRepository->find($data->getId());
+        $registeredClient = $this->clientRepository->findOneBy(['email' => $data->getEmail()]);
 
         //TODO: prehaps not use the ID and just use the email to check if user exists.
-        if ($registeredClient->getEmail() !== $data->getEmail()) {
-            throw new Exception('Bad Email'); //TODO: make this better than a simple error
+        if (null === $registeredClient) {
+            throw new Exception('Unregistered Email');
         }
 
         //setting a new token

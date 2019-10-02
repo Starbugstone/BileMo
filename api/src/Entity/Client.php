@@ -30,11 +30,6 @@ use App\Controller\ClientIntegration\ForgotClientPasswordAction;
  *         "controller"=ResetClientPasswordAction::class,
  *         },
  *
- *     "put_ForgotClientPassword"={
- *         "method"="POST",
- *         "path"="/forgot_client",
- *         "controller"=ForgotClientPasswordAction::class,
- *         }
  *
  *     }
  *
