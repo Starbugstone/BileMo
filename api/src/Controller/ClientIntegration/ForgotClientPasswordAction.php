@@ -94,7 +94,7 @@ class ForgotClientPasswordAction
         //sending a new email
         $this->sendMail->send('Forgot Bilmo password','email/sendResetPassword.html.twig',$registeredClient,$registeredClient->getEmail());
 
-        
+
         return new Response(null, 204, ['message' => 'Reset password request successful']);
 
     }

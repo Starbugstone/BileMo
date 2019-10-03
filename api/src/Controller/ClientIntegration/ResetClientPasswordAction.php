@@ -43,6 +43,10 @@ class ResetClientPasswordAction
         //resetting the token to null as we have redefined the password
         $registeredClient->setNewUserToken(null);
 
+        //After password change, old tokens are still valid
+//        $registeredClient->setPasswordChangeDate(time());
+
+
         return $registeredClient;
 
     }
