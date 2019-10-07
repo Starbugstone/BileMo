@@ -61,11 +61,11 @@ class Client implements UserInterface
      */
     private $password;
 
-//    /**
-//     * @var
-//     * @ORM\Column(type="integer", nullable=true)
-//     */
-//    private $passwordChangeDate;
+    /**
+     * @var integer|null the reset password date in unix format
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $passwordChangeDate;
 
     /**
      * @var string|null the unencrypted password
@@ -262,21 +262,21 @@ class Client implements UserInterface
         return $this;
     }
 
-//    /**
-//     * @param mixed $passwordChangeDate
-//     * @return Client
-//     */
-//    public function setPasswordChangeDate($passwordChangeDate)
-//    {
-//        $this->passwordChangeDate = $passwordChangeDate;
-//        return $this;
-//    }
-//
-//    /**
-//     * @return mixed
-//     */
-//    public function getPasswordChangeDate()
-//    {
-//        return $this->passwordChangeDate;
-//    }
+    /**
+     * @param mixed $passwordChangeDate
+     * @return Client
+     */
+    public function setPasswordChangeDate($passwordChangeDate)
+    {
+        $this->passwordChangeDate = $passwordChangeDate;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPasswordChangeDate()
+    {
+        return $this->passwordChangeDate;
+    }
 }

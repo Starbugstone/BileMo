@@ -44,7 +44,7 @@ class ResetClientPasswordAction
         $registeredClient->setNewUserToken(null);
 
         //After password change, old tokens are still valid
-//        $registeredClient->setPasswordChangeDate(time());
+        $registeredClient->setPasswordChangeDate(time());
 
 
         return $registeredClient;
