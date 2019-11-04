@@ -1,6 +1,5 @@
 {
-    "type": "project",
-    "license": "proprietary",
+    "license": "MIT",
     "require": {
         "php": "^7.1.3",
         "ext-ctype": "*",
@@ -13,23 +12,31 @@
         "symfony/dotenv": "4.3.*",
         "symfony/flex": "^1.1",
         "symfony/framework-bundle": "4.3.*",
-        "symfony/mercure-bundle": "*",
+        "symfony/mercure-bundle": "^0.1.2",
         "symfony/swiftmailer-bundle": "^3.2",
+        "symfony/templating": "4.3.*",
         "symfony/yaml": "4.3.*",
         "vich/uploader-bundle": "^1.10"
     },
     "require-dev": {
         "api-platform/schema-generator": "^2.1",
         "hautelook/alice-bundle": "^2.5",
+        "justinrainbow/json-schema": "^5.2",
+        "symfony/http-client": "4.3.*",
         "symfony/maker-bundle": "^1.11",
-        "symfony/phpunit-bridge": "^4.3",
-        "symfony/profiler-pack": "^1.0"
+        "symfony/profiler-pack": "^1.0",
+        "symfony/test-pack": "^1.0"
     },
-    "config": {
-        "preferred-install": {
-            "*": "dist"
-        },
-        "sort-packages": true
+    "conflict": {
+        "symfony/symfony": "*"
+    },
+    "replace": {
+        "paragonie/random_compat": "2.*",
+        "symfony/polyfill-ctype": "*",
+        "symfony/polyfill-iconv": "*",
+        "symfony/polyfill-php56": "*",
+        "symfony/polyfill-php70": "*",
+        "symfony/polyfill-php71": "*"
     },
     "autoload": {
         "psr-4": {
@@ -41,13 +48,11 @@
             "App\\Tests\\": "tests/"
         }
     },
-    "replace": {
-        "paragonie/random_compat": "2.*",
-        "symfony/polyfill-ctype": "*",
-        "symfony/polyfill-iconv": "*",
-        "symfony/polyfill-php71": "*",
-        "symfony/polyfill-php70": "*",
-        "symfony/polyfill-php56": "*"
+    "config": {
+        "preferred-install": {
+            "*": "dist"
+        },
+        "sort-packages": true
     },
     "scripts": {
         "auto-scripts": {
@@ -60,9 +65,6 @@
         "post-update-cmd": [
             "@auto-scripts"
         ]
-    },
-    "conflict": {
-        "symfony/symfony": "*"
     },
     "extra": {
         "symfony": {

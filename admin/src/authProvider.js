@@ -7,6 +7,7 @@ const authenticationTokenUri = `${process.env.REACT_APP_API_ENTRYPOINT}/client_l
 export default (type, params) => {
   switch (type) {
     case AUTH_LOGIN:
+      console.log("here");
       const { username, password } = params;
       const request = new Request(authenticationTokenUri, {
         method: 'POST',

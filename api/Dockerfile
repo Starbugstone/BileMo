@@ -57,7 +57,10 @@ RUN set -eux; \
 
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 RUN ln -s $PHP_INI_DIR/php.ini-production $PHP_INI_DIR/php.ini
-COPY docker/php/conf.d/api-platform.ini $PHP_INI_DIR/conf.d/api-platform.ini
+COPY docker/php/conf.d/api-platform.prod.ini $PHP_INI_DIR/conf.d/api-platform.ini
+
+# Workaround to allow using PHPUnit 8 with Symfony 4.3
+ENV SYMFONY_PHPUNIT_VERSION=8.3
 
 # https://getcomposer.org/doc/03-cli.md#composer-allow-superuser
 ENV COMPOSER_ALLOW_SUPERUSER=1
@@ -109,9 +112,9 @@ FROM nginx:${NGINX_VERSION}-alpine AS api_platform_nginx
 
 COPY docker/nginx/conf.d/default.conf /etc/nginx/conf.d/default.conf
 
-WORKDIR /srv/api
+WORKDIR /srv/api/public
 
-COPY --from=api_platform_php /srv/api/public public/
+COPY --from=api_platform_php /srv/api/public ./
 
 
 # "varnish" stage
@@ -119,25 +122,3 @@ COPY --from=api_platform_php /srv/api/public public/
 FROM cooptilleuls/varnish:${VARNISH_VERSION}-alpine AS api_platform_varnish
 
 COPY docker/varnish/conf/default.vcl /usr/local/etc/varnish/default.vcl
-
-#Adding Xdebut
-FROM api_platform_php as api_platform_php_dev
-
-ARG XDEBUG_VERSION=2.7.2
-RUN set -eux; \
-	apk add --no-cache --virtual .build-deps $PHPIZE_DEPS; \
-	pecl install xdebug-$XDEBUG_VERSION; \
-	docker-php-ext-enable xdebug; \
-	apk del .build-deps
-
-#blackfire
-# If you use Alpine, you need to set this value to "alpine"
-#ENV current_os=linux
-ENV current_os=alpine
-RUN version=$(php -r "echo PHP_MAJOR_VERSION.PHP_MINOR_VERSION;") \
-    && curl -A "Docker" -o /tmp/blackfire-probe.tar.gz -D - -L -s https://blackfire.io/api/v1/releases/probe/php/$current_os/amd64/$version \
-    && mkdir -p /tmp/blackfire \
-    && tar zxpf /tmp/blackfire-probe.tar.gz -C /tmp/blackfire \
-    && mv /tmp/blackfire/blackfire-*.so $(php -r "echo ini_get('extension_dir');")/blackfire.so \
-    && printf "extension=blackfire.so\nblackfire.agent_socket=tcp://blackfire:8707\n" > $PHP_INI_DIR/conf.d/blackfire.ini \
-    && rm -rf /tmp/blackfire /tmp/blackfire-probe.tar.gz
