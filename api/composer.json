@@ -14,6 +14,7 @@
         "symfony/flex": "^1.1",
         "symfony/framework-bundle": "4.3.*",
         "symfony/mercure-bundle": "*",
+        "symfony/swiftmailer-bundle": "^3.2",
         "symfony/yaml": "4.3.*",
         "vich/uploader-bundle": "^1.10"
     },

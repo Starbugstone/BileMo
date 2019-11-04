@@ -1,7 +1,7 @@
 <?php
-// api\src\Controller\ClientLoginFormController.php
+// api/src/Controller/UI/ClientLoginFormController.php
 
-namespace App\Controller;
+namespace App\Controller\UI;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
@@ -53,6 +53,7 @@ class ClientLoginFormController extends AbstractController
             ]);
 
             $responseContent = json_decode($response->getContent(false));
+;
             if ($response->getStatusCode() === 200) {
                 $token = 'Bearer '.$responseContent->token;
             } else {

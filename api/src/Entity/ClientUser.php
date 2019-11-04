@@ -1,5 +1,5 @@
 <?php
-// api\src\Entity\ClientUser.php
+// api/src/Entity/ClientUser.php
 
 namespace App\Entity;
 
@@ -7,11 +7,17 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use App\Controller\CreateClientUserAction;
 
 /**
- * @ApiResource(
- *     attributes={"access_control"="is_granted('ROLE_CLIENT')"},
- * )
+ * @ApiResource(collectionOperations={
+ *     "get",
+ *     "post_newClientUser"={
+ *         "method"="POST",
+ *         "path"="/client_users",
+ *         "controller"=CreateClientUserAction::class,
+ *     }
+ * })
  * @ORM\Entity(repositoryClass="App\Repository\ClientUserRepository")
  */
 class ClientUser
@@ -26,6 +32,7 @@ class ClientUser
     /**
      * @ORM\Column(type="string", length=255)
      */
+    //TODO: Change username to email
     private $username;
 
     /**

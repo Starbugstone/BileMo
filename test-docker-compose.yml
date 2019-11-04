@@ -17,6 +17,8 @@ services:
       <<: *cache
     depends_on:
       - db
+    environment:
+      - APP_ENV=test
     # Comment out these volumes in production
     # volumes:
     #   - ./api:/srv/api:rw,cached
