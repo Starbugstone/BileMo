@@ -24,3 +24,5 @@
 .phpunit.result.cache
 /phpunit.xml
 ###< symfony/phpunit-bridge ###
+
+#/api/public/phone_images/*
