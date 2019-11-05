@@ -1,50 +1,46 @@
-import React from 'react';
-import parseHydraDocumentation from '@api-platform/api-doc-parser/lib/hydra/parseHydraDocumentation';
-import { HydraAdmin, hydraClient, fetchHydra as baseFetchHydra } from '@api-platform/admin';
-import authProvider from './authProvider';
-import { Route, Redirect } from 'react-router-dom';
+// admin/src/App.js
 
-const entrypoint = process.env.REACT_APP_API_ENTRYPOINT; // Change this by your own entrypoint if you're not using API Platform distribution
-const docentry = process.env.REACT_APP_API_DOCS; // Change this by your own entrypoint if you're not using API Platform distribution
-const fetchHeaders = {'Authorization': `Bearer ${localStorage.getItem('token')}`};
+import React from 'react';
+import { HydraAdmin } from '@api-platform/admin';
+import parseHydraDocumentation from '@api-platform/api-doc-parser/lib/hydra/parseHydraDocumentation';
+import { dataProvider as baseDataProvider, fetchHydra as baseFetchHydra  } from '@api-platform/admin';
+import authProvider from './authProvider';
+import { Redirect } from 'react-router-dom';
+
+const entrypoint = process.env.REACT_APP_API_ENTRYPOINT;
+const fetchHeaders = {'Authorization': `Bearer ${window.localStorage.getItem('token')}`};
 const fetchHydra = (url, options = {}) => baseFetchHydra(url, {
     ...options,
     headers: new Headers(fetchHeaders),
-    // headers: new Headers({'Authorization': `Bearer ${localStorage.getItem('token')}`}),
 });
-const dataProvider = api => hydraClient(api, fetchHydra);
-const apiDocumentationParser = entrypoint =>
-  parseHydraDocumentation(entrypoint, {
-    headers: new Headers(fetchHeaders),
-    // headers: new Headers({'Authorization': `Bearer ${localStorage.getItem('token')}`}),
-  }).then(
-    ({ api }) => ({ api }),
-    result => {
-      const { api, status } = result;
+const apiDocumentationParser = entrypoint => parseHydraDocumentation(entrypoint, { headers: new Headers(fetchHeaders) })
+    .then(
+        ({ api }) => ({api}),
+        (result) => {
+            switch (result.status) {
+                case 401:
+                    return Promise.resolve({
+                        api: result.api,
+                        customRoutes: [{
+                            props: {
+                                path: '/',
+                                render: () => <Redirect to={`/login`}/>,
+                            },
+                        }],
+                    });
 
-      if (status === 401) {
-        return Promise.resolve({
-          api,
-          status,
-          customRoutes: [
-            <Route path="/" render={() => <Redirect to="/login" />} />,
-          ],
-        });
-      }
+                default:
+                    return Promise.reject(result);
+            }
+        },
+    );
+const dataProvider = baseDataProvider(entrypoint, fetchHydra, apiDocumentationParser);
 
-      return Promise.reject(result);
-    }
-  );
-
-export default () => (
+export default props => (
     <HydraAdmin
-        apiDocumentationParser={apiDocumentationParser}
-        authProvider={authProvider}
-        entrypoint={entrypoint}
-        dataProvider={dataProvider}
+        apiDocumentationParser={ apiDocumentationParser }
+        dataProvider={ dataProvider }
+        authProvider={ authProvider }
+        entrypoint={ entrypoint }
     />
 );
-
-
-// export default () => <HydraAdmin entrypoint={process.env.REACT_APP_API_ENTRYPOINT}/>;
-

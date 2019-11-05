@@ -1,3 +1,4 @@
+/docker/db/data
 /helm/api/charts
 
 ###> symfony/framework-bundle ###
@@ -13,17 +14,15 @@
 /.php_cs
 /.php_cs.cache
 ###< friendsofphp/php-cs-fixer ###
-###> uploaded images ###
-/public/phone_images/*
-!/public/phone_images/index.php
-###< uploaded images ###
 
 ###> lexik/jwt-authentication-bundle ###
 /config/jwt/*.pem
 ###< lexik/jwt-authentication-bundle ###
+
 ###> symfony/phpunit-bridge ###
 .phpunit
 .phpunit.result.cache
 /phpunit.xml
-/tests/html/* #no need to push the test coverage
 ###< symfony/phpunit-bridge ###
+
+/public/phone_images/*
