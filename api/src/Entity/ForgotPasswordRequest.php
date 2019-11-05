@@ -11,6 +11,7 @@ use App\Controller\ClientIntegration\ForgotClientPasswordAction;
  * Class ForgotPasswordRequest
  * @package App\DTO
  * @ApiResource(
+ *     itemOperations={},
  *     collectionOperations={
  *          "forgot_password"={
  *              "method"="POST",
