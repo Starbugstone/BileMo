@@ -19,7 +19,7 @@ class CreateClientUserActionTest extends TestCase
     protected $clientUserRepositoryMock;
     protected $entityManagerMock;
 
-    protected function setUp()
+    protected function setUp():void
     {
 //        $this->tokenStorageMock = $this->createMock(TokenStorageInterface::class);
         $this->tokenStorageMock = $this->getMockBuilder(TokenStorageInterface::class)
@@ -30,7 +30,7 @@ class CreateClientUserActionTest extends TestCase
         $this->entityManagerMock = $this->createMock(EntityManagerInterface::class);
     }
 
-    protected function tearDown()
+    protected function tearDown():void
     {
         $this->tokenStorageMock = null;
         $this->clientUserRepositoryMock = null;

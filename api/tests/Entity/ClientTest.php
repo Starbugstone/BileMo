@@ -11,12 +11,12 @@ class ClientTest extends TestCase
 {
     private $client;
 
-    protected function setUp()
+    protected function setUp():void
     {
         $this->client = new Client();
     }
 
-    protected function tearDown()
+    protected function tearDown():void
     {
         $this->client = null;
     }
@@ -32,8 +32,9 @@ class ClientTest extends TestCase
 
         $this->client->addRole('ROLE_ADMIN');
         $this->assertCount(2, $this->client->getRoles());
-        $this->assertEquals($this->client->getRoles(), $expectedArray, "\$canonicalize = true", 0.0, 10,
-            true); //Ignoring the array order
+//        $this->assertEquals($this->client->getRoles(), $expectedArray, "\$canonicalize = true", 0.0, 10,
+//            true); //Ignoring the array order
+        $this->assertEqualsCanonicalizing($this->client->getRoles(), $expectedArray); //Ignoring the array order
     }
 
     public function testDefaultOnlyClient()
@@ -41,7 +42,8 @@ class ClientTest extends TestCase
         $expectedArray = ['ROLE_CLIENT'];
 
         $this->assertCount(1, $this->client->getRoles());
-        $this->assertEquals($this->client->getRoles(), $expectedArray, "\$canonicalize = true", 0.0, 10,
-            true); //Ignoring the array order
+//        $this->assertEquals($this->client->getRoles(), $expectedArray, "\$canonicalize = true", 0.0, 10,
+//            true); //Ignoring the array order
+        $this->assertEqualsCanonicalizing($this->client->getRoles(), $expectedArray); //Ignoring the array order
     }
 }

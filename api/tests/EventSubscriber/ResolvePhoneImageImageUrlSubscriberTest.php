@@ -24,14 +24,14 @@ class ResolvePhoneImageImageUrlSubscriberTest extends TestCase
     private $requestStackMock;
     private $viewEventMock;
 
-    protected function setUp()
+    protected function setUp():void
     {
         $this->storageInterfaceMock = $this->createMock(StorageInterface::class);
         $this->requestStackMock = $this->createMock(RequestStack::class);
         $this->viewEventMock = $this->createMock(ViewEvent::class);
     }
 
-    protected function tearDown()
+    protected function tearDown():void
     {
         $this->storageInterfaceMock = null;
         $this->requestStackMock = null;

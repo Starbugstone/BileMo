@@ -17,13 +17,13 @@ class ClientDataPersisterTest extends TestCase
 
     private $passwordEncoderMock;
 
-    protected function setUp()
+    protected function setUp():void
     {
         $this->managerMock = $this->createMock(EntityManagerInterface::class);
         $this->passwordEncoderMock = $this->createMock(UserPasswordEncoderInterface::class);
     }
 
-    protected function tearDown()
+    protected function tearDown():void
     {
         $this->managerMock = null;
         $this->passwordEncoderMock = null;

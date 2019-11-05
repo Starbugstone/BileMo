@@ -18,7 +18,7 @@ class ClientUserExtensionTest extends TestCase
     private $queryNameGeneratorMock;
     private $resourceClassMock;
 
-    protected function setUp()
+    protected function setUp():void
     {
         $this->securityMock = $this->createMock(Security::class);
         $this->queryBuilderMock = $this->createMock(QueryBuilder::class);
@@ -26,7 +26,7 @@ class ClientUserExtensionTest extends TestCase
         $this->resourceClassMock = '';
     }
 
-    protected function tearDown()
+    protected function tearDown():void
     {
         $this->securityMock = null;
         $this->queryBuilderMock = null;

@@ -18,13 +18,13 @@ class CreatePhoneImageActionTest extends TestCase
     protected $phoneRepositoryMock;
     protected $requestMock;
 
-    protected function setUp()
+    protected function setUp():void
     {
         $this->phoneRepositoryMock = $this->createMock(PhoneRepository::class);
         $this->requestMock = $this->createMock(Request::class);
     }
 
-    protected function tearDown()
+    protected function tearDown():void
     {
         $this->phoneRepositoryMock = null;
         $this->requestMock = null;

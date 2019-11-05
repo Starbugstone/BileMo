@@ -20,13 +20,13 @@ class ClientUserTest extends TestCase
      */
     private $clientUser;
 
-    protected function setUp()
+    protected function setUp():void
     {
         $this->client = new Client();
         $this->clientUser = new ClientUser();
     }
 
-    protected function tearDown()
+    protected function tearDown():void
     {
         $this->client = null;
         $this->clientUser = null;

@@ -12,12 +12,12 @@ class TokenGeneratorTest extends TestCase
 
     private $tokenGenerator;
 
-    protected function setUp()
+    protected function setUp():void
     {
         $this->tokenGenerator = new TokenGenerator();
     }
 
-    protected function tearDown()
+    protected function tearDown():void
     {
         $this->tokenGenerator = null;
     }
