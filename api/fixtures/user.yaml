@@ -26,6 +26,6 @@ App\Entity\Client:
 
 App\Entity\ClientUser:
   user_{1..20}:
-    username (unique): <username()>
+    email (unique): <email()>
     client:
       - '@client_*'
