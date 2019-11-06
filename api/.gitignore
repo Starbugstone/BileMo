@@ -25,4 +25,4 @@
 /phpunit.xml
 ###< symfony/phpunit-bridge ###
 
-/public/phone_images/*
+/public/phone_images/*.jpg
