@@ -52,7 +52,7 @@ class CreateClientUserAction
     public function __invoke(ClientUser $data): ClientUser
     {
         //checking if the ClientUser already exists, if so we don't create a new one but add the client to the existing one
-        $alreadyClient = $this->clientUserRepository->findOneBy(['username' => $data->getUsername()]);
+        $alreadyClient = $this->clientUserRepository->findOneBy(['email' => $data->getEmail()]);
         if($alreadyClient !== null){
             $data = $alreadyClient;
         }

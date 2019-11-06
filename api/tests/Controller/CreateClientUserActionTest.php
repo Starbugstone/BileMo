@@ -43,7 +43,7 @@ class CreateClientUserActionTest extends TestCase
         $clientUser = new ClientUser();
 
         $client->setUsername('foo');
-        $clientUser->setUsername('bar');
+        $clientUser->setEmail('foo@bar.com');
 
         $this->clientUserRepositoryMock->expects($this->once())
             ->method('findOneBy')
@@ -76,7 +76,7 @@ class CreateClientUserActionTest extends TestCase
 
         $client->setUsername('foo');
         $client2->setUsername('baz');
-        $clientUser->setUsername('bar');
+        $clientUser->setEmail('foo@bar.com');
         $clientUser->addClient($client2);
 
         $this->clientUserRepositoryMock->expects($this->once())
