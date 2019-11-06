@@ -11,14 +11,23 @@ use Symfony\Component\Validator\Constraints as Assert;
 use App\Controller\CreateClientUserAction;
 
 /**
- * @ApiResource(collectionOperations={
- *     "get",
- *     "post_newClientUser"={
- *         "method"="POST",
- *         "path"="/client_users",
- *         "controller"=CreateClientUserAction::class,
+ * @ApiResource(
+ *     collectionOperations={
+ *          "get",
+ *          "post_newClientUser"={
+ *              "method"="POST",
+ *              "path"="/client_users",
+ *              "controller"=CreateClientUserAction::class,
+ *          }
+ *      },
+ *     itemOperations={
+ *          "put" = {
+ *              "access_control" = "is_granted('EDIT', previous_object)",
+ *          }
  *     }
- * })
+ *
+ *
+ * )
  * @ORM\Entity(repositoryClass="App\Repository\ClientUserRepository")
  */
 class ClientUser
