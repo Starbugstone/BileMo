@@ -14,7 +14,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 
 /**
- * "path"="/reset_client/{id}"
+ * "path"="/reset_client_password/{id}"
  * id in the url
  * send reset token
  * send new password
@@ -25,12 +25,9 @@ use Symfony\Component\Routing\Annotation\Route;
 class ResetClientPasswordAction
 {
     Use TokenVerificationTrait;
-    //TODO: Document in swagger / (hail) hydra format
-
 
     public function __invoke(Client $data)
     {
-
         $registeredClient = $this->getValidUser($data->getId(), $data->getNewUserToken());
 
         if ($registeredClient->getActive() === false) {

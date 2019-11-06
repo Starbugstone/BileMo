@@ -25,6 +25,7 @@ use App\Controller\ClientIntegration\ForgotClientPasswordAction;
 class ForgotPasswordRequest
 {
     /**
+     * @var string
      * @Assert\NotBlank()
      * @Assert\Email()
      */

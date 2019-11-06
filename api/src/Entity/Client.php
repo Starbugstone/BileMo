@@ -26,7 +26,7 @@ use App\Controller\ClientIntegration\ForgotClientPasswordAction;
  *
  *     "put_ResetClientPassword"={
  *         "method"="PUT",
- *         "path"="/reset_client/{id}",
+ *         "path"="/reset_client_password/{id}",
  *         "controller"=ResetClientPasswordAction::class,
  *         },
  *

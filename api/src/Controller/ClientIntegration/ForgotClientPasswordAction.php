@@ -18,7 +18,7 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 
 /**
- * "path"="/forgot_client/{id}"
+ * "path"="/forgot_client"
  *
  * id in the url
  * send Client Email in the put request
@@ -28,9 +28,6 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
  */
 class ForgotClientPasswordAction
 {
-
-    //TODO: Document in swagger / (hail) hydra format
-
     /**
      * @var ClientRepository
      */
@@ -95,6 +92,22 @@ class ForgotClientPasswordAction
         //sending a new email
         $this->sendMail->send('Forgot Bilmo password','email/sendResetPassword.html.twig',$registeredClient,$registeredClient->getEmail());
 
+        $this->em->persist($registeredClient);
+        $this->em->flush();
+
+        //if we are in dev, just return the necessary info rather than mess around with mails
+        //INSECURE IN PROD !!!
+        if ($_ENV['APP_ENV'] === 'dev' || $_ENV['APP_ENV'] === 'test'){
+            $response = new Response();
+            $response->setContent(json_encode([
+                'new_token' => $registeredClient->getNewUserToken(),
+                'id' => $registeredClient->getId(),
+            ]));
+            $response->headers->set('Content-Type', 'application/json');
+            $response->setStatusCode(201);
+            return $response;
+
+        }
 
         return new Response(null, 204, ['message' => 'Reset password request successful']);
 
