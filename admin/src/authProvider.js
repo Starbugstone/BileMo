@@ -7,7 +7,6 @@ const authenticationTokenUri = `${process.env.REACT_APP_API_ENTRYPOINT}/client_l
 export default (type, params) => {
   switch (type) {
     case AUTH_LOGIN:
-      console.log("here");
       const { username, password } = params;
       const request = new Request(authenticationTokenUri, {
         method: 'POST',
@@ -17,6 +16,7 @@ export default (type, params) => {
 
       return fetch(request)
         .then(response => {
+          // console.log(response);  // TODO: check if we can get if admin in response
           if (response.status < 200 || response.status >= 300) throw new Error(response.statusText);
 
           return response.json();
