@@ -24,6 +24,13 @@ class ClientUsersExtension implements QueryCollectionExtensionInterface, QueryIt
         $this->security = $security;
     }
 
+    /**
+     * Allow a client to only get back his own users
+     * @param QueryBuilder $queryBuilder
+     * @param QueryNameGeneratorInterface $queryNameGenerator
+     * @param string $resourceClass
+     * @param string|null $operationName
+     */
     public function applyToCollection(
         QueryBuilder $queryBuilder,
         QueryNameGeneratorInterface $queryNameGenerator,
@@ -33,6 +40,16 @@ class ClientUsersExtension implements QueryCollectionExtensionInterface, QueryIt
         $this->addWhere($queryBuilder, $resourceClass);
     }
 
+    /**
+     * Blank as this is taken care of in the voter
+     *
+     * @param QueryBuilder $queryBuilder
+     * @param QueryNameGeneratorInterface $queryNameGenerator
+     * @param string $resourceClass
+     * @param array $identifiers
+     * @param string|null $operationName
+     * @param array $context
+     */
     public function applyToItem(
         QueryBuilder $queryBuilder,
         QueryNameGeneratorInterface $queryNameGenerator,
@@ -41,7 +58,7 @@ class ClientUsersExtension implements QueryCollectionExtensionInterface, QueryIt
         string $operationName = null,
         array $context = []
     ) {
-        $this->addWhere($queryBuilder, $resourceClass);
+//        $this->addWhere($queryBuilder, $resourceClass);
     }
 
     private function addWhere(QueryBuilder $queryBuilder, string $resourceClass): void

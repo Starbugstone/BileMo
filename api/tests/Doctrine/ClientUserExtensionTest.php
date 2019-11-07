@@ -38,21 +38,21 @@ class ClientUserExtensionTest extends TestCase
     {
         $user = new Client();
 
-        $this->securityMock->expects($this->exactly(2))
+        $this->securityMock->expects($this->exactly(1))
             ->method('getUser')
             ->willReturn($user);
 
         $this->resourceClassMock = ClientUser::class;
 
-        $this->queryBuilderMock->expects($this->exactly(2))
+        $this->queryBuilderMock->expects($this->exactly(1))
             ->method('getRootAliases')
             ->willreturn(["o"]);
 
-        $this->queryBuilderMock->expects($this->exactly(2))
+        $this->queryBuilderMock->expects($this->exactly(1))
             ->method('andWhere')
             ->willreturn(true);
 
-        $this->queryBuilderMock->expects($this->exactly(2))
+        $this->queryBuilderMock->expects($this->exactly(1))
             ->method('setParameter')
             ->willreturn(true);
 
@@ -61,7 +61,7 @@ class ClientUserExtensionTest extends TestCase
 
     public function testAddWhereAdmin()
     {
-        $this->securityMock->expects($this->exactly(2))
+        $this->securityMock->expects($this->exactly(1))
             ->method('isGranted')
             ->willReturn(true); //We are an Admin
 
@@ -83,7 +83,7 @@ class ClientUserExtensionTest extends TestCase
     {
         $user = new ClientUser();
 
-        $this->securityMock->expects($this->exactly(2))
+        $this->securityMock->expects($this->exactly(1))
             ->method('getUser')
             ->willReturn($user);
 
@@ -105,7 +105,7 @@ class ClientUserExtensionTest extends TestCase
     {
         $user = null;
 
-        $this->securityMock->expects($this->exactly(2))
+        $this->securityMock->expects($this->exactly(1))
             ->method('getUser')
             ->willReturn($user);
 
