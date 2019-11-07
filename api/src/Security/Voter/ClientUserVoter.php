@@ -29,7 +29,7 @@ class ClientUserVoter extends Voter
     {
         // replace with your own logic
         // https://symfony.com/doc/current/security/voters.html
-        return in_array($attribute, ['EDIT'])
+        return in_array($attribute, ['CLIENT_AND_ADMIN'])
             && $subject instanceof ClientUser;
     }
 
@@ -45,7 +45,7 @@ class ClientUserVoter extends Voter
 
         // ... (check conditions and return true to grant permission) ...
         switch ($attribute) {
-            case 'EDIT':
+            case 'CLIENT_AND_ADMIN':
                 // logic to determine if the user can EDIT
                 // return true or false
                 if ($subject->getClient()->contains($user)) {
@@ -59,6 +59,5 @@ class ClientUserVoter extends Voter
         }
 
         throw new \Exception(sprintf('unhandled attribute "$s"', $attribute));
-        return false;
     }
 }

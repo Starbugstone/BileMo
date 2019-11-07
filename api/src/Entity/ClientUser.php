@@ -11,6 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 use App\Controller\CreateClientUserAction;
 
 /**
+ * the get is limited by the doctrine extension to only retreive our own clientUsers
  * @ApiResource(
  *     collectionOperations={
  *          "get",
@@ -22,10 +23,10 @@ use App\Controller\CreateClientUserAction;
  *      },
  *     itemOperations={
  *          "put" = {
- *              "access_control" = "is_granted('EDIT', previous_object)",
+ *              "access_control" = "is_granted('CLIENT_AND_ADMIN', previous_object)",
  *          },
  *          "get" = {
- *              "access_control" = "is_granted('EDIT', previous_object)",
+ *              "access_control" = "is_granted('CLIENT_AND_ADMIN', previous_object)",
  *          },
  *     }
  *
