@@ -23,10 +23,10 @@ use App\Controller\CreateClientUserAction;
  *      },
  *     itemOperations={
  *          "put" = {
- *              "access_control" = "is_granted('CLIENT_AND_ADMIN', previous_object)",
+ *              "access_control" = "is_granted('SELF_AND_ADMIN', previous_object)",
  *          },
  *          "get" = {
- *              "access_control" = "is_granted('CLIENT_AND_ADMIN', previous_object)",
+ *              "access_control" = "is_granted('SELF_AND_ADMIN', previous_object)",
  *          },
  *     }
  *

@@ -2,19 +2,15 @@
 
 namespace App\Security\Voter;
 
-use App\Entity\ClientUser;
+use App\Entity\Client;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Security\Core\User\UserInterface;
 
-/**
- * Voter to allow the update of clientUsers by clients and the admin
- * Class ClientUserVoter
- * @package App\Security\Voter
- */
-class ClientUserVoter extends Voter
+class ClientVoter extends Voter
 {
+
     /**
      * @var Security
      */
@@ -30,7 +26,7 @@ class ClientUserVoter extends Voter
         // replace with your own logic
         // https://symfony.com/doc/current/security/voters.html
         return in_array($attribute, ['SELF_AND_ADMIN'])
-            && $subject instanceof ClientUser;
+            && $subject instanceof Client;
     }
 
     protected function voteOnAttribute($attribute, $subject, TokenInterface $token)
@@ -41,14 +37,15 @@ class ClientUserVoter extends Voter
             return false;
         }
 
-        /** @var ClientUser $subject */
+        /** @var Client $subject */
 
         // ... (check conditions and return true to grant permission) ...
         switch ($attribute) {
             case 'SELF_AND_ADMIN':
                 // logic to determine if the user can EDIT
                 // return true or false
-                if ($subject->getClient()->contains($user)) {
+//                dd($user->getId());
+                if ($subject->getId() === $user->getId()) {
                     return true;
                 }
                 if ($this->security->isGranted('ROLE_ADMIN')) {

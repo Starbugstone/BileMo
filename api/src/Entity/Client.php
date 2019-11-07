@@ -11,13 +11,12 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use App\Controller\ClientIntegration\ActivateClientPasswordAction;
 use App\Controller\ClientIntegration\ResetClientPasswordAction;
-use App\Controller\ClientIntegration\ForgotClientPasswordAction;
 
 /**
  * @ApiResource(itemOperations={
- *     "get",
- *     "put",
- *     "delete",
+ *     "get"={"access_control"="is_granted('SELF_AND_ADMIN', previous_object)"},
+ *     "put"={"access_control"="is_granted('SELF_AND_ADMIN', previous_object)"},
+ *     "delete"={"access_control"="is_granted('ROLE_ADMIN')"},
  *     "put_ActivateClientPassword"={
  *         "method"="PUT",
  *         "path"="/activate_client/{id}",
@@ -29,9 +28,11 @@ use App\Controller\ClientIntegration\ForgotClientPasswordAction;
  *         "path"="/reset_client_password/{id}",
  *         "controller"=ResetClientPasswordAction::class,
  *         },
- *
- *
- *     }
+ *     },
+ *     collectionOperations={
+ *		   "get",
+ *		   "post"={"access_control"="is_granted('ROLE_ADMIN')"}
+ *	   },
  *
  * )
  * @ORM\Entity(repositoryClass="App\Repository\ClientRepository")
