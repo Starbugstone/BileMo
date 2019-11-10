@@ -14,9 +14,9 @@ use App\Controller\ClientIntegration\ResetClientPasswordAction;
 
 /**
  * @ApiResource(itemOperations={
- *     "get"={"access_control"="is_granted('SELF_AND_ADMIN', previous_object)"},
- *     "put"={"access_control"="is_granted('SELF_AND_ADMIN', previous_object)"},
- *     "delete"={"access_control"="is_granted('ROLE_ADMIN')"},
+ *     "get"={"access_control"="security('SELF_AND_ADMIN')"},
+ *     "put"={"access_control"="security('SELF_AND_ADMIN')"},
+ *     "delete"={"access_control"="security('ROLE_ADMIN')"},
  *     "put_ActivateClientPassword"={
  *         "method"="PUT",
  *         "path"="/activate_client/{id}",
@@ -31,7 +31,7 @@ use App\Controller\ClientIntegration\ResetClientPasswordAction;
  *     },
  *     collectionOperations={
  *		   "get",
- *		   "post"={"access_control"="is_granted('ROLE_ADMIN')"}
+ *		   "post"={"access_control"="security('ROLE_ADMIN')"}
  *	   },
  *
  * )
