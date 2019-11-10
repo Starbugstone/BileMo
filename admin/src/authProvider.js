@@ -45,7 +45,7 @@ export default (type, params) => {
       return localStorage.getItem('token') ? Promise.resolve() : Promise.reject();
 
     default:
-        return Promise.resolve();
-        // return Promise.reject('Unknown method');
+        // return Promise.resolve();
+        return Promise.reject('Unknown method');
   }
 }
