@@ -71,7 +71,7 @@ class Client implements UserInterface
 
     /**
      * @var string|null the unencrypted password
-     * @SerializedName("password")
+     * @ SerializedName("password")
      */
     private $plainPassword;
 
