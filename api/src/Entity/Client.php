@@ -11,6 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use App\Controller\ClientIntegration\ActivateClientPasswordAction;
 use App\Controller\ClientIntegration\ResetClientPasswordAction;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * @ApiResource(itemOperations={
@@ -70,7 +71,7 @@ class Client implements UserInterface
 
     /**
      * @var string|null the unencrypted password
-     * @ SerializedName("password")
+     * @SerializedName("password")
      */
     private $plainPassword;
 
