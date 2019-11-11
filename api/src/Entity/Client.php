@@ -11,18 +11,22 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use App\Controller\ClientIntegration\ActivateClientPasswordAction;
 use App\Controller\ClientIntegration\ResetClientPasswordAction;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
- * @ApiResource(itemOperations={
- *     "get"={"access_control"="is_granted('SELF_AND_ADMIN', previous_object)"},
- *     "put"={"access_control"="is_granted('SELF_AND_ADMIN', previous_object)"},
- *     "delete"={"access_control"="security('ROLE_ADMIN')"},
- *     "put_ActivateClientPassword"={
- *         "method"="PUT",
- *         "path"="/activate_client/{id}",
- *         "controller"=ActivateClientPasswordAction::class,
- *         },
+ * @ApiResource(
+ *     normalizationContext={"groups"={"client_read"}},
+ *     denormalizationContext={"groups"={"client_write"}},
+ *     itemOperations={
+ *          "get"={"access_control"="is_granted('SELF_AND_ADMIN', previous_object)"},
+ *          "put"={"access_control"="is_granted('SELF_AND_ADMIN', previous_object)"},
+ *          "delete"={"access_control"="security('ROLE_ADMIN')"},
+ *          "put_ActivateClientPassword"={
+ *              "method"="PUT",
+ *              "path"="/activate_client/{id}",
+ *              "controller"=ActivateClientPasswordAction::class,
+ *          },
  *
  *     "put_ResetClientPassword"={
  *         "method"="PUT",
@@ -49,11 +53,13 @@ class Client implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
+     * @Groups({"client_read", "client_write"})
      */
     private $username;
 
     /**
      * @ORM\Column(type="json")
+     * @Groups({"admin_read", "admin_write"})
      */
     private $roles = [];
 
@@ -72,12 +78,14 @@ class Client implements UserInterface
     /**
      * @var string|null the unencrypted password
      * @ SerializedName("password")
+     * @Groups({"client_write"})
      */
     private $plainPassword;
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\ClientUser", mappedBy="client")
      * @ApiSubresource
+     * @Groups({"client_read", "client_write"})
      */
     private $clientUsers;
 
@@ -88,11 +96,13 @@ class Client implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"client_read", "client_write"})
      */
     private $email;
 
     /**
      * @ORM\Column(type="boolean")
+     * @Groups({"client_read", "client_write"})
      */
     private $active = false;
 
