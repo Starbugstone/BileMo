@@ -26,13 +26,14 @@ use Symfony\Component\Serializer\Annotation\SerializedName;
  *              "method"="PUT",
  *              "path"="/activate_client/{id}",
  *              "controller"=ActivateClientPasswordAction::class,
+ *              "normalization_context"={"groups"={"activate_client"}},
  *          },
  *
- *     "put_ResetClientPassword"={
- *         "method"="PUT",
- *         "path"="/reset_client_password/{id}",
- *         "controller"=ResetClientPasswordAction::class,
- *         },
+ *          "put_ResetClientPassword"={
+ *              "method"="PUT",
+ *              "path"="/reset_client_password/{id}",
+ *              "controller"=ResetClientPasswordAction::class,
+ *          },
  *     },
  *     collectionOperations={
  *		   "get",
@@ -78,7 +79,7 @@ class Client implements UserInterface
     /**
      * @var string|null the unencrypted password
      * @ SerializedName("password")
-     * @Groups({"client_write"})
+     * @Groups({"client_write","activate_client"})
      */
     private $plainPassword;
 
@@ -91,6 +92,7 @@ class Client implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"activate_client"})
      */
     private $newUserToken;
 
