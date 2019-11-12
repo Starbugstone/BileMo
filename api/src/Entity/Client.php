@@ -85,7 +85,7 @@ class Client implements UserInterface
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\ClientUser", mappedBy="client")
      * @ApiSubresource
-     * @Groups({"client_read", "client_write"})
+     * @Groups({"admin_read", "client_write"})
      */
     private $clientUsers;
 
