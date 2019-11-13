@@ -103,7 +103,7 @@ VOLUME /srv/api/var
 
 COPY docker/php/docker-entrypoint.sh /usr/local/bin/docker-entrypoint
 RUN chmod +x /usr/local/bin/docker-entrypoint
-RUN chmod 755 bin/phpunit
+#RUN chmod 755 bin/phpunit
 
 ENTRYPOINT ["docker-entrypoint"]
 CMD ["php-fpm"]
