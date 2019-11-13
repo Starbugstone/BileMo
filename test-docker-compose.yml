@@ -13,7 +13,7 @@ services:
       context: ./api
       dockerfile: test-Dockerfile
       target: api_platform_php
-      <<: *cache
+      <<: *api-cache-from
     depends_on:
       - db
     environment:
@@ -30,7 +30,7 @@ services:
       context: ./api
       dockerfile: test-Dockerfile
       target: api_platform_nginx
-      <<: *cache
+      <<: *api-cache-from
     depends_on:
       - php
     # Comment out this volume in production
