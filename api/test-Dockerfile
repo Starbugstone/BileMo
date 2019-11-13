@@ -84,7 +84,7 @@ RUN set -eux; \
 # do not use .env files in production
 COPY .env ./
 COPY .env.test ./
-#RUN composer dump-env test; \
+RUN composer dump-env test; \
 #	rm .env
 
 # copy only specifically what we need
@@ -96,7 +96,7 @@ COPY tests tests/
 
 RUN set -eux; \
 	mkdir -p var/cache var/log; \
-	composer dump-autoload --classmap-authoritative --no-dev; \
+	composer dump-autoload --classmap-authoritative; \
 	composer run-script post-install-cmd; \
 	chmod +x bin/console; sync
 VOLUME /srv/api/var
