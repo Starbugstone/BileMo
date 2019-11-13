@@ -52,7 +52,6 @@ class ClientVoter extends Voter
                     return true;
                 }
                 return false;
-                break;
         }
 
         throw new \Exception(sprintf('unhandled attribute "$s"', $attribute));
