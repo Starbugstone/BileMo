@@ -18,6 +18,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *     collectionOperations={
  *          "get",
  *          "post"={
+ *              "access_control"="security('ROLE_ADMIN')",
  *              "controller"=CreatePhoneImageAction::class,
  *              "deserialize"=false,
  *              "swagger_context"={
@@ -46,7 +47,12 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *                 },
  *             },
  *          }
- *     }
+ *     },
+ *     itemOperations={
+ *          "get",
+ *          "put"={"access_control"="security('ROLE_ADMIN')"},
+ *          "delete"={"access_control"="security('ROLE_ADMIN')"},
+ *     },
  * )
  * @ORM\Entity(repositoryClass="App\Repository\PhoneImageRepository")
  * @Vich\Uploadable()

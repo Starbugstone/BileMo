@@ -10,6 +10,12 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
+/**
+ * Encode the Client password from the plain password on save to database
+ *
+ * Class ClientUpdateDataPersister
+ * @package App\DataPersister
+ */
 class ClientUpdateDataPersister implements DataPersisterInterface
 {
 
@@ -36,10 +42,7 @@ class ClientUpdateDataPersister implements DataPersisterInterface
      */
     public function supports($data): bool
     {
-        if($data instanceof  Client){
-            return true;
-        }
-        return false;
+        return $data instanceof Client;
     }
 
     /**

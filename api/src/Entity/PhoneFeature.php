@@ -15,10 +15,18 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @ApiResource(
  *     normalizationContext={"groups"={"read_feature"}},
+ *     collectionOperations={
+ *          "get",
+ *          "post"={
+ *              "access_control"="security('ROLE_ADMIN')"
+ *          }
+ *     },
  *     itemOperations={
  *         "get"={
  *             "normalization_context"={"groups"={"get_feature"}}
  *          },
+ *         "put"={"access_control"="security('ROLE_ADMIN')"},
+ *         "delete"={"access_control"="security('ROLE_ADMIN')"},
  *     }
  * )
  * @ORM\Entity(repositoryClass="App\Repository\PhoneFeatureRepository")

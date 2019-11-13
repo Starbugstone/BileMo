@@ -3,6 +3,7 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiProperty;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Symfony\Component\Validator\Constraints as Assert;
 use App\Controller\ClientIntegration\ForgotClientPasswordAction;
@@ -17,7 +18,8 @@ use App\Controller\ClientIntegration\ForgotClientPasswordAction;
  *              "method"="POST",
  *              "path"="/forgot_password",
  *              "controller"=ForgotClientPasswordAction::class,
- *          }
+ *          },
+ *          "get"
  *     }
  *
  * )
@@ -25,6 +27,8 @@ use App\Controller\ClientIntegration\ForgotClientPasswordAction;
 class ForgotPasswordRequest
 {
     /**
+     * @var string
+     * @ApiProperty(identifier=true)
      * @Assert\NotBlank()
      * @Assert\Email()
      */

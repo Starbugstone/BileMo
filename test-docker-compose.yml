@@ -1,20 +1,19 @@
 version: '3.4'
 
-x-cache:
-  &cache
-  cache_from:
-    - ${CONTAINER_REGISTRY_BASE}/php
-    - ${CONTAINER_REGISTRY_BASE}/nginx
-    - ${CONTAINER_REGISTRY_BASE}/varnish
+x-cache-from:
+    - &api-cache-from
+        cache_from:
+            - ${NGINX_IMAGE:-quay.io/api-platform/nginx}
+            - ${PHP_IMAGE:-quay.io/api-platform/php}
 
 services:
   php:
-    image: ${CONTAINER_REGISTRY_BASE}/php
+    image: ${PHP_IMAGE:-quay.io/api-platform/php}
     build:
       context: ./api
       dockerfile: test-Dockerfile
       target: api_platform_php
-      <<: *cache
+      <<: *api-cache-from
     depends_on:
       - db
     environment:
@@ -26,12 +25,12 @@ services:
       # - ./api/var:/srv/api/var:rw
 
   api:
-    image: ${CONTAINER_REGISTRY_BASE}/nginx
+    image: ${NGINX_IMAGE:-quay.io/api-platform/nginx}
     build:
       context: ./api
       dockerfile: test-Dockerfile
       target: api_platform_nginx
-      <<: *cache
+      <<: *api-cache-from
     depends_on:
       - php
     # Comment out this volume in production
@@ -54,6 +53,18 @@ services:
       # - ./docker/db/data:/var/lib/postgresql/data:rw
     ports:
       - "5432:5432"
+  mercure:
+      image: dunglas/mercure
+      environment:
+          - ALLOW_ANONYMOUS=1
+          - CORS_ALLOWED_ORIGINS=*
+          - DEMO=1
+          - JWT_KEY=!ChangeMe!
+          - PUBLISH_ALLOWED_ORIGINS=http://localhost:1337,https://localhost:1338 # required for publishing from demo page
+      ports:
+          -   target: 80
+              published: 1337
+              protocol: tcp
 
 volumes:
   db-data: {}

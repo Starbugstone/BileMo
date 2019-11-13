@@ -42,6 +42,7 @@ security:
          - { path: ^/client_login, roles: IS_AUTHENTICATED_ANONYMOUSLY } # the dev login form helper
          - { path: ^/activate_client/, roles: IS_AUTHENTICATED_ANONYMOUSLY } # activate the client with token and set password
          - { path: ^/reset_client_password/, roles: IS_AUTHENTICATED_ANONYMOUSLY } # the client wishes to reset his password
+         - { path: ^/forgot_password, roles: IS_AUTHENTICATED_ANONYMOUSLY } # the client forgot his password
          - { path: ^/docs,         roles: IS_AUTHENTICATED_ANONYMOUSLY } # access the documentation
          - { path: ^/,             roles: IS_AUTHENTICATED_FULLY } # everything else
         # - { path: ^/admin, roles: ROLE_ADMIN }

@@ -19,13 +19,14 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @ApiResource(
  *     attributes={"order"={"releaseDate": "ASC"}},
-
+ *
  *     collectionOperations={
  *          "get"={
  *              "normalization_context"={"groups"={"get_phones"}}
  *          },
  *          "post"={
- *              "denormalization_context"={"groups"={"post_phone"}}
+ *              "denormalization_context"={"groups"={"post_phone"}},
+ *              "access_control"="security('ROLE_ADMIN')"
  *          }
  *     },
  *     itemOperations={
@@ -33,8 +34,10 @@ use Symfony\Component\Validator\Constraints as Assert;
  *             "normalization_context"={"groups"={"get_phone"}}
  *         },
  *         "put"={
- *             "denormalization_context"={"groups"={"put_phone"}}
- *         }
+ *             "denormalization_context"={"groups"={"put_phone"}},
+ *              "access_control"="security('ROLE_ADMIN')"
+ *         },
+ *         "delete"={"access_control"="security('ROLE_ADMIN')"},
  *     }
  *
  * )
