@@ -82,7 +82,6 @@ class ForgotClientPasswordAction
         $registeredClient = $this->clientRepository->findOneBy(['email' => $data->getEmail()]);
 
         if ($registeredClient===null) {
-            dd('here');
             //we didn't find a client so returning fake response
             return new Response(null, 204, ['message' => 'Reset password request successful']);
         }
