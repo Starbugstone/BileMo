@@ -12,32 +12,41 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use App\Controller\ClientIntegration\ActivateClientPasswordAction;
 use App\Controller\ClientIntegration\ResetClientPasswordAction;
 use Symfony\Component\Serializer\Annotation\Groups;
-use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * @ApiResource(
  *     normalizationContext={"groups"={"client_read"}},
- *     denormalizationContext={"groups"={"client_write"}},
  *     itemOperations={
- *          "get"={"access_control"="is_granted('SELF_AND_ADMIN', previous_object)"},
- *          "put"={"access_control"="is_granted('SELF_AND_ADMIN', previous_object)"},
- *          "delete"={"access_control"="security('ROLE_ADMIN')"},
+ *          "get"={
+ *              "access_control"="is_granted('SELF_AND_ADMIN', previous_object)"
+ *          },
+ *          "put"={
+ *              "access_control"="is_granted('SELF_AND_ADMIN', previous_object)",
+ *              "denormalization_context"={"groups"={"client_write"}}
+ *          },
+ *          "delete"={
+ *              "access_control"="security('ROLE_ADMIN')"
+ *          },
  *          "put_ActivateClientPassword"={
  *              "method"="PUT",
  *              "path"="/activate_client/{id}",
  *              "controller"=ActivateClientPasswordAction::class,
- *              "normalization_context"={"groups"={"activate_client"}},
+ *              "denormalization_context"={"groups"={"activate_client"}},
  *          },
  *
  *          "put_ResetClientPassword"={
  *              "method"="PUT",
  *              "path"="/reset_client_password/{id}",
  *              "controller"=ResetClientPasswordAction::class,
+ *              "denormalization_context"={"groups"={"reset_client"}},
  *          },
  *     },
  *     collectionOperations={
  *		   "get",
- *		   "post"={"access_control"="security('ROLE_ADMIN')"}
+ *		   "post"={
+ *              "access_control"="security('ROLE_ADMIN')",
+ *              "denormalization_context"={"groups"={"client_write"}}
+ *          }
  *	   },
  *
  * )
@@ -78,8 +87,7 @@ class Client implements UserInterface
 
     /**
      * @var string|null the unencrypted password
-     * @ SerializedName("password")
-     * @Groups({"client_write","activate_client"})
+     * @Groups({"activate_client","reset_client","client_write"})
      */
     private $plainPassword;
 
@@ -91,8 +99,9 @@ class Client implements UserInterface
     private $clientUsers;
 
     /**
+     * @var string|null the user unique token
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"activate_client"})
+     * @Groups({"activate_client","reset_client"})
      */
     private $newUserToken;
 
@@ -104,7 +113,7 @@ class Client implements UserInterface
 
     /**
      * @ORM\Column(type="boolean")
-     * @Groups({"client_read", "client_write"})
+     * @Groups({"client_read", "admin_write"})
      */
     private $active = false;
 
@@ -240,11 +249,18 @@ class Client implements UserInterface
         return $this->plainPassword;
     }
 
+    /**
+     * @return string|null
+     */
     public function getNewUserToken(): ?string
     {
         return $this->newUserToken;
     }
 
+    /**
+     * @param string|null $newUserToken
+     * @return $this
+     */
     public function setNewUserToken(?string $newUserToken): self
     {
         $this->newUserToken = $newUserToken;

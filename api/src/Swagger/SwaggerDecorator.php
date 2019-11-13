@@ -18,39 +18,16 @@ final class SwaggerDecorator implements NormalizerInterface
     {
         $docs = $this->decorated->normalize($object, $format, $context);
 
-//        $customDefinition = [
-//            'name' => 'fields',
-//            'description' => 'Fields to remove of the output',
-//            'default' => 'id',
-//            'in' => 'query',
-//        ];
-//
-//
-//        // e.g. add a custom parameter
-//        $docs['paths']['/foos']['get']['parameters'][] = $customDefinition;
-//
-//        // e.g. remove an existing parameter
-//        $docs['paths']['/foos']['get']['parameters'] = array_values(array_filter($docs['paths']['/foos']['get']['parameters'], function ($param) {
-//            return $param['name'] !== 'bar';
-//        }));
-
         //Override the descriptions
         $docs['paths']['/activate_client/{id}']['put']['summary'] = 'Activate the client';
         $docs['paths']['/activate_client/{id}']['put']['description'] = 'Activate the client with a valid token and new password';
         $docs['paths']['/activate_client/{id}']['put']['requestBody']['description'] = 'The client activation resource';
         $docs['paths']['/activate_client/{id}']['put']['responses']['200']['description'] = 'The client has been successfully activated';
 
-        // Override title
-//        $docs['info']['title'] = 'My Api Foo';
-//        echo "<pre>";
-//        var_dump($docs);
-//        echo "</pre>";
-//        die();
-
-        //Override the descriptions
-//        $docs['paths']['/activate_client/{id}']['put']['summary'] = 'My Api Foo';
-//        $docs['paths']['/activate_client/{id}']['put']['description'] = 'My Api BAR';
-
+        $docs['paths']['/reset_client_password/{id}']['put']['summary'] = 'Reset a forgotten password';
+        $docs['paths']['/reset_client_password/{id}']['put']['description'] = 'Set a new password after having demanded a password reset';
+        $docs['paths']['/reset_client_password/{id}']['put']['requestBody']['description'] = 'The reset password resource';
+        $docs['paths']['/reset_client_password/{id}']['put']['responses']['200']['description'] = 'The password has bees successfully reset';
 
         return $docs;
     }
