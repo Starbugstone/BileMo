@@ -25,7 +25,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *              "denormalization_context"={"groups"={"client_write"}}
  *          },
  *          "delete"={
- *              "access_control"="security('ROLE_ADMIN')"
+ *              "access_control"="is_granted('ROLE_ADMIN')"
  *          },
  *          "put_ActivateClientPassword"={
  *              "method"="PUT",
@@ -44,8 +44,8 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *     collectionOperations={
  *		   "get",
  *		   "post"={
- *              "access_control"="security('ROLE_ADMIN')",
- *              "denormalization_context"={"groups"={"client_write"}}
+ *              "access_control"="is_granted('ROLE_ADMIN')",
+ *              "denormalization_context"={"groups"={"client_create"}}
  *          }
  *	   },
  *
@@ -63,7 +63,7 @@ class Client implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
-     * @Groups({"client_read", "client_write"})
+     * @Groups({"client_read", "client_write", "client_create"})
      */
     private $username;
 
@@ -107,7 +107,7 @@ class Client implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"client_read", "client_write"})
+     * @Groups({"client_read", "client_write", "client_create"})
      */
     private $email;
 

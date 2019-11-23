@@ -77,8 +77,6 @@ class CreateNewClientSubscriber implements EventSubscriberInterface
         //create token
         $client->setNewUserToken($this->tokenGenerator->uniqueToken());
 
-        //TODO: do not allow the password to be sent on POST
-
         //send mail to client
         $mailSent = $this->sendMail->send(
             'New account created for ' . $client->getUsername(),

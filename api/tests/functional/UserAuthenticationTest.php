@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Tests\_functional;
+namespace App\Tests\functional;
 
 
 use ApiPlatform\Core\Bridge\Symfony\Bundle\Test\ApiTestCase;
