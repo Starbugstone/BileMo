@@ -34,7 +34,6 @@ use Symfony\Component\Validator\Constraints as Assert;
  *              "controller"=ActivateClientPasswordAction::class,
  *              "denormalization_context"={"groups"={"activate_client"}},
  *          },
- *
  *          "put_ResetClientPassword"={
  *              "method"="PUT",
  *              "path"="/reset_client_password/{id}",
@@ -90,7 +89,7 @@ class Client implements UserInterface
      * @var string|null the unencrypted password
      * @Groups({"activate_client","reset_client","client_write"})
      * @Assert\NotBlank(groups={"activate_client","reset_client","client_write"})
-     * @Assert\Length(min=5,groups={"activate_client","reset_client","client_write"})
+     * @Assert\Length(min = 5,groups={"activate_client","reset_client","client_write"})
      */
     private $plainPassword;
 
@@ -182,6 +181,10 @@ class Client implements UserInterface
         return (string)$this->password;
     }
 
+    /**
+     * @param string $password
+     * @return $this
+     */
     public function setPassword(string $password): self
     {
         $this->password = $password;
