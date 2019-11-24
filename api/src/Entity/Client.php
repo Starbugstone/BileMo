@@ -12,6 +12,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use App\Controller\ClientIntegration\ActivateClientPasswordAction;
 use App\Controller\ClientIntegration\ResetClientPasswordAction;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ApiResource(
@@ -88,6 +89,8 @@ class Client implements UserInterface
     /**
      * @var string|null the unencrypted password
      * @Groups({"activate_client","reset_client","client_write"})
+     * @Assert\NotBlank(groups={"client_write"})
+     * @Assert\Length(min=5,groups={"client_write"})
      */
     private $plainPassword;
 
