@@ -29,7 +29,7 @@ class UserAuthenticationTest extends ApiTestCase
         ]]);
         $this->assertResponseIsSuccessful();
 
-        //test that are not allowed a page without login
+        //test that we are not allowed a page without login
         $client->request('GET', '/clients',[
             'json'=>[]
         ]);
@@ -42,14 +42,5 @@ class UserAuthenticationTest extends ApiTestCase
             'json'=>[]
         ]);
         $this->assertResponseIsSuccessful();
-
-//        This works, reuse in other tests
-//        $client2 = self::createClient([],[
-//            'headers' => ['Authorization'=>'bearer '.$obj->token]
-//        ]);
-//        $client2->request('GET', '/clients',[
-//            'json'=>[]
-//        ]);
-//        $this->assertResponseIsSuccessful();
     }
 }
