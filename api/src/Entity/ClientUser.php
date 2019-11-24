@@ -57,6 +57,7 @@ class ClientUser
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Client", inversedBy="clientUsers")
+     * @Groups({"admin_user_read"})
      */
     public $client;
 

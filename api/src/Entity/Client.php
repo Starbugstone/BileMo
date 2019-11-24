@@ -70,7 +70,7 @@ class Client implements UserInterface
 
     /**
      * @ORM\Column(type="json")
-     * @Groups({"admin_read", "admin_write"})
+     * @Groups({"admin_client_read", "admin_client_write"})
      */
     private $roles = [];
 
@@ -97,7 +97,7 @@ class Client implements UserInterface
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\ClientUser", mappedBy="client")
      * @ApiSubresource
-     * @Groups({"admin_read", "client_write"})
+     * @Groups({"admin_client_read", "client_client_write"})
      */
     private $clientUsers;
 
@@ -116,7 +116,7 @@ class Client implements UserInterface
 
     /**
      * @ORM\Column(type="boolean")
-     * @Groups({"client_read", "admin_write"})
+     * @Groups({"client_read", "admin_client_write"})
      */
     private $active = false;
 
