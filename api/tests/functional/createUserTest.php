@@ -7,6 +7,7 @@ namespace App\Tests\functional;
 use ApiPlatform\Core\Bridge\Symfony\Bundle\Test\ApiTestCase;
 use App\Tests\userAuthTrait;
 use Hautelook\AliceBundle\PhpUnit\RefreshDatabaseTrait;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 class createUserTest extends ApiTestCase
 {
@@ -26,9 +27,22 @@ class createUserTest extends ApiTestCase
         $this->assertResponseIsSuccessful();
 
         $obj = json_decode($response->getContent());
-//        $idUrl = $obj->@id;
-//        dd($obj);
+        $idUrl = $obj->{"@id"};
 
+        $response = $client->request('GET', $idUrl,[
+            'json'=>[]
+        ]);
+        $this->assertResponseIsSuccessful();
+
+        $obj = json_decode($response->getContent());
+
+        $this->assertEquals('test1',$obj->username);
+        $this->assertEquals('pass1@dev.com',$obj->email);
+        $this->assertContains('ROLE_CLIENT',$obj->roles);
+        $this->assertFalse(in_array('ROLE_ADMIN', $obj->roles));
+        $this->assertFalse($obj->active);
+
+        
 
     }
 
@@ -42,6 +56,7 @@ class createUserTest extends ApiTestCase
                 'email' => 'pass2@dev.com'
             ]
         ]);
+
         //this should fail as the client cant create a client
         $this->assertResponseStatusCodeSame(403);
 

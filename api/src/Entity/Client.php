@@ -19,14 +19,14 @@ use Symfony\Component\Validator\Constraints as Assert;
  *     normalizationContext={"groups"={"client_read"}},
  *     itemOperations={
  *          "get"={
- *              "access_control"="is_granted('SELF_AND_ADMIN', previous_object)"
+ *              "security"="is_granted('SELF_AND_ADMIN', object)"
  *          },
  *          "put"={
- *              "access_control"="is_granted('SELF_AND_ADMIN', previous_object)",
+ *              "security"="is_granted('SELF_AND_ADMIN', object)",
  *              "denormalization_context"={"groups"={"client_write"}}
  *          },
  *          "delete"={
- *              "access_control"="is_granted('ROLE_ADMIN')"
+ *              "security"="is_granted('ROLE_ADMIN')"
  *          },
  *          "put_ActivateClientPassword"={
  *              "method"="PUT",
@@ -45,7 +45,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *     collectionOperations={
  *		   "get",
  *		   "post"={
- *              "access_control"="is_granted('ROLE_ADMIN')",
+ *              "security"="is_granted('ROLE_ADMIN')",
  *              "denormalization_context"={"groups"={"client_create"}}
  *          }
  *	   },
