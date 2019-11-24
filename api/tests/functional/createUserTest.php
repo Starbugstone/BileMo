@@ -7,7 +7,6 @@ namespace App\Tests\functional;
 use ApiPlatform\Core\Bridge\Symfony\Bundle\Test\ApiTestCase;
 use App\Entity\Client;
 use App\Tests\userAuthTrait;
-use Hautelook\AliceBundle\PhpUnit\RefreshDatabaseTrait;
 use Hautelook\AliceBundle\PhpUnit\ReloadDatabaseTrait;
 
 class createUserTest extends ApiTestCase
