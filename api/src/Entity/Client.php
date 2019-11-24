@@ -89,8 +89,8 @@ class Client implements UserInterface
     /**
      * @var string|null the unencrypted password
      * @Groups({"activate_client","reset_client","client_write"})
-     * @Assert\NotBlank(groups={"client_write"})
-     * @Assert\Length(min=5,groups={"client_write"})
+     * @Assert\NotBlank(groups={"activate_client","reset_client","client_write"})
+     * @Assert\Length(min=5,groups={"activate_client","reset_client","client_write"})
      */
     private $plainPassword;
 
