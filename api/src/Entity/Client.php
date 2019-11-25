@@ -23,7 +23,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  *          },
  *          "put"={
  *              "security"="is_granted('SELF_AND_ADMIN', object)",
- *              "denormalization_context"={"groups"={"client_write"}}
+ *              "denormalization_context"={"groups"={"client_write"}},
+ *              "validation_groups"={"Default", "update"}
  *          },
  *          "delete"={
  *              "security"="is_granted('ROLE_ADMIN')"
@@ -33,12 +34,14 @@ use Symfony\Component\Validator\Constraints as Assert;
  *              "path"="/activate_client/{id}",
  *              "controller"=ActivateClientPasswordAction::class,
  *              "denormalization_context"={"groups"={"activate_client"}},
+ *              "validation_groups"={"Default", "update"}
  *          },
  *          "put_ResetClientPassword"={
  *              "method"="PUT",
  *              "path"="/reset_client_password/{id}",
  *              "controller"=ResetClientPasswordAction::class,
  *              "denormalization_context"={"groups"={"reset_client"}},
+ *              "validation_groups"={"Default", "update"}
  *          },
  *     },
  *     collectionOperations={
@@ -88,8 +91,8 @@ class Client implements UserInterface
     /**
      * @var string|null the unencrypted password
      * @Groups({"activate_client","reset_client","client_write"})
-     * @Assert\NotBlank(groups={"activate_client","reset_client","client_write"})
-     * @Assert\Length(min = 5,groups={"activate_client","reset_client","client_write"})
+     * @Assert\NotBlank(groups={"update"})
+     * @Assert\Length(min = 5,groups={"update"})
      */
     private $plainPassword;
 
