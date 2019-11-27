@@ -54,7 +54,6 @@ class ClientUpdateDataPersister implements DataPersisterInterface
      */
     public function persist($data)
     {
-        //TODO Check if constraints work here or are we before the constraint verification (normaly no as the object is already hydrated
         if($data->getPlainPassword()){
             $encodedPassword = $this->passwordEncoder->encodePassword($data, $data->getPlainPassword());
             $data->setPassword($encodedPassword);

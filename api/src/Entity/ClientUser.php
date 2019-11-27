@@ -10,6 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 use App\Controller\CreateClientUserAction;
+use App\Controller\DeleteClientUserAction;
 
 /**
  * the get is limited by the doctrine extension to only retreive our own clientUsers
@@ -26,11 +27,19 @@ use App\Controller\CreateClientUserAction;
  *      },
  *     itemOperations={
  *          "put" = {
- *              "access_control" = "is_granted('SELF_AND_ADMIN', previous_object)",
+ *              "security" = "is_granted('SELF_AND_ADMIN', object)",
  *          },
  *          "get" = {
- *              "access_control" = "is_granted('SELF_AND_ADMIN', previous_object)",
+ *              "security" = "is_granted('SELF_AND_ADMIN', object)",
  *          },
+ *          "delete"={
+ *              "security"="is_granted('ROLE_ADMIN')"
+ *          },
+ *          "delete_clientUser"={
+ *              "method"="DELETE",
+ *              "path"="/delete_client_users/{id}",
+ *              "controller"=DeleteClientUserAction::class,
+ *          }
  *     }
  *
  *

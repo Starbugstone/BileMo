@@ -19,7 +19,7 @@ class updateUserTest extends ApiTestCase
      */
     private $entityManager;
 
-    protected function setUp():void
+    protected function setUp(): void
     {
         $kernel = self::bootKernel();
 
@@ -44,22 +44,22 @@ class updateUserTest extends ApiTestCase
         $apiClientId = $apiClient->getId();
 
         //Changing the client email
-        $response = $client->request('PUT','/clients/'.$apiClientId,[
-            'json'=>[
-                'email'=>'newEmail@local.dev'
+        $response = $client->request('PUT', '/clients/' . $apiClientId, [
+            'json' => [
+                'email' => 'newEmail@local.dev'
             ]
         ]);
 
         $this->assertResponseIsSuccessful();
 
         $obj = json_decode($response->getContent());
-        $this->assertEquals('newEmail@local.dev',$obj->email);
+        $this->assertEquals('newEmail@local.dev', $obj->email);
 
         //Changing the password
         //check if constraints work
-        $client->request('POST','/update_my_password',[
-            'json'=>[
-                'plainPassword'=>'123'
+        $client->request('POST', '/update_my_password', [
+            'json' => [
+                'plainPassword' => '123'
             ]
         ]);
         $this->assertResponseStatusCodeSame(400);
@@ -70,9 +70,9 @@ class updateUserTest extends ApiTestCase
         ]);
         $this->assertResponseIsSuccessful();
 
-        $client->request('POST','/update_my_password',[
-            'json'=>[
-                'plainPassword'=>'123456'
+        $client->request('POST', '/update_my_password', [
+            'json' => [
+                'plainPassword' => '123456'
             ]
         ]);
         $this->assertResponseIsSuccessful();

@@ -1,17 +1,18 @@
 <?php
-// api/src/Controller/ClientIntegration/UpdateClientPasswordAction.php
+// api\src\Controller\DeleteClientUserAction.php
 
-namespace App\Controller\ClientIntegration;
+namespace App\Controller;
 
+use App\Entity\ClientUser;
 use Psr\Container\ContainerInterface;
 
 /**
- * "path"="/update_my_password"
+ * "path"="/delete_client_users/{id}"
  *
- * Class UpdateClientPasswordAction
+ * Class DeleteClientUserAction
  * @package App\Controller\ClientIntegration
  */
-class UpdateClientPasswordAction
+class DeleteClientUserAction
 {
 
     private $container;
@@ -21,9 +22,9 @@ class UpdateClientPasswordAction
         $this->container = $container;
     }
 
-    public function __invoke($data)
+    public function __invoke(ClientUser $data)
     {
-        //Sanity check as we are dealing with user passwords
+        //Sanity check as we are dealing with deleting data
         if (!$this->container->has('security.token_storage')) {
             throw new \LogicException('The Security Bundle is not registered in your application.');
         }
@@ -33,13 +34,8 @@ class UpdateClientPasswordAction
             throw new \Exception('something went wrong, no logged in client');
         }
 
-        $loggedInClient->setPlainPassword($data->getPlainPassword());
-        //resetting the token to null as we have redefined the password
-        $loggedInClient->setNewUserToken(null);
-        //After password change, old tokens are still valid
-        $loggedInClient->setPasswordChangeDate(time());
+        $data->removeClient($loggedInClient);
 
         return $loggedInClient;
-
     }
 }
