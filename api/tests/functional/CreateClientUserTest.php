@@ -43,15 +43,51 @@ class CreateClientUserTest extends ApiTestCase
 
         $obj = json_decode($response->getContent());
 
-        //probably a better way to check this but running short on time
-        $createdClient = false;
-        foreach ($obj->{"hydra:member"} as $clientUser){
-            if ($clientUser->email === 'newClientUser@local.dev'){
-                $createdClient = true;
+        $this->assertTrue($this->checkIfClientIsMemberOfUser($obj->{"hydra:member"}));
+
+    }
+
+    public function testUserClientDelete()
+    {
+        $client = $this->authUser('client1', 'password');
+        //Create a new user for client1
+        $response = $client->request('POST', '/client_users', [
+            'json' => [
+                'email' => 'newClientUser@local.dev'
+            ]
+        ]);
+        $this->assertResponseIsSuccessful();
+
+        $obj = json_decode($response->getContent());
+        //construct the url
+        $url = str_replace('client_users', 'delete_client_users', $obj->{"@id"});
+        //now delete the user
+        $response = $client->request('DELETE', $url, [
+            'json' => [
+            ]
+        ]);
+        $this->assertResponseIsSuccessful();
+
+        //make sure that the user no longer exists for client1
+        $response = $client->request('GET', '/client_users', [
+            'json' => [
+            ]
+        ]);
+        $this->assertResponseIsSuccessful();
+        $obj = json_decode($response->getContent());
+        $this->assertFalse($this->checkIfClientIsMemberOfUser($obj->{"hydra:member"}));
+    }
+    
+    private function checkIfClientIsMemberOfUser($clientArray)
+    {
+        //probably a better way to check but running out of time
+        $isMember = false;
+        foreach ($clientArray as $clientUser) {
+            if ($clientUser->email === 'newClientUser@local.dev') {
+                $isMember = true;
             }
         }
-        $this->assertTrue($createdClient);
-
+        return $isMember;
     }
 
 }
