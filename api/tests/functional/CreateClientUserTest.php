@@ -37,7 +37,6 @@ class CreateClientUserTest extends ApiTestCase
         //make sure the user is associated to client
         $response = $client->request('GET', '/client_users', [
             'json' => [
-
             ]
         ]);
         $this->assertResponseIsSuccessful();

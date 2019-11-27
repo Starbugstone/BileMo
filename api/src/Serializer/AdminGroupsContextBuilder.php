@@ -37,10 +37,6 @@ class AdminGroupsContextBuilder implements SerializerContextBuilderInterface
             $context['groups'][] = $normalization ? 'admin_user_read' : 'admin_user_write';
         }
 
-//        if ($resourceClass === Client::class && isset($context['groups']) && $this->authorizationChecker->isGranted('ROLE_ADMIN') && false === $normalization) {
-//            $context['groups'][] = 'admin:input';
-//        }
-
         return $context;
     }
 
