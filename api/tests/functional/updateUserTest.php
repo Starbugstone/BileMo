@@ -43,11 +43,53 @@ class updateUserTest extends ApiTestCase
 
         $apiClientId = $apiClient->getId();
 
-//        $obj = json_decode($response->getContent());
-//        $idUrl = $obj->{"@id"};
-//        dd($obj);
+        //Changing the client email
+        $response = $client->request('PUT','/clients/'.$apiClientId,[
+            'json'=>[
+                'email'=>'newEmail@local.dev'
+            ]
+        ]);
 
+        $this->assertResponseIsSuccessful();
 
+        $obj = json_decode($response->getContent());
+        $this->assertEquals('newEmail@local.dev',$obj->email);
+
+        //Changing the password
+        //check if constraints work
+        $client->request('POST','/update_my_password',[
+            'json'=>[
+                'plainPassword'=>'123'
+            ]
+        ]);
+        $this->assertResponseStatusCodeSame(400);
+
+        //make sure we are still logged in
+        $client->request('GET', '/clients', [
+            'json' => []
+        ]);
+        $this->assertResponseIsSuccessful();
+
+        $client->request('POST','/update_my_password',[
+            'json'=>[
+                'plainPassword'=>'123456'
+            ]
+        ]);
+        $this->assertResponseIsSuccessful();
+
+        //make sure we are not logged in
+        $client->request('GET', '/clients', [
+            'json' => []
+        ]);
+        $this->assertResponseStatusCodeSame(401);
+
+        //log back in with new password
+        $client = $this->authUser('client1', '123456');
+        //make sure we are logged in properly
+        $client->request('GET', '/clients', [
+            'json' => []
+        ]);
+        $this->assertResponseIsSuccessful();
 
     }
 }
