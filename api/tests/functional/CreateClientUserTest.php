@@ -8,7 +8,7 @@ use ApiPlatform\Core\Bridge\Symfony\Bundle\Test\ApiTestCase;
 use App\Tests\userAuthTrait;
 use Hautelook\AliceBundle\PhpUnit\ReloadDatabaseTrait;
 
-class createUserClientTest extends ApiTestCase
+class CreateClientUserTest extends ApiTestCase
 {
     use ReloadDatabaseTrait;
     use userAuthTrait;

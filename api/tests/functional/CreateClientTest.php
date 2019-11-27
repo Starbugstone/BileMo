@@ -9,7 +9,7 @@ use App\Entity\Client;
 use App\Tests\userAuthTrait;
 use Hautelook\AliceBundle\PhpUnit\ReloadDatabaseTrait;
 
-class createUserTest extends ApiTestCase
+class CreateClientTest extends ApiTestCase
 {
     use ReloadDatabaseTrait;
     use userAuthTrait;
