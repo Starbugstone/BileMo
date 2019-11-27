@@ -11,6 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use App\Controller\ClientIntegration\ActivateClientPasswordAction;
 use App\Controller\ClientIntegration\ResetClientPasswordAction;
+use App\Controller\ClientIntegration\UpdateClientPasswordAction;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -24,7 +25,6 @@ use Symfony\Component\Validator\Constraints as Assert;
  *          "put"={
  *              "security"="is_granted('SELF_AND_ADMIN', object)",
  *              "denormalization_context"={"groups"={"client_write"}},
- *              "validation_groups"={"Default", "update"}
  *          },
  *          "delete"={
  *              "security"="is_granted('ROLE_ADMIN')"
@@ -49,7 +49,14 @@ use Symfony\Component\Validator\Constraints as Assert;
  *		   "post"={
  *              "security"="is_granted('ROLE_ADMIN')",
  *              "denormalization_context"={"groups"={"client_create"}}
- *          }
+ *          },
+ *          "post_UpdateMyPassword"={
+ *              "method"="POST",
+ *              "path"="/update_my_password",
+ *              "controller"=UpdateClientPasswordAction::class,
+ *              "denormalization_context"={"groups"={"update_client_password"}},
+ *              "validation_groups"={"Default", "update"}
+ *          },
  *	   },
  *
  * )
@@ -90,7 +97,7 @@ class Client implements UserInterface
 
     /**
      * @var string|null the unencrypted password
-     * @Groups({"activate_client","reset_client","client_write"})
+     * @Groups({"activate_client","reset_client","update_client_password"})
      * @Assert\NotBlank(groups={"update"})
      * @Assert\Length(min = 5,groups={"update"})
      */

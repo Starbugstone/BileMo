@@ -29,6 +29,11 @@ final class SwaggerDecorator implements NormalizerInterface
         $docs['paths']['/reset_client_password/{id}']['put']['requestBody']['description'] = 'The reset password resource';
         $docs['paths']['/reset_client_password/{id}']['put']['responses']['200']['description'] = 'The password has bees successfully reset';
 
+        $docs['paths']['/update_my_password']['post']['summary'] = 'Set a new password';
+        $docs['paths']['/update_my_password']['post']['description'] = 'Set a new password for our account';
+        $docs['paths']['/update_my_password']['post']['requestBody']['description'] = 'The reset my password resource';
+        $docs['paths']['/update_my_password']['post']['responses']['200']['description'] = 'The password has bees successfully set';
+
         return $docs;
     }
 
