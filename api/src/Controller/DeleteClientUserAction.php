@@ -5,6 +5,7 @@ namespace App\Controller;
 
 use App\Entity\ClientUser;
 use Psr\Container\ContainerInterface;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * "path"="/delete_client_users/{id}"
@@ -36,6 +37,6 @@ class DeleteClientUserAction
 
         $data->removeClient($loggedInClient);
 
-        return $loggedInClient;
+        return new Response(null, 204, ['message' => 'Client deletion successful']);
     }
 }
