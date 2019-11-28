@@ -5,7 +5,7 @@ namespace App\Mail;
 
 use Swift_Mailer;
 use Swift_Message;
-use Symfony\Component\Templating\EngineInterface;
+use Twig\Environment;
 
 /**
  * Class SendMail
@@ -29,7 +29,7 @@ class SendMail
      */
     private $templating;
 
-    public function __construct(Swift_Mailer $mailer, EngineInterface $templating)
+    public function __construct(Swift_Mailer $mailer, Environment $templating)
     {
         $this->mailer = $mailer;
         $this->templating = $templating;

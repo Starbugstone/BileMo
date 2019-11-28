@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4fc64db42014d890f1beb5ed8f8cbd9c",
+    "content-hash": "e1d88fd16f690ccca042dd41bf68bde7",
     "packages": [
         {
             "name": "api-platform/api-pack",
@@ -632,16 +632,16 @@
         },
         {
             "name": "doctrine/doctrine-bundle",
-            "version": "1.12.1",
+            "version": "1.12.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/DoctrineBundle.git",
-                "reference": "1035bdda574f6beb39468c9a6b6066f5368a6b18"
+                "reference": "9ac04186b47abda4759d0c304ab8f0780c470ac9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/DoctrineBundle/zipball/1035bdda574f6beb39468c9a6b6066f5368a6b18",
-                "reference": "1035bdda574f6beb39468c9a6b6066f5368a6b18",
+                "url": "https://api.github.com/repos/doctrine/DoctrineBundle/zipball/9ac04186b47abda4759d0c304ab8f0780c470ac9",
+                "reference": "9ac04186b47abda4759d0c304ab8f0780c470ac9",
                 "shasum": ""
             },
             "require": {
@@ -718,7 +718,7 @@
                 "orm",
                 "persistence"
             ],
-            "time": "2019-11-27T08:24:00+00:00"
+            "time": "2019-11-28T13:00:49+00:00"
         },
         {
             "name": "doctrine/doctrine-cache-bundle",
