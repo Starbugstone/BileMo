@@ -62,7 +62,7 @@ class CreateClientUserTest extends ApiTestCase
         //construct the url
         $url = str_replace('client_users', 'delete_client_users', $obj->{"@id"});
         //now delete the user
-        $response = $client->request('DELETE', $url, [
+        $client->request('DELETE', $url, [
             'json' => [
             ]
         ]);
@@ -75,9 +75,10 @@ class CreateClientUserTest extends ApiTestCase
         ]);
         $this->assertResponseIsSuccessful();
         $obj = json_decode($response->getContent());
+
         $this->assertFalse($this->checkIfClientIsMemberOfUser($obj->{"hydra:member"}));
     }
-    
+
     private function checkIfClientIsMemberOfUser($clientArray)
     {
         //probably a better way to check but running out of time
