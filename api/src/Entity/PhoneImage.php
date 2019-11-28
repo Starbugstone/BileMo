@@ -18,33 +18,31 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *     collectionOperations={
  *          "get",
  *          "post"={
- *              "access_control"="security('ROLE_ADMIN')",
+ *              "security"="is_granted('ROLE_ADMIN')",
  *              "controller"=CreatePhoneImageAction::class,
  *              "deserialize"=false,
- *              "swagger_context"={
- *                 "consumes"={
- *                     "multipart/form-data",
- *                 },
- *                 "parameters"={
- *                     {
- *                         "in"="formData",
- *                         "name"="imageFile",
- *                         "type"="file",
- *                         "description"="The file to upload",
- *                     },
- *                     {
- *                         "in"="formData",
- *                         "name"="phone",
- *                         "type"="string",
- *                         "description"="ID of the attached phone",
- *                     },
- *                     {
- *                         "in"="formData",
- *                         "name"="title",
- *                         "type"="string",
- *                         "description"="Title of the uploaded image",
- *                     },
- *                 },
+ *              "validation_groups"={"Default", "phone_image_create"},
+ *              "openapi_context"={
+ *                "requestBody"={
+ *                  "content"={
+ *                    "multipart/form-data"={
+ *                       "schema"={
+ *                         "type"="object",
+ *                         "properties"={
+ *                            "imageFile"={
+ *                               "type"="string",
+ *                               "format"="binary"
+ *                            },
+ *                            "phone"={
+ *                               "type"="int",
+ *                               "description"="ID of the attached phone",
+ *                            }
+ *
+ *                         }
+ *                       }
+ *                     }
+ *                  }
+ *                }
  *             },
  *          }
  *     },
@@ -76,7 +74,7 @@ class PhoneImage
 
     /**
      * @Vich\UploadableField(mapping="phone_images", fileNameProperty="image")
-     * @Assert\NotNull()
+     * @Assert\NotNull(groups={"phone_image_create"})
      * @var File
      */
     private $imageFile;
