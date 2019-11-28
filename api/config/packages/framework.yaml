@@ -14,8 +14,3 @@ framework:
     #fragments: true
     php_errors:
         log: true
-#    templating:
-#        engines:
-#            - twig
-#    fragments:
-#        hinclude_default_template: hinclude.html.twig
