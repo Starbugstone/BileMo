@@ -4,6 +4,7 @@
 namespace App\Controller;
 
 use App\Entity\ClientUser;
+use Doctrine\ORM\EntityManagerInterface;
 use Psr\Container\ContainerInterface;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -17,10 +18,15 @@ class DeleteClientUserAction
 {
 
     private $container;
+    /**
+     * @var EntityManagerInterface
+     */
+    private $em;
 
-    public function __construct(ContainerInterface $container)
+    public function __construct(ContainerInterface $container, EntityManagerInterface $em)
     {
         $this->container = $container;
+        $this->em = $em;
     }
 
     public function __invoke(ClientUser $data)
@@ -36,6 +42,9 @@ class DeleteClientUserAction
         }
 
         $data->removeClient($loggedInClient);
+
+        $this->em->persist($data);
+        $this->em->flush();
 
         return new Response(null, 204, ['message' => 'Client deletion successful']);
     }
