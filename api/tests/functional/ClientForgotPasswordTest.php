@@ -31,6 +31,12 @@ class ClientForgotPasswordTest extends ApiTestCase
         /** @var Client $apiClient */
         $apiClient = $entityManager->getRepository(Client::class)->findOneBy(array('username' => 'client1'));
 
+        //Make sure we get a valid response even when the email is wrong to avoid exposing our client emails
+        $client->request('POST', '/forgot_password', ['json' => [
+            'email' => 'thisisabademail@nonexistant.com'
+        ]]);
+        $this->assertResponseIsSuccessful();
+
         //send the forgot password request
         $client->request('POST', '/forgot_password', ['json' => [
             'email' => $apiClient->getEmail()
@@ -41,23 +47,30 @@ class ClientForgotPasswordTest extends ApiTestCase
         $entityManager->clear();
         $apiClient = $entityManager->getRepository(Client::class)->find($apiClient->getId());
         $this->assertNotNull($apiClient->getNewUserToken(), 'The new user token was not generated');
-//        dd($apiClient);
 
+        //test that we get a bad response when sending wrong token
+        $client->request('PUT', '/reset_client_password/' . $apiClient->getId(), [
+            'json' => [
+                'newUserToken' => '123456789',
+                'plainPassword' => "KyloIsANub"
+            ]
+        ]);
+        $this->assertResponseStatusCodeSame(400);
+
+        //Reset the password with the good token
         $client->request('PUT', '/reset_client_password/' . $apiClient->getId(), [
             'json' => [
                 'newUserToken' => $apiClient->getNewUserToken(),
-	            'plainPassword' => "KyloIsANub"
+                'plainPassword' => "KyloIsANub"
             ]
         ]);
         $this->assertResponseIsSuccessful();
 
         //try to log in with the new password
-        $response = $client->request('POST', '/client_login',['json'=>[
-            'username'=> 'client1',
-            'password'=> 'KyloIsANub'
+        $response = $client->request('POST', '/client_login', ['json' => [
+            'username' => 'client1',
+            'password' => 'KyloIsANub'
         ]]);
         $this->assertResponseIsSuccessful();
-
-
     }
 }

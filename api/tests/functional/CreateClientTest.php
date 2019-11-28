@@ -76,7 +76,7 @@ class CreateClientTest extends ApiTestCase
 	            'plainPassword' => 'shootFirst'
             ]
         ]);
-        $this->assertResponseStatusCodeSame(500);
+        $this->assertResponseStatusCodeSame(400);
 
         //now with real token
         $response = $client->request('PUT','/activate_client/'.$apiClient->getId(),[
