@@ -75,7 +75,6 @@ class ForgotClientPasswordAction
             throw new Exception($errors[0]->getMessage());
         }
 
-        //$this->em->clear(); //needed to clear doctrine cache else it returns the same as $data
         /**
          * @var Client $registeredClient
          */
