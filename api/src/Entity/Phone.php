@@ -26,7 +26,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *          },
  *          "post"={
  *              "denormalization_context"={"groups"={"post_phone"}},
- *              "access_control"="security('ROLE_ADMIN')"
+ *              "security"="is_granted('ROLE_ADMIN')"
  *          }
  *     },
  *     itemOperations={
@@ -35,9 +35,9 @@ use Symfony\Component\Validator\Constraints as Assert;
  *         },
  *         "put"={
  *             "denormalization_context"={"groups"={"put_phone"}},
- *              "access_control"="security('ROLE_ADMIN')"
+ *              "security"="is_granted('ROLE_ADMIN')"
  *         },
- *         "delete"={"access_control"="security('ROLE_ADMIN')"},
+ *         "delete"={"security"="is_granted('ROLE_ADMIN')"},
  *     }
  *
  * )

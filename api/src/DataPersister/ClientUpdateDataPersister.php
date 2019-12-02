@@ -9,6 +9,7 @@ use App\Entity\Client;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 /**
  * Encode the Client password from the plain password on save to database
@@ -27,6 +28,7 @@ class ClientUpdateDataPersister implements DataPersisterInterface
      * @var UserPasswordEncoderInterface
      */
     private $passwordEncoder;
+
 
 
     public function __construct(EntityManagerInterface $manager, UserPasswordEncoderInterface $passwordEncoder)
@@ -52,7 +54,6 @@ class ClientUpdateDataPersister implements DataPersisterInterface
      */
     public function persist($data)
     {
-        //TODO Check if constraints work here or are we before the constraint verification (normaly no as the object is already hydrated
         if($data->getPlainPassword()){
             $encodedPassword = $this->passwordEncoder->encodePassword($data, $data->getPlainPassword());
             $data->setPassword($encodedPassword);

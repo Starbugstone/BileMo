@@ -8,6 +8,7 @@ use ApiPlatform\Core\EventListener\EventPriorities;
 use App\Entity\Client;
 use App\Mail\SendMail;
 use App\Token\TokenGenerator;
+use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -25,11 +26,16 @@ class CreateNewClientSubscriber implements EventSubscriberInterface
      * @var SendMail
      */
     private $sendMail;
+    /**
+     * @var EntityManagerInterface
+     */
+    private $em;
 
-    public function __construct(TokenGenerator $tokenGenerator, SendMail $sendMail)
+    public function __construct(TokenGenerator $tokenGenerator, SendMail $sendMail, EntityManagerInterface $em)
     {
         $this->tokenGenerator = $tokenGenerator;
         $this->sendMail = $sendMail;
+        $this->em = $em;
     }
 
     /**
@@ -77,7 +83,8 @@ class CreateNewClientSubscriber implements EventSubscriberInterface
         //create token
         $client->setNewUserToken($this->tokenGenerator->uniqueToken());
 
-        //TODO: do not allow the password to be sent on POST
+        $this->em->persist($client);
+//        $this->em->flush();
 
         //send mail to client
         $mailSent = $this->sendMail->send(

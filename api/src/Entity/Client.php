@@ -11,42 +11,52 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use App\Controller\ClientIntegration\ActivateClientPasswordAction;
 use App\Controller\ClientIntegration\ResetClientPasswordAction;
+use App\Controller\ClientIntegration\UpdateClientPasswordAction;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ApiResource(
  *     normalizationContext={"groups"={"client_read"}},
  *     itemOperations={
  *          "get"={
- *              "access_control"="is_granted('SELF_AND_ADMIN', previous_object)"
+ *              "security"="is_granted('SELF_AND_ADMIN', object)"
  *          },
  *          "put"={
- *              "access_control"="is_granted('SELF_AND_ADMIN', previous_object)",
- *              "denormalization_context"={"groups"={"client_write"}}
+ *              "security"="is_granted('SELF_AND_ADMIN', object)",
+ *              "denormalization_context"={"groups"={"client_write"}},
  *          },
  *          "delete"={
- *              "access_control"="security('ROLE_ADMIN')"
+ *              "security"="is_granted('ROLE_ADMIN')"
  *          },
  *          "put_ActivateClientPassword"={
  *              "method"="PUT",
  *              "path"="/activate_client/{id}",
  *              "controller"=ActivateClientPasswordAction::class,
  *              "denormalization_context"={"groups"={"activate_client"}},
+ *              "validation_groups"={"Default", "update"}
  *          },
- *
  *          "put_ResetClientPassword"={
  *              "method"="PUT",
  *              "path"="/reset_client_password/{id}",
  *              "controller"=ResetClientPasswordAction::class,
  *              "denormalization_context"={"groups"={"reset_client"}},
+ *              "validation_groups"={"Default", "update"}
  *          },
  *     },
  *     collectionOperations={
  *		   "get",
  *		   "post"={
- *              "access_control"="security('ROLE_ADMIN')",
- *              "denormalization_context"={"groups"={"client_write"}}
- *          }
+ *              "security"="is_granted('ROLE_ADMIN')",
+ *              "denormalization_context"={"groups"={"client_create"}}
+ *          },
+ *          "post_UpdateMyPassword"={
+ *              "method"="POST",
+ *              "path"="/update_my_password",
+ *              "controller"=UpdateClientPasswordAction::class,
+ *              "denormalization_context"={"groups"={"update_client_password"}},
+ *              "validation_groups"={"Default", "update"}
+ *          },
  *	   },
  *
  * )
@@ -63,13 +73,13 @@ class Client implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
-     * @Groups({"client_read", "client_write"})
+     * @Groups({"client_read", "client_write", "client_create"})
      */
     private $username;
 
     /**
      * @ORM\Column(type="json")
-     * @Groups({"admin_read", "admin_write"})
+     * @Groups({"admin_client_read", "admin_client_write"})
      */
     private $roles = [];
 
@@ -87,14 +97,16 @@ class Client implements UserInterface
 
     /**
      * @var string|null the unencrypted password
-     * @Groups({"activate_client","reset_client","client_write"})
+     * @Groups({"activate_client","reset_client","update_client_password"})
+     * @Assert\NotBlank(groups={"update"})
+     * @Assert\Length(min = 5,groups={"update"})
      */
     private $plainPassword;
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\ClientUser", mappedBy="client")
      * @ApiSubresource
-     * @Groups({"admin_read", "client_write"})
+     * @Groups({"admin_client_read", "client_client_write"})
      */
     private $clientUsers;
 
@@ -107,13 +119,13 @@ class Client implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"client_read", "client_write"})
+     * @Groups({"client_read", "client_write", "client_create"})
      */
     private $email;
 
     /**
      * @ORM\Column(type="boolean")
-     * @Groups({"client_read", "admin_write"})
+     * @Groups({"client_read", "admin_client_write"})
      */
     private $active = false;
 
@@ -179,6 +191,10 @@ class Client implements UserInterface
         return (string)$this->password;
     }
 
+    /**
+     * @param string $password
+     * @return $this
+     */
     public function setPassword(string $password): self
     {
         $this->password = $password;

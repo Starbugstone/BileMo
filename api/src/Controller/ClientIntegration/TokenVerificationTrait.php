@@ -37,7 +37,7 @@ Trait TokenVerificationTrait
          */
         $registeredClient = $this->clientRepository->find($id);
         if ($registeredClient->getNewUserToken() === null) {
-            throw new BadTokenException('No define password key found');
+            throw new BadTokenException('No defined password key found');
         }
 
         if ($token !== $registeredClient->getNewUserToken()) {

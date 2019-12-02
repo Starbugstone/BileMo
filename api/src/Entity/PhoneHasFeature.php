@@ -12,12 +12,15 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ApiResource(
  *     collectionOperations={
  *          "get",
- *		    "post"={"access_control"="security('ROLE_ADMIN')"}
+ *		    "post"={"security"="is_granted('ROLE_ADMIN')"}
  *     },
  *     itemOperations={
  *          "get",
- *          "put"={"access_control"="security('ROLE_ADMIN')"},
- *          "delete"={"access_control"="security('ROLE_ADMIN')"},
+ *          "put"={
+ *              "security"="is_granted('ROLE_ADMIN')",
+ *              "denormalization_context"={"groups"={"put_phone_has_feature"}},
+ *          },
+ *          "delete"={"security"="is_granted('ROLE_ADMIN')"},
  *     },
  * )
  * @ORM\Entity(repositoryClass="App\Repository\PhoneHasFeatureRepository")
@@ -35,7 +38,7 @@ class PhoneHasFeature
      * @var Phone $phone the associated telephone
      * @ORM\ManyToOne(targetEntity="App\Entity\Phone", inversedBy="phoneHasFeatures")
      * @ORM\JoinColumn(nullable=false)
-     * @Groups({"get_feature"})
+     * @Groups({"get_feature", "put_phone_has_feature"})
      */
     private $phone;
 
@@ -43,14 +46,14 @@ class PhoneHasFeature
      * @var PhoneFeature $phoneFeature The associated feature
      * @ORM\ManyToOne(targetEntity="App\Entity\PhoneFeature", inversedBy="phoneHasFeatures")
      * @ORM\JoinColumn(nullable=false)
-     * @Groups({"get_phone"})
+     * @Groups({"get_phone", "put_phone_has_feature"})
      */
     private $phoneFeature;
 
     /**
      * @var string $value the value of the feature
      * @ORM\Column(type="string", length=255)
-     * @Groups({"get_phone", "get_feature"})
+     * @Groups({"get_phone", "get_feature", "put_phone_has_feature"})
      *
      * @Assert\NotBlank
      *

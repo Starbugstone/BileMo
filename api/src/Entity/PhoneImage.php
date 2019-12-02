@@ -18,40 +18,47 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *     collectionOperations={
  *          "get",
  *          "post"={
- *              "access_control"="security('ROLE_ADMIN')",
+ *              "security"="is_granted('ROLE_ADMIN')",
  *              "controller"=CreatePhoneImageAction::class,
  *              "deserialize"=false,
- *              "swagger_context"={
- *                 "consumes"={
- *                     "multipart/form-data",
- *                 },
- *                 "parameters"={
- *                     {
- *                         "in"="formData",
- *                         "name"="imageFile",
- *                         "type"="file",
- *                         "description"="The file to upload",
- *                     },
- *                     {
- *                         "in"="formData",
- *                         "name"="phone",
- *                         "type"="string",
- *                         "description"="ID of the attached phone",
- *                     },
- *                     {
- *                         "in"="formData",
- *                         "name"="title",
- *                         "type"="string",
- *                         "description"="Title of the uploaded image",
- *                     },
- *                 },
+ *              "validation_groups"={"Default", "phone_image_create"},
+ *              "openapi_context"={
+ *                "requestBody"={
+ *                  "content"={
+ *                    "multipart/form-data"={
+ *                       "schema"={
+ *                         "type"="object",
+ *                         "properties"={
+ *                            "imageFile"={
+ *                               "type"="string",
+ *                               "format"="binary"
+ *                            },
+ *                            "phone"={
+ *                               "type"="int",
+ *                               "description"="ID of the attached phone",
+ *                            },
+ *                            "title"={
+ *                               "type"="string",
+ *                               "description"="title of the image",
+ *                            }
+ *
+ *                         }
+ *                       }
+ *                     }
+ *                  }
+ *                }
  *             },
  *          }
  *     },
  *     itemOperations={
  *          "get",
- *          "put"={"access_control"="security('ROLE_ADMIN')"},
- *          "delete"={"access_control"="security('ROLE_ADMIN')"},
+ *          "put"={
+ *              "security"="is_granted('ROLE_ADMIN')",
+ *              "denormalization_context"={"groups"={"put_phone_image"}},
+ *          },
+ *          "delete"={
+ *              "security"="is_granted('ROLE_ADMIN')",
+ *          },
  *     },
  * )
  * @ORM\Entity(repositoryClass="App\Repository\PhoneImageRepository")
@@ -76,7 +83,8 @@ class PhoneImage
 
     /**
      * @Vich\UploadableField(mapping="phone_images", fileNameProperty="image")
-     * @Assert\NotNull()
+     * @Assert\NotNull(groups={"phone_image_create"})
+     * @Groups({"put_phone_image"})
      * @var File
      */
     private $imageFile;
@@ -90,7 +98,7 @@ class PhoneImage
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Phone", inversedBy="phoneImages")
      * @ORM\JoinColumn(nullable=true)
-     * @Groups({"read"})
+     * @Groups({"read","put_phone_image"})
      */
     private $phone;
 
@@ -102,7 +110,7 @@ class PhoneImage
     /**
      * @var string $title Title of the image
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"get_phone", "get_phones", "read"})
+     * @Groups({"get_phone", "get_phones", "read", "phone_image_create", "put_phone_image"})
      */
     private $title;
 
@@ -116,7 +124,7 @@ class PhoneImage
         return $this->image;
     }
 
-    public function setImage(string $image): self
+    public function setImage(?string $image): self
     {
         $this->image = $image;
 

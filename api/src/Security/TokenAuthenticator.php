@@ -23,7 +23,7 @@ class TokenAuthenticator extends JWTTokenAuthenticator
         $client = parent::getUser($preAuthToken, $userProvider);
 
         //if we change password, invalidate the actual token
-        if ($client->getPasswordChangeDate() && $preAuthToken->getPayload()['iat'] < $client->getPasswordChangeDate()) {
+        if ($client->getPasswordChangeDate() !== null && $preAuthToken->getPayload()['iat'] < $client->getPasswordChangeDate()) {
             throw new ExpiredTokenException();
         }
 

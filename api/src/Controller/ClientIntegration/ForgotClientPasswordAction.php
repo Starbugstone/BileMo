@@ -75,13 +75,12 @@ class ForgotClientPasswordAction
             throw new Exception($errors[0]->getMessage());
         }
 
-        //$this->em->clear(); //needed to clear doctrine cache else it returns the same as $data
         /**
          * @var Client $registeredClient
          */
         $registeredClient = $this->clientRepository->findOneBy(['email' => $data->getEmail()]);
 
-        if (!$registeredClient) {
+        if ($registeredClient===null) {
             //we didn't find a client so returning fake response
             return new Response(null, 204, ['message' => 'Reset password request successful']);
         }

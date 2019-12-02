@@ -44,7 +44,6 @@ class ClientVoter extends Voter
             case 'SELF_AND_ADMIN':
                 // logic to determine if the user can EDIT
                 // return true or false
-//                dd($user->getId());
                 if ($subject->getId() === $user->getId()) {
                     return true;
                 }
@@ -52,7 +51,6 @@ class ClientVoter extends Voter
                     return true;
                 }
                 return false;
-                break;
         }
 
         throw new \Exception(sprintf('unhandled attribute "$s"', $attribute));

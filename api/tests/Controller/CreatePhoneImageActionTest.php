@@ -109,7 +109,6 @@ class CreatePhoneImageActionTest extends TestCase
 
     protected function createFileBag(): FileBag
     {
-        //TODO: Prehaps only allow image uploads
         $tmpFile = $this->createTempFile();
         $bag = new FileBag(array('imageFile' => array(
             'name' => basename($tmpFile),
