@@ -18,15 +18,19 @@ use Symfony\Component\Validator\Constraints as Assert;
  *     collectionOperations={
  *          "get",
  *          "post"={
- *              "access_control"="security('ROLE_ADMIN')"
+ *              "security"="is_granted('ROLE_ADMIN')",
+ *              "denormalization_context"={"groups"={"post_phone_feature"}},
  *          }
  *     },
  *     itemOperations={
  *         "get"={
  *             "normalization_context"={"groups"={"get_feature"}}
  *          },
- *         "put"={"access_control"="security('ROLE_ADMIN')"},
- *         "delete"={"access_control"="security('ROLE_ADMIN')"},
+ *         "put"={
+ *              "security"="is_granted('ROLE_ADMIN')",
+ *              "denormalization_context"={"groups"={"post_phone_feature"}},
+ *          },
+ *         "delete"={"security"="is_granted('ROLE_ADMIN')"},
  *     }
  * )
  * @ORM\Entity(repositoryClass="App\Repository\PhoneFeatureRepository")
@@ -44,7 +48,7 @@ class PhoneFeature
     /**
      * @var string $name The name of the Feature
      * @ORM\Column(type="string", length=255, unique=true)
-     * @Groups({"get_phone", "read_feature", "get_feature"})
+     * @Groups({"get_phone", "read_feature", "get_feature", "post_phone_feature"})
      *
      * @Assert\NotBlank
      */
@@ -53,7 +57,7 @@ class PhoneFeature
     /**
      * @var string|null $unit The unit of the feature (Kg, Gb, ...)
      * @ORM\Column(type="string", length=25, nullable=true)
-     * @Groups({"get_phone", "read_feature", "get_feature"})
+     * @Groups({"get_phone", "read_feature", "get_feature", "post_phone_feature"})
      */
     private $unit;
 
