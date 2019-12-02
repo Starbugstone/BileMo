@@ -1,0 +1,37 @@
+App\Entity\Phone:
+  phone_push:
+    name: Motorola G5
+    price: 250.25
+    description: Moto G5 Phone description
+    releaseDate: <(new DateTime("2018-02-10"))>
+
+App\Entity\PhoneHasFeature:
+  phoneHasFeature_phone_Brand:
+    phone: '@phone_push'
+    phoneFeature: '@phoneFeature_brand'
+    value: Lenovo
+
+  phoneHasFeature_phone_weight:
+    phone: '@phone_push'
+    phoneFeature: '@phoneFeature_weight'
+    value: 151
+
+  phoneHasFeature_phone_screen_size:
+    phone: '@phone_push'
+    phoneFeature: '@phoneFeature_screen_size'
+    value: 5
+
+  phoneHasFeature_phone_OS:
+    phone: '@phone_push'
+    phoneFeature: '@phoneFeature_OS'
+    value: Android 7.0
+
+  phoneHasFeature_phone_memory:
+    phone: '@phone_push'
+    phoneFeature: '@phoneFeature_memory'
+    value: 2
+
+  phoneHasFeature_phone_disk:
+    phone: '@phone_push'
+    phoneFeature: '@phoneFeature_disk'
+    value: 16

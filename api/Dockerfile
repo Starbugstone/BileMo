@@ -5,7 +5,7 @@
 
 # https://docs.docker.com/engine/reference/builder/#understand-how-arg-and-from-interact
 ARG PHP_VERSION=7.3
-ARG NGINX_VERSION=1.15
+ARG NGINX_VERSION=1.17
 ARG VARNISH_VERSION=6.2
 
 
@@ -57,7 +57,10 @@ RUN set -eux; \
 
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 RUN ln -s $PHP_INI_DIR/php.ini-production $PHP_INI_DIR/php.ini
-COPY docker/php/conf.d/api-platform.ini $PHP_INI_DIR/conf.d/api-platform.ini
+COPY docker/php/conf.d/api-platform.prod.ini $PHP_INI_DIR/conf.d/api-platform.ini
+
+# Workaround to allow using PHPUnit 8 with Symfony 4.3
+ENV SYMFONY_PHPUNIT_VERSION=8.3
 
 # https://getcomposer.org/doc/03-cli.md#composer-allow-superuser
 ENV COMPOSER_ALLOW_SUPERUSER=1
@@ -109,9 +112,9 @@ FROM nginx:${NGINX_VERSION}-alpine AS api_platform_nginx
 
 COPY docker/nginx/conf.d/default.conf /etc/nginx/conf.d/default.conf
 
-WORKDIR /srv/api
+WORKDIR /srv/api/public
 
-COPY --from=api_platform_php /srv/api/public public/
+COPY --from=api_platform_php /srv/api/public ./
 
 
 # "varnish" stage

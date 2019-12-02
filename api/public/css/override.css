@@ -1,0 +1,15 @@
+body {
+    margin: 70px 0 0;
+    background: #f7f4ff;
+}
+
+header:before{
+    background-color: #551ef3;
+}
+
+#swagger-ui.api-platform .info .title{
+    color: #551ef3;
+    text-align: center;
+    text-shadow: 2px 2px 1px rgba(97,97,97,0.6);
+    /*padding-top: 1rem;*/
+}

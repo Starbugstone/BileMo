@@ -1,0 +1,13 @@
+vich_uploader:
+    db_driver: orm
+
+    mappings:
+        phone_images:
+            uri_prefix: /phone_images
+            upload_destination: '%kernel.project_dir%/public/phone_images'
+            namer: Vich\UploaderBundle\Naming\UniqidNamer
+
+    #mappings:
+    #    products:
+    #        uri_prefix: /images/products
+    #        upload_destination: '%kernel.project_dir%/public/images/products'

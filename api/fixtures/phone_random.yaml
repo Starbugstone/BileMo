@@ -1,0 +1,44 @@
+App\Entity\Phone:
+  phone_random_{1..30}:
+    name: <name()>
+    price: <randomFloat(2,50, 900)>
+    description: <paragraph()>
+    releaseDate: <dateTimeBetween('-10 years')>
+
+App\Entity\PhoneHasFeature:
+  phoneHasFeature_Brand_{@phone_random_*}:
+    phone: <current()>
+    phoneFeature: '@phoneFeature_brand'
+    value: <company()>
+
+  phoneHasFeature_weight_{@phone_random_*}:
+    phone: <current()>
+    phoneFeature: '@phoneFeature_weight'
+    value: <numberBetween(40, 350)>
+
+  phoneHasFeature_screen_size_{@phone_random_*}:
+    phone: <current()>
+    phoneFeature: '@phoneFeature_screen_size'
+    value: <randomFloat(1,3,9)>
+
+  phoneHasFeature_OS_{@phone_random_*}:
+    phone: <current()>
+    phoneFeature: '@phoneFeature_OS'
+    value: Android <numberBetween(4, 8)>
+
+  phoneHasFeature_memory_{@phone_random_*}:
+    phone: <current()>
+    phoneFeature: '@phoneFeature_memory'
+    value: <numberBetween(1, 8)>
+
+  phoneHasFeature_disk_{@phone_random_*}:
+    phone: <current()>
+    phoneFeature: '@phoneFeature_disk'
+    value: <numberBetween(4, 128)>
+
+App\Entity\PhoneImage:
+  phoneImage_{@phone_random_*}:
+    phone: <current()>
+    title: <firstName()>
+    image: <image('public/phone_images', 640, 480, '', 0)>
+    updatedAt: <date_create()>

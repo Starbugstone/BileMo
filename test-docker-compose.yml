@@ -1,0 +1,70 @@
+version: '3.4'
+
+x-cache-from:
+    - &api-cache-from
+        cache_from:
+            - ${NGINX_IMAGE:-quay.io/api-platform/nginx}
+            - ${PHP_IMAGE:-quay.io/api-platform/php}
+
+services:
+  php:
+    image: ${PHP_IMAGE:-quay.io/api-platform/php}
+    build:
+      context: ./api
+      dockerfile: test-Dockerfile
+      target: api_platform_php
+      <<: *api-cache-from
+    depends_on:
+      - db
+    environment:
+      - APP_ENV=test
+    # Comment out these volumes in production
+    # volumes:
+    #   - ./api:/srv/api:rw,cached
+      # If you develop on Linux, uncomment the following line to use a bind-mounted host directory instead
+      # - ./api/var:/srv/api/var:rw
+
+  api:
+    image: ${NGINX_IMAGE:-quay.io/api-platform/nginx}
+    build:
+      context: ./api
+      dockerfile: test-Dockerfile
+      target: api_platform_nginx
+      <<: *api-cache-from
+    depends_on:
+      - php
+    # Comment out this volume in production
+    # volumes:
+    #   - ./api/public:/srv/api/public:ro
+    ports:
+      - "8080:80"
+
+  db:
+    # In production, you may want to use a managed database service
+    image: postgres:10-alpine
+    environment:
+      - POSTGRES_DB=api
+      - POSTGRES_USER=api-platform
+      # You should definitely change the password in production
+      - POSTGRES_PASSWORD=!ChangeMe!
+    volumes:
+      - db-data:/var/lib/postgresql/data:rw
+      # You may use a bind-mounted host directory instead, so that it is harder to accidentally remove the volume and lose all your data!
+      # - ./docker/db/data:/var/lib/postgresql/data:rw
+    ports:
+      - "5432:5432"
+  mercure:
+      image: dunglas/mercure
+      environment:
+          - ALLOW_ANONYMOUS=1
+          - CORS_ALLOWED_ORIGINS=*
+          - DEMO=1
+          - JWT_KEY=!ChangeMe!
+          - PUBLISH_ALLOWED_ORIGINS=http://localhost:1337,https://localhost:1338 # required for publishing from demo page
+      ports:
+          -   target: 80
+              published: 1337
+              protocol: tcp
+
+volumes:
+  db-data: {}
