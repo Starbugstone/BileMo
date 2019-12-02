@@ -26,7 +26,6 @@ class CreatePhoneImageAction
     {
         $uploadedFile = $request->files->get('imageFile');
 
-        //TODO: Prehaps look into reformatting when we are passing the API url ?
         /**@var Phone $phone */
         $phone = $this->repository->find($request->get('phone'));
 
