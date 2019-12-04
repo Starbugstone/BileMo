@@ -10,7 +10,7 @@ use Doctrine\Common\Persistence\Mapping\MappingException;
 use Exception;
 
 /**
- * "path"="/activate_client/{id}"
+ * "path"="/clients/{id}/activate"
  *
  * Class ActivateClientPasswordAction
  * @package App\Controller\ClientIntegration

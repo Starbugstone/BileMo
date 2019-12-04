@@ -15,7 +15,7 @@ Trait userAuthTrait
     public function authUser(string $user, string $pass): Client
     {
         $client = ApiTestCase::createClient();
-        $response = $client->request('POST', '/client_login', [
+        $response = $client->request('POST', '/clients/login', [
             'json' => [
                 'username' => $user,
                 'password' => $pass

@@ -18,26 +18,32 @@ use App\Controller\DeleteClientUserAction;
  *     normalizationContext={"groups"={"client_read"}},
  *     denormalizationContext={"groups"={"client_write"}},
  *     collectionOperations={
- *          "get",
+ *          "get"={
+ *              "path"="/users",
+ *          },
  *          "post_newClientUser"={
  *              "method"="POST",
- *              "path"="/client_users",
+ *              "path"="/users",
  *              "controller"=CreateClientUserAction::class,
  *          }
  *      },
  *     itemOperations={
  *          "put" = {
+ *              "path"="/users/{id}",
  *              "security" = "is_granted('SELF_AND_ADMIN', object)",
  *          },
  *          "get" = {
+ *              "path"="/users/{id}",
  *              "security" = "is_granted('SELF_AND_ADMIN', object)",
  *          },
- *          "delete"={
+ *          "delete_any_clientUser"={
+ *              "method"="DELETE",
+ *              "path"="/users/{id}",
  *              "security"="is_granted('ROLE_ADMIN')"
  *          },
- *          "delete_clientUser"={
+ *          "delete_own_clientUser"={
  *              "method"="DELETE",
- *              "path"="/delete_client_users/{id}",
+ *              "path"="/clients/users/{id}",
  *              "controller"=DeleteClientUserAction::class,
  *          }
  *     }

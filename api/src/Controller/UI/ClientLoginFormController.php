@@ -42,7 +42,7 @@ class ClientLoginFormController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
 
-            $url = 'http://api/client_login';
+            $url = 'http://api/clients/login';
             $httpClient = HttpClient::create();
 
             $response = $httpClient->request('POST', $url, [

@@ -31,14 +31,14 @@ use Symfony\Component\Validator\Constraints as Assert;
  *          },
  *          "put_ActivateClientPassword"={
  *              "method"="PUT",
- *              "path"="/activate_client/{id}",
+ *              "path"="/clients/activate/{id}",
  *              "controller"=ActivateClientPasswordAction::class,
  *              "denormalization_context"={"groups"={"activate_client"}},
  *              "validation_groups"={"Default", "update"}
  *          },
  *          "put_ResetClientPassword"={
  *              "method"="PUT",
- *              "path"="/reset_client_password/{id}",
+ *              "path"="/clients/password/reset/{id}",
  *              "controller"=ResetClientPasswordAction::class,
  *              "denormalization_context"={"groups"={"reset_client"}},
  *              "validation_groups"={"Default", "update"}
@@ -52,7 +52,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *          },
  *          "post_UpdateMyPassword"={
  *              "method"="POST",
- *              "path"="/update_my_password",
+ *              "path"="/clients/password/update",
  *              "controller"=UpdateClientPasswordAction::class,
  *              "denormalization_context"={"groups"={"update_client_password"}},
  *              "validation_groups"={"Default", "update"}
@@ -105,7 +105,9 @@ class Client implements UserInterface
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\ClientUser", mappedBy="client")
-     * @ApiSubresource
+     * @ApiSubresource(
+     *
+     * )
      * @Groups({"admin_client_read", "client_client_write"})
      */
     private $clientUsers;

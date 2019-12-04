@@ -14,7 +14,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 
 /**
- * "path"="/reset_client_password/{id}"
+ * "path"="/clients/{id}/password/reset"
  * id in the url
  * send reset token
  * send new password

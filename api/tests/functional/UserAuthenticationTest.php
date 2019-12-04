@@ -16,14 +16,14 @@ class UserAuthenticationTest extends ApiTestCase
         $client = self::createClient();
 
         //making sure that a bad login is 401
-        $client->request('POST', '/client_login',['json'=>[
+        $client->request('POST', '/clients/login',['json'=>[
             'username'=> 'NonExistant',
             'password'=> 'ThisisNotA_Pa$$w0rD'
         ]]);
         $this->assertResponseStatusCodeSame(401);
 
         //This should be OK
-        $response = $client->request('POST', '/client_login',['json'=>[
+        $response = $client->request('POST', '/clients/login',['json'=>[
             'username'=> 'client1',
 	        'password'=> 'password'
         ]]);

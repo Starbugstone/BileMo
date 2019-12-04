@@ -16,10 +16,12 @@ use App\Controller\ClientIntegration\ForgotClientPasswordAction;
  *     collectionOperations={
  *          "forgot_password"={
  *              "method"="POST",
- *              "path"="/forgot_password",
+ *              "path"="/clients/password/forgot",
  *              "controller"=ForgotClientPasswordAction::class,
  *          },
- *          "get"
+ *          "get"={
+ *              "path"="/clients/password",
+ *          }
  *     }
  *
  * )

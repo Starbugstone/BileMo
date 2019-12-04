@@ -18,7 +18,7 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 
 /**
- * "path"="/forgot_client"
+ * "path"="/clients/password/forgot"
  *
  * id in the url
  * send Client Email in the put request
@@ -80,6 +80,7 @@ class ForgotClientPasswordAction
          */
         $registeredClient = $this->clientRepository->findOneBy(['email' => $data->getEmail()]);
 
+        dd($registeredClient);
         if ($registeredClient===null) {
             //we didn't find a client so returning fake response
             return new Response(null, 204, ['message' => 'Reset password request successful']);

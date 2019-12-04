@@ -2,7 +2,7 @@
 import { AUTH_LOGIN, AUTH_LOGOUT, AUTH_ERROR, AUTH_CHECK } from 'react-admin';
 
 // Change this to be your own authentication token URI.
-const authenticationTokenUri = `${process.env.REACT_APP_API_ENTRYPOINT}/client_login`;
+const authenticationTokenUri = `${process.env.REACT_APP_API_ENTRYPOINT}/clients/login`;
 
 export default (type, params) => {
   switch (type) {
