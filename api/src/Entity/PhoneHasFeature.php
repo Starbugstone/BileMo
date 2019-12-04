@@ -11,16 +11,27 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @ApiResource(
  *     collectionOperations={
- *          "get",
- *		    "post"={"security"="is_granted('ROLE_ADMIN')"}
+ *          "get"={
+ *              "path"="/phones/features"
+ *          },
+ *		    "post"={
+ *              "path"="/phones/features",
+ *              "security"="is_granted('ROLE_ADMIN')"
+ *          }
  *     },
  *     itemOperations={
- *          "get",
+ *          "get"={
+ *              "path"="/phones/features/{id}"
+ *          },
  *          "put"={
+ *              "path"="/phones/features/{id}",
  *              "security"="is_granted('ROLE_ADMIN')",
  *              "denormalization_context"={"groups"={"put_phone_has_feature"}},
  *          },
- *          "delete"={"security"="is_granted('ROLE_ADMIN')"},
+ *          "delete"={
+ *              "path"="/phones/features/{id}",
+ *              "security"="is_granted('ROLE_ADMIN')"
+ *          },
  *     },
  * )
  * @ORM\Entity(repositoryClass="App\Repository\PhoneHasFeatureRepository")
