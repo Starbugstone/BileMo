@@ -1,5 +1,7 @@
 # BileMo
 
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/Starbugstone/BileMo/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/Starbugstone/BileMo/?branch=master)
+
 The project is based on the docker-compose file from API platform.
 Simply download the project and run docker-compose up from the root folder of the project. 
 The migrations for the database will load on first startup and all the components will load.
