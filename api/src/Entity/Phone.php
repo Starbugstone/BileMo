@@ -47,8 +47,6 @@ use Symfony\Component\Validator\Constraints as Assert;
  *     properties={
  *          "name": "ipartial",
  *          "description": "ipartial",
- *          "phoneHasFeatures.value": "exact",
- *          "phoneHasFeatures.phoneFeature.name": "exact",
  *     }
  * )
  *
