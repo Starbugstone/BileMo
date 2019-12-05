@@ -37,12 +37,20 @@ final class SwaggerDecorator implements NormalizerInterface
         $docs['paths']['/clients/self/users/{id}']['delete']['summary'] = 'Delete users for clients';
         $docs['paths']['/clients/self/users/{id}']['delete']['description'] = 'path for the clients to delete there users';
         $docs['paths']['/clients/self/users/{id}']['delete']['requestBody']['description'] = 'Delete Client Users resource';
-        $docs['paths']['/clients/self/users/{id}']['delete']['responses']['200']['description'] = 'The user has successfully been removed';
+        $docs['paths']['/clients/self/users/{id}']['delete']['responses']['204']['description'] = 'The user has successfully been removed';
 
         $docs['paths']['/clients/{id}/users/{user_id}']['delete']['summary'] = 'Remove a user from a specific client';
         $docs['paths']['/clients/{id}/users/{user_id}']['delete']['description'] = 'path to delete users from a client';
         $docs['paths']['/clients/{id}/users/{user_id}']['delete']['requestBody']['description'] = 'Delete Client Users resource';
-        $docs['paths']['/clients/{id}/users/{user_id}']['delete']['responses']['200']['description'] = 'The user has successfully been removed';
+        $docs['paths']['/clients/{id}/users/{user_id}']['delete']['responses']['204']['description'] = 'The user has successfully been removed';
+        $docs['paths']['/clients/{id}/users/{user_id}']['delete']['parameters'][] = [
+            'name' => 'user_id',
+            'description' => 'The user ID',
+            'default' => 'user_id',
+            'in' => 'path',
+            'required' => 'true',
+            'type' => 'integer'
+        ];
 
         return $docs;
     }

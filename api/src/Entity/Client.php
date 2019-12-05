@@ -61,8 +61,11 @@ use Symfony\Component\Validator\Constraints as Assert;
  *          }
  *     },
  *     collectionOperations={
- *		   "get",
+ *		   "get"={
+ *              "path"="/clients",
+ *          },
  *		   "post"={
+ *              "path"="/clients",
  *              "security"="is_granted('ROLE_ADMIN')",
  *              "denormalization_context"={"groups"={"client_create"}}
  *          },
