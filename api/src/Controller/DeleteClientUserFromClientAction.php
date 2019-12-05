@@ -5,12 +5,13 @@ namespace App\Controller;
 
 use App\Entity\Client;
 use App\Entity\ClientUser;
+use App\Repository\ClientUserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Container\ContainerInterface;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * "path"="/clients/{id}/users/{client_id}"
+ * "path"="/clients/{id}/users/{user_id}"
  * "method"="DELETE"
  *
  * Class DeleteClientUserFromClientAction
@@ -19,22 +20,26 @@ use Symfony\Component\HttpFoundation\Response;
 class DeleteClientUserFromClientAction
 {
 
-    private $container;
     /**
      * @var EntityManagerInterface
      */
     private $em;
+    /**
+     * @var ClientUserRepository
+     */
+    private $clientUserRepository;
 
-    public function __construct(ContainerInterface $container, EntityManagerInterface $em)
+    public function __construct(EntityManagerInterface $em, ClientUserRepository $clientUserRepository)
     {
-        $this->container = $container;
         $this->em = $em;
+        $this->clientUserRepository = $clientUserRepository;
     }
 
-    public function __invoke(Client $client, ClientUser $data)
+    public function __invoke( Client $data, $user_id)
     {
+        $user = $this->clientUserRepository->find($user_id);
 
-        $data->removeClient($client);
+        $data->removeClientUser($user);
 
         $this->em->persist($data);
         $this->em->flush();

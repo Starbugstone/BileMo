@@ -21,15 +21,18 @@ use Symfony\Component\Validator\Constraints as Assert;
  *     },
  *     itemOperations={
  *          "get"={
- *              "path"="/phones/features/{id}"
+ *              "path"="/phones/features/{id}",
+ *              "requirements"={"id"="\d+"},
  *          },
  *          "put"={
  *              "path"="/phones/features/{id}",
+ *              "requirements"={"id"="\d+"},
  *              "security"="is_granted('ROLE_ADMIN')",
  *              "denormalization_context"={"groups"={"put_phone_has_feature"}},
  *          },
  *          "delete"={
  *              "path"="/phones/features/{id}",
+ *              "requirements"={"id"="\d+"},
  *              "security"="is_granted('ROLE_ADMIN')"
  *          },
  *     },

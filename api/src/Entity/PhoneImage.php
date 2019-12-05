@@ -56,14 +56,17 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *     itemOperations={
  *          "get"={
  *              "path"="/phones/images/{id}",
+ *              "requirements"={"id"="\d+"},
  *          },
  *          "put"={
  *              "path"="/phones/images/{id}",
+ *              "requirements"={"id"="\d+"},
  *              "security"="is_granted('ROLE_ADMIN')",
  *              "denormalization_context"={"groups"={"put_phone_image"}},
  *          },
  *          "delete"={
  *              "path"="/phones/images/{id}",
+ *              "requirements"={"id"="\d+"},
  *              "security"="is_granted('ROLE_ADMIN')",
  *          },
  *     },

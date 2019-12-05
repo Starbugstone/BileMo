@@ -12,6 +12,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use App\Controller\ClientIntegration\ActivateClientPasswordAction;
 use App\Controller\ClientIntegration\ResetClientPasswordAction;
 use App\Controller\ClientIntegration\UpdateClientPasswordAction;
+use App\Controller\DeleteClientUserFromClientAction;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -20,18 +21,25 @@ use Symfony\Component\Validator\Constraints as Assert;
  *     normalizationContext={"groups"={"client_read"}},
  *     itemOperations={
  *          "get"={
+ *              "path"="/clients/{id}",
+ *              "requirements"={"id"="\d+"},
  *              "security"="is_granted('SELF_AND_ADMIN', object)"
  *          },
  *          "put"={
+ *              "path"="/clients/{id}",
+ *              "requirements"={"id"="\d+"},
  *              "security"="is_granted('SELF_AND_ADMIN', object)",
  *              "denormalization_context"={"groups"={"client_write"}},
  *          },
  *          "delete"={
+ *              "path"="/clients/{id}",
+ *              "requirements"={"id"="\d+"},
  *              "security"="is_granted('ROLE_ADMIN')"
  *          },
  *          "put_ActivateClientPassword"={
  *              "method"="PUT",
  *              "path"="/clients/{id}/activate",
+ *              "requirements"={"id"="\d+"},
  *              "controller"=ActivateClientPasswordAction::class,
  *              "denormalization_context"={"groups"={"activate_client"}},
  *              "validation_groups"={"Default", "update"}
@@ -39,10 +47,18 @@ use Symfony\Component\Validator\Constraints as Assert;
  *          "put_ResetClientPassword"={
  *              "method"="PUT",
  *              "path"="/clients/{id}/password/reset",
+ *              "requirements"={"id"="\d+"},
  *              "controller"=ResetClientPasswordAction::class,
  *              "denormalization_context"={"groups"={"reset_client"}},
  *              "validation_groups"={"Default", "update"}
  *          },
+ *          "delete_clientUser_from_client"={
+ *              "method"="DELETE",
+ *              "path"="/clients/{id}/users/{user_id}",
+ *              "requirements"={"id"="\d+", "user_id"="\d+"},
+ *              "controller"=DeleteClientUserFromClientAction::class,
+ *              "security"="is_granted('ROLE_ADMIN')"
+ *          }
  *     },
  *     collectionOperations={
  *		   "get",
