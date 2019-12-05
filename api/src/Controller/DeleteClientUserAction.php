@@ -38,7 +38,7 @@ class DeleteClientUserAction
         }
 
         $loggedInClient = $this->container->get('security.token_storage')->getToken()->getUser();
-        if (null === $loggedInClient){
+        if (null === $loggedInClient) {
             throw new \Exception('something went wrong, no logged in client');
         }
 

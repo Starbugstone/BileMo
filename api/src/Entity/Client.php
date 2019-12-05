@@ -61,10 +61,10 @@ use Symfony\Component\Validator\Constraints as Assert;
  *          }
  *     },
  *     collectionOperations={
- *		   "get"={
+ *           "get"={
  *              "path"="/clients",
  *          },
- *		   "post"={
+ *           "post"={
  *              "path"="/clients",
  *              "security"="is_granted('ROLE_ADMIN')",
  *              "denormalization_context"={"groups"={"client_create"}}
@@ -77,7 +77,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *              "validation_groups"={"Default", "update"},
  *              "cache_headers"={"max_age"=0}
  *          },
- *	   },
+ *       },
  *
  * )
  * @ORM\Entity(repositoryClass="App\Repository\ClientRepository")

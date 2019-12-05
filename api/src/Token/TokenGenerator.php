@@ -16,9 +16,9 @@ class TokenGenerator
      */
     public function uniqueToken(Int $length = 20)
     {
-        try{
+        try {
             $random = random_bytes($length);
-        } catch (Exception $exception){
+        } catch (Exception $exception) {
             throw new RuntimeException('Random_bytes failed to generate a number for a token');
         }
         return bin2hex($random);

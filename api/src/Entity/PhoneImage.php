@@ -161,7 +161,7 @@ class PhoneImage
     public function setUpdatedAt(\DateTimeInterface $updatedAt = null): self
     {
         //Helper if we omit to set the updated time, we automaticly set it here
-        if($updatedAt === null){
+        if ($updatedAt === null) {
             $updatedAt = new \DateTime();
         }
         $this->updatedAt = $updatedAt;

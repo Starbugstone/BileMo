@@ -4,10 +4,8 @@
 namespace App\Controller;
 
 use App\Entity\Client;
-use App\Entity\ClientUser;
 use App\Repository\ClientUserRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Psr\Container\ContainerInterface;
 use Symfony\Component\HttpFoundation\Response;
 
 /**

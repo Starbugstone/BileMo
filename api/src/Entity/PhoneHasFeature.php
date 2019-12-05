@@ -14,7 +14,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *          "get"={
  *              "path"="/phones/features"
  *          },
- *		    "post"={
+ *            "post"={
  *              "path"="/phones/features",
  *              "security"="is_granted('ROLE_ADMIN')"
  *          }

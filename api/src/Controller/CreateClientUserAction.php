@@ -38,8 +38,11 @@ class CreateClientUserAction
      */
     private $entityManager;
 
-    public function __construct(TokenStorageInterface $tokenStorage, ClientUserRepository $clientUserRepository, EntityManagerInterface $entityManager)
-    {
+    public function __construct(
+        TokenStorageInterface $tokenStorage,
+        ClientUserRepository $clientUserRepository,
+        EntityManagerInterface $entityManager
+    ) {
         $this->tokenStorage = $tokenStorage;
         $this->clientUserRepository = $clientUserRepository;
         $this->entityManager = $entityManager;
@@ -53,7 +56,7 @@ class CreateClientUserAction
     {
         //checking if the ClientUser already exists, if so we don't create a new one but add the client to the existing one
         $alreadyClient = $this->clientUserRepository->findOneBy(['email' => $data->getEmail()]);
-        if($alreadyClient !== null){
+        if ($alreadyClient !== null) {
             $data = $alreadyClient;
         }
 

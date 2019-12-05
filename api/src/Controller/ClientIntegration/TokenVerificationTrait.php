@@ -27,7 +27,7 @@ Trait TokenVerificationTrait
      * @return Client
      * @throws BadTokenException
      */
-    public function getValidUser(int $id, string $token):Client
+    public function getValidUser(int $id, string $token): Client
     {
         //clear doctrine cache else we return data and not the DB entity
         $this->em->clear();

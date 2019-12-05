@@ -32,13 +32,13 @@ class ActivateClientPasswordAction
     public function __invoke(Client $data): Client
     {
         //if all necessary info isn't found in payload, just stop here
-        if($data->getNewUserToken() === null || $data->getPlainPassword() === null){
+        if ($data->getNewUserToken() === null || $data->getPlainPassword() === null) {
             throw new BadTokenException('Bad JSON payload');
         }
 
         $registeredClient = $this->getValidUser($data->getId(), $data->getNewUserToken());
 
-        if($registeredClient->getActive() === true){
+        if ($registeredClient->getActive() === true) {
             throw new Exception('Account already active');
         }
 
