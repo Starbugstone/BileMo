@@ -15,8 +15,8 @@ use App\Controller\DeleteClientUserAction;
 /**
  * the get is limited by the doctrine extension to only retreive our own clientUsers
  * @ApiResource(
- *     normalizationContext={"groups"={"client_read"}},
- *     denormalizationContext={"groups"={"client_write"}},
+ *     normalizationContext={"groups"={"client_user_read"}},
+ *     denormalizationContext={"groups"={"client_user_write"}},
  *     collectionOperations={
  *          "get"={
  *              "path"="/users",
@@ -68,14 +68,14 @@ class ClientUser
      * @ORM\Column(type="string", length=255, unique=true)
      * @Assert\NotBlank()
      * @Assert\Email()
-     * @Groups({"client_read", "client_write"})
+     * @Groups({"client_read", "client_user_read", "client_user_write"})
      */
 
     private $email;
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Client", inversedBy="clientUsers")
-     * @Groups({"admin_user_read"})
+     * @Groups({"admin_user_read", "client_user_read"})
      */
     public $client;
 

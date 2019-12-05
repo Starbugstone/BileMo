@@ -93,7 +93,7 @@ class Client implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
-     * @Groups({"client_read", "client_write", "client_create"})
+     * @Groups({"client_read", "client_write", "client_create", "client_user_read"})
      */
     private $username;
 
@@ -125,8 +125,7 @@ class Client implements UserInterface
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\ClientUser", mappedBy="client")
-     * @ApiSubresource(maxDepth=1)
-     * @Groups({"admin_client_read", "client_client_write"})
+     * @Groups({"admin_client_read", "client_client_write", "client_read"})
      */
     private $clientUsers;
 
@@ -139,7 +138,7 @@ class Client implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"client_read", "client_write", "client_create"})
+     * @Groups({"client_read", "client_write", "client_create", "client_user_read"})
      */
     private $email;
 
