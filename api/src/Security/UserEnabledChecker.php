@@ -21,13 +21,13 @@ class UserEnabledChecker implements UserCheckerInterface
      */
     public function checkPreAuth(UserInterface $user)
     {
-        if(!$user instanceof Client){
+        if (!$user instanceof Client) {
             return;
         }
         /**
          * @var Client $user
          */
-        if(!$user->getActive()){
+        if (!$user->getActive()) {
             throw new DisabledException('Account not active ');
         }
     }

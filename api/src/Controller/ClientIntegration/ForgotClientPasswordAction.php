@@ -18,7 +18,7 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 
 /**
- * "path"="/forgot_client"
+ * "path"="/clients/password/forgot"
  *
  * id in the url
  * send Client Email in the put request
@@ -49,8 +49,13 @@ class ForgotClientPasswordAction
      */
     private $validator;
 
-    public function __construct(ClientRepository $clientRepository, EntityManagerInterface $em, SendMail $sendMail, TokenGenerator $tokenGenerator, ValidatorInterface $validator)
-    {
+    public function __construct(
+        ClientRepository $clientRepository,
+        EntityManagerInterface $em,
+        SendMail $sendMail,
+        TokenGenerator $tokenGenerator,
+        ValidatorInterface $validator
+    ) {
 
         $this->clientRepository = $clientRepository;
         $this->em = $em;
@@ -71,7 +76,7 @@ class ForgotClientPasswordAction
             $emailConstraint
         );
 
-        if(0 !== count($errors)){
+        if (0 !== count($errors)) {
             throw new Exception($errors[0]->getMessage());
         }
 
@@ -80,7 +85,7 @@ class ForgotClientPasswordAction
          */
         $registeredClient = $this->clientRepository->findOneBy(['email' => $data->getEmail()]);
 
-        if ($registeredClient===null) {
+        if ($registeredClient === null) {
             //we didn't find a client so returning fake response
             return new Response(null, 204, ['message' => 'Reset password request successful']);
         }
@@ -89,14 +94,15 @@ class ForgotClientPasswordAction
         $registeredClient->setNewUserToken($this->tokenGenerator->uniqueToken());
 
         //sending a new email
-        $this->sendMail->send('Forgot Bilmo password','email/sendResetPassword.html.twig',$registeredClient,$registeredClient->getEmail());
+        $this->sendMail->send('Forgot Bilmo password', 'email/sendResetPassword.html.twig', $registeredClient,
+            $registeredClient->getEmail());
 
         $this->em->persist($registeredClient);
         $this->em->flush();
 
         //if we are in dev, just return the necessary info rather than mess around with mails
         //INSECURE IN PROD !!!
-        if ($_ENV['APP_ENV'] === 'dev' || $_ENV['APP_ENV'] === 'test'){
+        if ($_ENV['APP_ENV'] === 'dev' || $_ENV['APP_ENV'] === 'test') {
             $response = new Response();
             $response->setContent(json_encode([
                 'new_token' => $registeredClient->getNewUserToken(),

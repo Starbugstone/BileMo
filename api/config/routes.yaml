@@ -6,6 +6,6 @@ swagger_ui:
   path: /docs
   controller: api_platform.swagger.action.ui
   
-client_login:
-    path: /client_login
+clients_login:
+    path: /clients/login
     methods: ['POST']

@@ -12,6 +12,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use App\Controller\ClientIntegration\ActivateClientPasswordAction;
 use App\Controller\ClientIntegration\ResetClientPasswordAction;
 use App\Controller\ClientIntegration\UpdateClientPasswordAction;
+use App\Controller\DeleteClientUserFromClientAction;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -20,44 +21,63 @@ use Symfony\Component\Validator\Constraints as Assert;
  *     normalizationContext={"groups"={"client_read"}},
  *     itemOperations={
  *          "get"={
+ *              "path"="/clients/{id}",
+ *              "requirements"={"id"="\d+"},
  *              "security"="is_granted('SELF_AND_ADMIN', object)"
  *          },
  *          "put"={
+ *              "path"="/clients/{id}",
+ *              "requirements"={"id"="\d+"},
  *              "security"="is_granted('SELF_AND_ADMIN', object)",
  *              "denormalization_context"={"groups"={"client_write"}},
  *          },
  *          "delete"={
+ *              "path"="/clients/{id}",
+ *              "requirements"={"id"="\d+"},
  *              "security"="is_granted('ROLE_ADMIN')"
  *          },
  *          "put_ActivateClientPassword"={
  *              "method"="PUT",
- *              "path"="/activate_client/{id}",
+ *              "path"="/clients/{id}/activate",
+ *              "requirements"={"id"="\d+"},
  *              "controller"=ActivateClientPasswordAction::class,
  *              "denormalization_context"={"groups"={"activate_client"}},
  *              "validation_groups"={"Default", "update"}
  *          },
  *          "put_ResetClientPassword"={
  *              "method"="PUT",
- *              "path"="/reset_client_password/{id}",
+ *              "path"="/clients/{id}/password/reset",
+ *              "requirements"={"id"="\d+"},
  *              "controller"=ResetClientPasswordAction::class,
  *              "denormalization_context"={"groups"={"reset_client"}},
  *              "validation_groups"={"Default", "update"}
  *          },
+ *          "delete_clientUser_from_client"={
+ *              "method"="DELETE",
+ *              "path"="/clients/{id}/users/{user_id}",
+ *              "requirements"={"id"="\d+", "user_id"="\d+"},
+ *              "controller"=DeleteClientUserFromClientAction::class,
+ *              "security"="is_granted('ROLE_ADMIN')"
+ *          }
  *     },
  *     collectionOperations={
- *		   "get",
- *		   "post"={
+ *           "get"={
+ *              "path"="/clients",
+ *          },
+ *           "post"={
+ *              "path"="/clients",
  *              "security"="is_granted('ROLE_ADMIN')",
  *              "denormalization_context"={"groups"={"client_create"}}
  *          },
  *          "post_UpdateMyPassword"={
  *              "method"="POST",
- *              "path"="/update_my_password",
+ *              "path"="/clients/self/password/update",
  *              "controller"=UpdateClientPasswordAction::class,
  *              "denormalization_context"={"groups"={"update_client_password"}},
- *              "validation_groups"={"Default", "update"}
+ *              "validation_groups"={"Default", "update"},
+ *              "cache_headers"={"max_age"=0}
  *          },
- *	   },
+ *       },
  *
  * )
  * @ORM\Entity(repositoryClass="App\Repository\ClientRepository")
@@ -73,7 +93,7 @@ class Client implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
-     * @Groups({"client_read", "client_write", "client_create"})
+     * @Groups({"client_read", "client_write", "client_create", "client_user_read"})
      */
     private $username;
 
@@ -105,8 +125,7 @@ class Client implements UserInterface
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\ClientUser", mappedBy="client")
-     * @ApiSubresource
-     * @Groups({"admin_client_read", "client_client_write"})
+     * @Groups({"admin_client_read", "client_client_write", "client_read"})
      */
     private $clientUsers;
 
@@ -119,7 +138,7 @@ class Client implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"client_read", "client_write", "client_create"})
+     * @Groups({"client_read", "client_write", "client_create", "client_user_read"})
      */
     private $email;
 

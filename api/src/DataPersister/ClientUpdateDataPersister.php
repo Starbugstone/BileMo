@@ -7,9 +7,7 @@ namespace App\DataPersister;
 use ApiPlatform\Core\DataPersister\DataPersisterInterface;
 use App\Entity\Client;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
-use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 /**
  * Encode the Client password from the plain password on save to database
@@ -30,7 +28,6 @@ class ClientUpdateDataPersister implements DataPersisterInterface
     private $passwordEncoder;
 
 
-
     public function __construct(EntityManagerInterface $manager, UserPasswordEncoderInterface $passwordEncoder)
     {
         $this->manager = $manager;
@@ -49,12 +46,12 @@ class ClientUpdateDataPersister implements DataPersisterInterface
 
     /**
      * Persists the data.
-     * @var Client $data this is the Client waiting to be persisted to the DB
      * @return object|void Void will not be supported in API Platform 3, an object should always be returned
+     * @var Client $data this is the Client waiting to be persisted to the DB
      */
     public function persist($data)
     {
-        if($data->getPlainPassword()){
+        if ($data->getPlainPassword()) {
             $encodedPassword = $this->passwordEncoder->encodePassword($data, $data->getPlainPassword());
             $data->setPassword($encodedPassword);
             $data->eraseCredentials();

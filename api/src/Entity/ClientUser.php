@@ -15,31 +15,40 @@ use App\Controller\DeleteClientUserAction;
 /**
  * the get is limited by the doctrine extension to only retreive our own clientUsers
  * @ApiResource(
- *     normalizationContext={"groups"={"client_read"}},
- *     denormalizationContext={"groups"={"client_write"}},
+ *     normalizationContext={"groups"={"client_user_read"}},
+ *     denormalizationContext={"groups"={"client_user_write"}},
  *     collectionOperations={
- *          "get",
+ *          "get"={
+ *              "path"="/users",
+ *          },
  *          "post_newClientUser"={
  *              "method"="POST",
- *              "path"="/client_users",
+ *              "path"="/users",
  *              "controller"=CreateClientUserAction::class,
  *          }
  *      },
  *     itemOperations={
  *          "put" = {
+ *              "path"="/users/{id}",
  *              "security" = "is_granted('SELF_AND_ADMIN', object)",
  *          },
  *          "get" = {
+ *              "path"="/users/{id}",
  *              "security" = "is_granted('SELF_AND_ADMIN', object)",
  *          },
- *          "delete"={
+ *          "delete_any_clientUser"={
+ *              "method"="DELETE",
+ *              "path"="/users/{id}",
+ *              "requirements"={"id"="\d+"},
  *              "security"="is_granted('ROLE_ADMIN')"
  *          },
- *          "delete_clientUser"={
+ *          "delete_own_clientUser"={
  *              "method"="DELETE",
- *              "path"="/delete_client_users/{id}",
+ *              "path"="/clients/self/users/{id}",
+ *              "requirements"={"id"="\d+"},
  *              "controller"=DeleteClientUserAction::class,
- *          }
+ *              "cache_headers"={"max_age"=0}
+ *          },
  *     }
  *
  *
@@ -59,14 +68,14 @@ class ClientUser
      * @ORM\Column(type="string", length=255, unique=true)
      * @Assert\NotBlank()
      * @Assert\Email()
-     * @Groups({"client_read", "client_write"})
+     * @Groups({"client_read", "client_user_read", "client_user_write"})
      */
 
     private $email;
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Client", inversedBy="clientUsers")
-     * @Groups({"admin_user_read"})
+     * @Groups({"admin_user_read", "client_user_read"})
      */
     public $client;
 

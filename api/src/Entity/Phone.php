@@ -22,22 +22,32 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  *     collectionOperations={
  *          "get"={
+ *              "path"="/phones",
  *              "normalization_context"={"groups"={"get_phones"}}
  *          },
  *          "post"={
+ *              "path"="/phones",
  *              "denormalization_context"={"groups"={"post_phone"}},
  *              "security"="is_granted('ROLE_ADMIN')"
  *          }
  *     },
  *     itemOperations={
  *         "get"={
+ *             "path"="/phones/{id}",
+ *             "requirements"={"id"="\d+"},
  *             "normalization_context"={"groups"={"get_phone"}}
  *         },
  *         "put"={
+ *             "path"="/phones/{id}",
+ *             "requirements"={"id"="\d+"},
  *             "denormalization_context"={"groups"={"put_phone"}},
  *              "security"="is_granted('ROLE_ADMIN')"
  *         },
- *         "delete"={"security"="is_granted('ROLE_ADMIN')"},
+ *         "delete"={
+ *              "path"="/phones/{id}",
+ *              "requirements"={"id"="\d+"},
+ *              "security"="is_granted('ROLE_ADMIN')"
+ *         },
  *     }
  *
  * )

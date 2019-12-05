@@ -63,14 +63,14 @@ class CreateClientTest extends ApiTestCase
         $apiClientToken = $apiClient->getNewUserToken();
 
         //Making sure that the user can not log in yet
-        $client->request('POST', '/client_login',['json'=>[
+        $client->request('POST', '/clients/login',['json'=>[
             'username'=> 'test1',
             'password'=> ''
         ]]);
         $this->assertResponseStatusCodeSame(401);
 
         //testing false token
-        $client->request('PUT','/activate_client/'.$apiClient->getId(),[
+        $client->request('PUT','/clients/'.$apiClient->getId().'/activate',[
             'json' => [
                 'newUserToken' => '123456abcdefg',
 	            'plainPassword' => 'shootFirst'
@@ -79,7 +79,7 @@ class CreateClientTest extends ApiTestCase
         $this->assertResponseStatusCodeSame(400);
 
         //now with real token
-        $response = $client->request('PUT','/activate_client/'.$apiClient->getId(),[
+        $response = $client->request('PUT','/clients/'.$apiClient->getId().'/activate',[
             'json' => [
                 'newUserToken' => $apiClientToken,
                 'plainPassword' => 'shootFirst'
@@ -97,7 +97,7 @@ class CreateClientTest extends ApiTestCase
         $this->assertTrue($obj->active);
 
         //testing that we can login with the new user
-        $client->request('POST', '/client_login',['json'=>[
+        $client->request('POST', '/clients/login',['json'=>[
             'username'=> 'test1',
             'password'=> 'shootFirst'
         ]]);

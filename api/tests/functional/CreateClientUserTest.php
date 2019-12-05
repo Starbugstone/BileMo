@@ -18,7 +18,7 @@ class CreateClientUserTest extends ApiTestCase
         $client = $this->authUser('client1', 'password');
 
         //Create a new user for client1
-        $response = $client->request('POST', '/client_users', [
+        $response = $client->request('POST', '/users', [
             'json' => [
                 'email' => 'newClientUser@local.dev'
             ]
@@ -35,7 +35,7 @@ class CreateClientUserTest extends ApiTestCase
         $this->assertResponseIsSuccessful();
 
         //make sure the user is associated to client
-        $response = $client->request('GET', '/client_users', [
+        $response = $client->request('GET', '/users', [
             'json' => [
             ]
         ]);
@@ -51,7 +51,7 @@ class CreateClientUserTest extends ApiTestCase
     {
         $client = $this->authUser('client1', 'password');
         //Create a new user for client1
-        $response = $client->request('POST', '/client_users', [
+        $response = $client->request('POST', '/users', [
             'json' => [
                 'email' => 'newClientUser@local.dev'
             ]
@@ -59,17 +59,15 @@ class CreateClientUserTest extends ApiTestCase
         $this->assertResponseIsSuccessful();
 
         $obj = json_decode($response->getContent());
-        //construct the url
-        $url = str_replace('client_users', 'delete_client_users', $obj->{"@id"});
         //now delete the user
-        $client->request('DELETE', $url, [
+        $client->request('DELETE', '/clients/self'.$obj->{"@id"}, [
             'json' => [
             ]
         ]);
         $this->assertResponseIsSuccessful();
 
         //make sure that the user no longer exists for client1
-        $response = $client->request('GET', '/client_users', [
+        $response = $client->request('GET', '/users', [
             'json' => [
             ]
         ]);

@@ -16,8 +16,11 @@ use Symfony\Component\Serializer\Annotation\Groups;
  * @ApiResource(
  *     normalizationContext={"groups"={"read"}},
  *     collectionOperations={
- *          "get",
+ *          "get"={
+ *              "path"="/phones/images",
+ *          },
  *          "post"={
+ *              "path"="/phones/images",
  *              "security"="is_granted('ROLE_ADMIN')",
  *              "controller"=CreatePhoneImageAction::class,
  *              "deserialize"=false,
@@ -51,12 +54,19 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *          }
  *     },
  *     itemOperations={
- *          "get",
+ *          "get"={
+ *              "path"="/phones/images/{id}",
+ *              "requirements"={"id"="\d+"},
+ *          },
  *          "put"={
+ *              "path"="/phones/images/{id}",
+ *              "requirements"={"id"="\d+"},
  *              "security"="is_granted('ROLE_ADMIN')",
  *              "denormalization_context"={"groups"={"put_phone_image"}},
  *          },
  *          "delete"={
+ *              "path"="/phones/images/{id}",
+ *              "requirements"={"id"="\d+"},
  *              "security"="is_granted('ROLE_ADMIN')",
  *          },
  *     },
@@ -151,7 +161,7 @@ class PhoneImage
     public function setUpdatedAt(\DateTimeInterface $updatedAt = null): self
     {
         //Helper if we omit to set the updated time, we automaticly set it here
-        if($updatedAt === null){
+        if ($updatedAt === null) {
             $updatedAt = new \DateTime();
         }
         $this->updatedAt = $updatedAt;

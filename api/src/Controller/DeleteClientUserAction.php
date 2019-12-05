@@ -9,7 +9,8 @@ use Psr\Container\ContainerInterface;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * "path"="/delete_client_users/{id}"
+ * "path"="/clients/self/users/{id}"
+ * "method"="DELETE"
  *
  * Class DeleteClientUserAction
  * @package App\Controller\ClientIntegration
@@ -37,7 +38,7 @@ class DeleteClientUserAction
         }
 
         $loggedInClient = $this->container->get('security.token_storage')->getToken()->getUser();
-        if (null === $loggedInClient){
+        if (null === $loggedInClient) {
             throw new \Exception('something went wrong, no logged in client');
         }
 

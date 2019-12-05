@@ -6,7 +6,8 @@ namespace App\Controller\ClientIntegration;
 use Psr\Container\ContainerInterface;
 
 /**
- * "path"="/update_my_password"
+ * "path"="/clients/self/password/update",
+ * "method"="POST",
  *
  * Class UpdateClientPasswordAction
  * @package App\Controller\ClientIntegration
@@ -29,7 +30,7 @@ class UpdateClientPasswordAction
         }
 
         $loggedInClient = $this->container->get('security.token_storage')->getToken()->getUser();
-        if (null === $loggedInClient){
+        if (null === $loggedInClient) {
             throw new \Exception('something went wrong, no logged in client');
         }
 

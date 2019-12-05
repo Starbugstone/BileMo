@@ -19,7 +19,7 @@ security:
             anonymous: true
             provider: app_user_provider
             json_login:
-                check_path: /client_login
+                check_path: /clients/login
                 username_path: username
                 password_path: password
                 success_handler: lexik_jwt_authentication.handler.authentication_success
@@ -39,10 +39,10 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-         - { path: ^/client_login, roles: IS_AUTHENTICATED_ANONYMOUSLY } # the dev login form helper
-         - { path: ^/activate_client/, roles: IS_AUTHENTICATED_ANONYMOUSLY } # activate the client with token and set password
-         - { path: ^/reset_client_password/, roles: IS_AUTHENTICATED_ANONYMOUSLY } # the client wishes to reset his password
-         - { path: ^/forgot_password, roles: IS_AUTHENTICATED_ANONYMOUSLY } # the client forgot his password
+         - { path: ^/client_login_form, roles: IS_AUTHENTICATED_ANONYMOUSLY } # the dev login form helper
+         - { path: ^/clients/[0-9]+/activate, roles: IS_AUTHENTICATED_ANONYMOUSLY } # activate the client with token and set password
+         - { path: ^/clients/[0-9]+/password/reset, roles: IS_AUTHENTICATED_ANONYMOUSLY } # the client wishes to reset his password
+         - { path: ^/clients/password/forgot, roles: IS_AUTHENTICATED_ANONYMOUSLY } # the client forgot his password
          - { path: ^/docs,         roles: IS_AUTHENTICATED_ANONYMOUSLY } # access the documentation
          - { path: ^/,             roles: IS_AUTHENTICATED_FULLY } # everything else
         # - { path: ^/admin, roles: ROLE_ADMIN }

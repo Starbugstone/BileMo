@@ -42,7 +42,7 @@ class ClientLoginFormController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
 
-            $url = 'http://api/client_login';
+            $url = 'http://api/clients/login';
             $httpClient = HttpClient::create();
 
             $response = $httpClient->request('POST', $url, [
@@ -53,9 +53,8 @@ class ClientLoginFormController extends AbstractController
             ]);
 
             $responseContent = json_decode($response->getContent(false));
-;
             if ($response->getStatusCode() === 200) {
-                $token = 'Bearer '.$responseContent->token;
+                $token = 'Bearer ' . $responseContent->token;
             } else {
                 $token = $responseContent->message;
             }

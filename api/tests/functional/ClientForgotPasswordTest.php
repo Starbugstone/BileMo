@@ -32,13 +32,13 @@ class ClientForgotPasswordTest extends ApiTestCase
         $apiClient = $entityManager->getRepository(Client::class)->findOneBy(array('username' => 'client1'));
 
         //Make sure we get a valid response even when the email is wrong to avoid exposing our client emails
-        $client->request('POST', '/forgot_password', ['json' => [
+        $client->request('POST', '/clients/password/forgot', ['json' => [
             'email' => 'thisisabademail@nonexistant.com'
         ]]);
         $this->assertResponseIsSuccessful();
 
         //send the forgot password request
-        $client->request('POST', '/forgot_password', ['json' => [
+        $client->request('POST', '/clients/password/forgot', ['json' => [
             'email' => $apiClient->getEmail()
         ]]);
         $this->assertResponseIsSuccessful();
@@ -49,7 +49,7 @@ class ClientForgotPasswordTest extends ApiTestCase
         $this->assertNotNull($apiClient->getNewUserToken(), 'The new user token was not generated');
 
         //test that we get a bad response when sending wrong token
-        $client->request('PUT', '/reset_client_password/' . $apiClient->getId(), [
+        $client->request('PUT', '/clients/'.$apiClient->getId().'/password/reset', [
             'json' => [
                 'newUserToken' => '123456789',
                 'plainPassword' => "KyloIsANub"
@@ -58,7 +58,7 @@ class ClientForgotPasswordTest extends ApiTestCase
         $this->assertResponseStatusCodeSame(400);
 
         //Reset the password with the good token
-        $client->request('PUT', '/reset_client_password/' . $apiClient->getId(), [
+        $client->request('PUT', '/clients/'.$apiClient->getId().'/password/reset', [
             'json' => [
                 'newUserToken' => $apiClient->getNewUserToken(),
                 'plainPassword' => "KyloIsANub"
@@ -67,7 +67,7 @@ class ClientForgotPasswordTest extends ApiTestCase
         $this->assertResponseIsSuccessful();
 
         //try to log in with the new password
-        $response = $client->request('POST', '/client_login', ['json' => [
+        $response = $client->request('POST', '/clients/login', ['json' => [
             'username' => 'client1',
             'password' => 'KyloIsANub'
         ]]);

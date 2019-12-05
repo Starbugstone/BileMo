@@ -6,15 +6,11 @@ namespace App\Controller\ClientIntegration;
 
 use App\Entity\Client;
 use App\Exception\BadTokenException;
-use App\Repository\ClientRepository;
-use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\EntityManagerInterface;
 use Exception;
-use Symfony\Component\Routing\Annotation\Route;
 
 
 /**
- * "path"="/reset_client_password/{id}"
+ * "path"="/clients/{id}/password/reset"
  * id in the url
  * send reset token
  * send new password
@@ -29,7 +25,7 @@ class ResetClientPasswordAction
     public function __invoke(Client $data)
     {
         //if all necessary info isn't found in payload, just stop here
-        if($data->getNewUserToken() === null || $data->getPlainPassword() === null){
+        if ($data->getNewUserToken() === null || $data->getPlainPassword() === null) {
             throw new BadTokenException('Bad JSON payload');
         }
 
