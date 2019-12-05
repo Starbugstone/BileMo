@@ -1,7 +1,7 @@
 // admin/src/App.js
 
 import React from 'react';
-import { HydraAdmin, ResourceGuesser } from '@api-platform/admin';
+import { HydraAdmin, ResourceGuesser, ListGuesser, FieldGuesser } from '@api-platform/admin';
 import parseHydraDocumentation from '@api-platform/api-doc-parser/lib/hydra/parseHydraDocumentation';
 import { dataProvider as baseDataProvider, fetchHydra as baseFetchHydra  } from '@api-platform/admin';
 import authProvider from './authProvider';
@@ -44,10 +44,10 @@ export default props => (
         entrypoint={ entrypoint }
     >
       <ResourceGuesser name="clients" />
-      <ResourceGuesser name="client_users" />
+      <ResourceGuesser name="users" />
       <ResourceGuesser name="phones" />
-      <ResourceGuesser name="phone_has_features" />
-      <ResourceGuesser name="phone_images" />
-      <ResourceGuesser name="phone_features" />
+      {/*<ResourceGuesser name="phone_has_features" />*/}
+      {/*<ResourceGuesser name="phone_images" />*/}
+      {/*<ResourceGuesser name="phone_features" />*/}
     </HydraAdmin>
 );

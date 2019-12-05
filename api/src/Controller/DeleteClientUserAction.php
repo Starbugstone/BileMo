@@ -9,7 +9,8 @@ use Psr\Container\ContainerInterface;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * "path"="/delete_client_users/{id}"
+ * "path"="/clients/self/users/{id}"
+ * "method"="DELETE"
  *
  * Class DeleteClientUserAction
  * @package App\Controller\ClientIntegration

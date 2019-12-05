@@ -57,7 +57,7 @@ class UpdateClientTest extends ApiTestCase
 
         //Changing the password
         //check if constraints work
-        $client->request('POST', '/clients/password/update', [
+        $client->request('POST', '/clients/self/password/update', [
             'json' => [
                 'plainPassword' => '123'
             ]
@@ -70,7 +70,7 @@ class UpdateClientTest extends ApiTestCase
         ]);
         $this->assertResponseIsSuccessful();
 
-        $client->request('POST', '/clients/password/update', [
+        $client->request('POST', '/clients/self/password/update', [
             'json' => [
                 'plainPassword' => '123456'
             ]

@@ -60,7 +60,7 @@ class CreateClientUserTest extends ApiTestCase
 
         $obj = json_decode($response->getContent());
         //now delete the user
-        $client->request('DELETE', '/clients'.$obj->{"@id"}, [
+        $client->request('DELETE', '/clients/self'.$obj->{"@id"}, [
             'json' => [
             ]
         ]);

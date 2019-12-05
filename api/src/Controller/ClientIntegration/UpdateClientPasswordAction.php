@@ -6,7 +6,8 @@ namespace App\Controller\ClientIntegration;
 use Psr\Container\ContainerInterface;
 
 /**
- * "path"="/clients/password/update"
+ * "path"="/clients/self/password/update",
+ * "method"="POST",
  *
  * Class UpdateClientPasswordAction
  * @package App\Controller\ClientIntegration

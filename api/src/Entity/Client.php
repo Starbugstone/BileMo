@@ -31,14 +31,14 @@ use Symfony\Component\Validator\Constraints as Assert;
  *          },
  *          "put_ActivateClientPassword"={
  *              "method"="PUT",
- *              "path"="/clients/activate/{id}",
+ *              "path"="/clients/{id}/activate",
  *              "controller"=ActivateClientPasswordAction::class,
  *              "denormalization_context"={"groups"={"activate_client"}},
  *              "validation_groups"={"Default", "update"}
  *          },
  *          "put_ResetClientPassword"={
  *              "method"="PUT",
- *              "path"="/clients/password/reset/{id}",
+ *              "path"="/clients/{id}/password/reset",
  *              "controller"=ResetClientPasswordAction::class,
  *              "denormalization_context"={"groups"={"reset_client"}},
  *              "validation_groups"={"Default", "update"}
@@ -52,10 +52,11 @@ use Symfony\Component\Validator\Constraints as Assert;
  *          },
  *          "post_UpdateMyPassword"={
  *              "method"="POST",
- *              "path"="/clients/password/update",
+ *              "path"="/clients/self/password/update",
  *              "controller"=UpdateClientPasswordAction::class,
  *              "denormalization_context"={"groups"={"update_client_password"}},
- *              "validation_groups"={"Default", "update"}
+ *              "validation_groups"={"Default", "update"},
+ *              "cache_headers"={"max_age"=0}
  *          },
  *	   },
  *

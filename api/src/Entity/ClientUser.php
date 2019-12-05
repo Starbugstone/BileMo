@@ -11,6 +11,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 use App\Controller\CreateClientUserAction;
 use App\Controller\DeleteClientUserAction;
+use App\Controller\DeleteClientUserFromClientAction;
 
 /**
  * the get is limited by the doctrine extension to only retreive our own clientUsers
@@ -43,8 +44,15 @@ use App\Controller\DeleteClientUserAction;
  *          },
  *          "delete_own_clientUser"={
  *              "method"="DELETE",
- *              "path"="/clients/users/{id}",
+ *              "path"="/clients/self/users/{id}",
  *              "controller"=DeleteClientUserAction::class,
+ *              "cache_headers"={"max_age"=0}
+ *          },
+ *          "delete_clientUser_from_client"={
+ *              "method"="DELETE",
+ *              "path"="/clients/{id}/users/{user_id}",
+ *              "controller"=DeleteClientUserFromClientAction::class,
+ *              "security"="is_granted('ROLE_ADMIN')"
  *          }
  *     }
  *
