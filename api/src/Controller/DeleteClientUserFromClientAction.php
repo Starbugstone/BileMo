@@ -33,9 +33,13 @@ class DeleteClientUserFromClientAction
         $this->clientUserRepository = $clientUserRepository;
     }
 
-    public function __invoke( Client $data, $user_id)
+    public function __invoke(Client $data, int $user_id)
     {
         $user = $this->clientUserRepository->find($user_id);
+
+        if (null === $user) {
+            throw new \Exception('the used does not exist');
+        }
 
         $data->removeClientUser($user);
 

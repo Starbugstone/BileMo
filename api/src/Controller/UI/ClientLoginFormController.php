@@ -52,7 +52,7 @@ class ClientLoginFormController extends AbstractController
                 ],
             ]);
 
-            $responseContent = json_decode($response->getContent(false));;
+            $responseContent = json_decode($response->getContent(false));
             if ($response->getStatusCode() === 200) {
                 $token = 'Bearer ' . $responseContent->token;
             } else {
